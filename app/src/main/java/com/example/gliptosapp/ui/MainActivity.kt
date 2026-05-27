@@ -1,4 +1,4 @@
-package com.example.gliptosapp.ui.home
+package com.example.gliptosapp.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

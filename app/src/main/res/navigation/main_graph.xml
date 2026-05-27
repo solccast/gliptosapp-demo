@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/initFragment">
+
+    <fragment
+        android:id="@+id/colectionFragment"
+        android:name="com.example.gliptosapp.ui.colection.ColectionFragment"
+        android:label="fragment_colection"
+        tools:layout="@layout/fragment_colection" />
+    <fragment
+        android:id="@+id/RAumentadaFragment"
+        android:name="com.example.gliptosapp.ui.ra.RAumentadaFragment"
+        android:label="fragment_r_aumentada"
+        tools:layout="@layout/fragment_r_aumentada" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.gliptosapp.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/initFragment"
+        android:name="com.example.gliptosapp.ui.home.InitFragment"
+        android:label="fragment_init"
+        tools:layout="@layout/fragment_init" />
+</navigation>
