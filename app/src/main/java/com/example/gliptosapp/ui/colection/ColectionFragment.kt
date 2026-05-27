@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.gliptosapp.databinding.FragmentColectionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ColectionFragment : Fragment() {
     private var _binding: FragmentColectionBinding? = null
     private val binding get() = _binding!!
