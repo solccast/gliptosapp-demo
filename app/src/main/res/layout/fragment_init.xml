@@ -5,10 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.InitFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Saludos desde inicio" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/btnExcavacion"
+            android:text="@string/excavacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnColeccion"
+            android:text="@string/coleccion_fosiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <Button
+            android:id="@+id/btnAjustes"
+            android:text="@string/ajustes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <Button
+            android:id="@+id/btnRecursos"
+            android:text="@string/recursos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+    </LinearLayout>
 
 </FrameLayout>
