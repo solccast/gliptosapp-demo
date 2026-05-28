@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentColectionBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +21,23 @@ class ColectionFragment : Fragment() {
     ): View {
         _binding = FragmentColectionBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val listaMock = listOf(
+            Fosil("Gliptodonte", true),
+            Fosil("Tiranosaurio", false),
+            Fosil("Trilobite", true)
+        )
+
+        binding.listaFosiles.layoutManager = LinearLayoutManager(requireContext())
+        binding.listaFosiles.adapter = FosilAdapter(listaMock)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
