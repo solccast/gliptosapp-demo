@@ -26,9 +26,9 @@ class ColectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listaMock = listOf(
-            Fosil("Gliptodonte", true),
-            Fosil("Tiranosaurio", false),
-            Fosil("Trilobite", true)
+            Fosil("Gliptodonte", true, null),
+            Fosil("Tiranosaurio", false, null),
+            Fosil("Trilobite", true, null)
         )
 
         binding.listaFosiles.layoutManager = LinearLayoutManager(requireContext())
