@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="boton_alto_medium">72dp</dimen>
+    <dimen name="texto_boton_medium">18sp</dimen>
+
+    <dimen name="boton_alto_large">96dp</dimen>
+    <dimen name="texto_boton_large">24sp</dimen>
 </resources>
