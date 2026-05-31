@@ -1,5 +1,6 @@
 package com.example.gliptosapp.ui.detailFosile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
+import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,6 +45,11 @@ class ExtraInfoFosileFragment : Fragment() {
 
         binding.btnVer.setOnClickListener {
             // TODO realidad aumentada
+            val intent = Intent(requireContext(), RAFosilActivity::class.java)
+            intent.putExtra("nombreFosil", args.nombreFosil)
+            startActivity(intent)
         }
+        binding.btnVer.contentDescription =
+            "Ver el fósil ${args.nombreFosil} en realidad aumentada"
     }
 }
