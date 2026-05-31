@@ -9,7 +9,12 @@
         android:id="@+id/colectionFragment"
         android:name="com.example.gliptosapp.ui.colection.ColectionFragment"
         android:label="fragment_colection"
-        tools:layout="@layout/fragment_colection" />
+        tools:layout="@layout/fragment_colection">
+        <action
+            android:id="@+id/action_colectionFragment_to_extraInfoFosileFragment"
+            app:destination="@+id/extraInfoFosileFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/RAumentadaFragment"
         android:name="com.example.gliptosapp.ui.ra.RAumentadaFragment"
@@ -25,4 +30,13 @@
         android:name="com.example.gliptosapp.ui.home.InitFragment"
         android:label="fragment_init"
         tools:layout="@layout/fragment_init" />
+    <fragment
+        android:id="@+id/extraInfoFosileFragment"
+        android:name="com.example.gliptosapp.ui.detailFosile.ExtraInfoFosileFragment"
+        android:label="ExtraInfoFosileFragment"
+        tools:layout="@layout/fragment_extra_info_fosile">
+        <argument
+            android:name="nombreFosil"
+            app:argType="string" />
+    </fragment>
 </navigation>

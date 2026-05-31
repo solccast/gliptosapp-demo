@@ -7,7 +7,8 @@ import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.ItemFosilBinding
 
 class FosilAdapter(
-    private val lista: List<Fosil>
+    private val lista: List<Fosil>,
+    private val onDetalleClick: (Fosil) -> Unit
 ) : RecyclerView.Adapter<FosilAdapter.FosilViewHolder>() {
 
     class FosilViewHolder(val binding: ItemFosilBinding) :
@@ -39,6 +40,11 @@ class FosilAdapter(
 
             btnDetalle.contentDescription =
                 "Ver detalle del fósil ${fosil.nombre}"
+            btnDetalle.setOnClickListener {
+                if (fosil.descubierto) {
+                    onDetalleClick(fosil)
+                }
+            }
         }
     }
 

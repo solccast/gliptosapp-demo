@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentColectionBinding
@@ -32,7 +33,13 @@ class ColectionFragment : Fragment() {
         )
 
         binding.listaFosiles.layoutManager = LinearLayoutManager(requireContext())
-        binding.listaFosiles.adapter = FosilAdapter(listaMock)
+        binding.listaFosiles.adapter = FosilAdapter(listaMock) { fosil ->
+
+            val action = ColectionFragmentDirections
+                .actionColectionFragmentToExtraInfoFosileFragment(fosil.nombre)
+
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {
