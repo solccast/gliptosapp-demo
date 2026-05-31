@@ -1,4 +1,6 @@
 package com.example.gliptosapp.ui.excavation
 
-class ExcavacionActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class ExcavacionActivity : AppCompatActivity() {
 }

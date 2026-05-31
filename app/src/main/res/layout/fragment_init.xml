@@ -1,43 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo1"
     tools:context=".ui.home.InitFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp">
+    <ImageView
+        android:id="@+id/imgPatitasTop"
+        android:layout_width="90dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/patitas"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/btnExcavacion"
-            android:text="@string/excavacion"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCuaderno"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@color/vinieta"
+        app:layout_constraintTop_toBottomOf="@id/imgPatitasTop"
+        app:layout_constraintBottom_toTopOf="@id/imgPatitasBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
 
-        <Button
-            android:id="@+id/btnColeccion"
-            android:text="@string/coleccion_fosiles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnAjustes"
-            android:text="@string/ajustes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"/>
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp"
+                    android:importantForAccessibility="no"
+                    tools:ignore="UselessLeaf">
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginBottom="14dp" android:background="@drawable/perforacion_hoja"/>
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/btnRecursos"
-            android:text="@string/recursos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"/>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-</FrameLayout>
+                    <TextView
+                        android:id="@+id/txtTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Caminando sobre\nGliptodontes"
+                        android:textAlignment="center"
+                        android:textColor="@color/texto1"
+                        android:textStyle="bold"
+                        android:textSize="28sp"
+                        android:accessibilityHeading="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Descubrí los gigantes que habitaron\nLa Plata hace miles de años"
+                        android:textAlignment="center"
+                        android:textColor="@color/boton2"
+                        android:textSize="16sp"/>
+                    <Button
+                        android:id="@+id/btnExcavacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/boton_alto_medium"
+                        android:layout_marginTop="32dp"
+                        android:backgroundTint="@color/boton1"
+                        android:text="@string/excavacion"
+                        android:textColor="@color/texto2"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/texto_boton_medium"
+                        android:contentDescription="Realizar excavación para descubrir fósiles"/>
+
+                    <Button
+                        android:id="@+id/btnColeccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/boton_alto_medium"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/boton2"
+                        android:text="@string/coleccion_fosiles"
+                        android:textColor="@color/texto2"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/texto_boton_medium"
+                        android:contentDescription="Abrir colección de fósiles"/>
+
+                    <Button
+                        android:id="@+id/btnAjustes"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/boton_alto_medium"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/post_its"
+                        android:text="@string/ajustes"
+                        android:textColor="@color/texto1"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/texto_boton_medium"
+                        android:contentDescription="Abrir ajustes de la aplicación"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imgPatitasBottom"
+        android:layout_width="90dp"
+        android:layout_height="120dp"
+        android:src="@drawable/patitas"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
