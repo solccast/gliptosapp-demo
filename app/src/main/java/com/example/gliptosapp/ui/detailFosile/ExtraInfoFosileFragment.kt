@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.gliptosapp.R
+import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
 import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +31,11 @@ class ExtraInfoFosileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         val nombre = args.nombreFosil
 
         binding.tituloFosil.text = nombre
@@ -35,9 +43,20 @@ class ExtraInfoFosileFragment : Fragment() {
         binding.descripcionFosil.text = "Este fósil es muy interesante..."
         binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
 
-        // accesibilidad dinámica
-        binding.imagenFosil.contentDescription =
-            "Imagen del fósil $nombre"
+        val listaMock = listOf(
+            Fosil("Gliptodonte", true, R.drawable.gliptodonte, null),
+            Fosil("Tiranosaurio", false, null, null),
+            Fosil("Trilobite", true, null, null)
+        )
+
+        val fosil = listaMock.find { it.nombre == nombre }
+
+        fosil?.img?.let {
+            binding.imagenFosil.setImageResource(it)
+            binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
+        } ?: run {
+            binding.imagenFosil.contentDescription = "Imagen no disponible del fósil $nombre"
+        }
 
         binding.btnJugar.setOnClickListener {
             // TODO navegación o acción

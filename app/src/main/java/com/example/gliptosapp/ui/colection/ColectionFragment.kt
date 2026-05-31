@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gliptosapp.R
 import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentColectionBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +28,14 @@ class ColectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listaMock = listOf(
-            Fosil("Gliptodonte", true, null),
-            Fosil("Tiranosaurio", false, null),
-            Fosil("Trilobite", true, null)
+            Fosil("Gliptodonte", true, R.drawable.gliptodonte, null),
+            Fosil("Tiranosaurio", false, null,null),
+            Fosil("Trilobite", true, null,null)
         )
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.listaFosiles.layoutManager = LinearLayoutManager(requireContext())
         binding.listaFosiles.adapter = FosilAdapter(listaMock) { fosil ->
