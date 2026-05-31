@@ -7,6 +7,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Volver"/>
+
     <!-- Título -->
     <TextView
         android:id="@+id/titulo"
@@ -30,7 +37,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ir al mapa"
+        android:text="@string/ir_al_mapa"
         android:contentDescription="Ir al mapa para descubrir fósiles"/>
 
 </LinearLayout>
