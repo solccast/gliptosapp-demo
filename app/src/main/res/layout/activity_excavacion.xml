@@ -1,19 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@color/fondo1"
+    tools:context=".ui.excavation.ExcavacionActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- 1. IMAGEN DE FONDO (El Fósil dinámico) -->
+    <!-- Se marca como NO importante para accesibilidad porque el estado se maneja en el área interactiva -->
+    <ImageView
+        android:id="@+id/imgFosilFondo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/gliptodonte_1"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 2. ÁREA INTERACTIVA DE EXCAVACIÓN -->
+    <!-- Mapea toda la zona central de la pantalla para capturar los clicks del niño -->
+    <View
+        android:id="@+id/areaExcavacionClick"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Zona de excavación. Toque aquí con la herramienta seleccionada para desenterrar el fósil."
+        app:layout_constraintTop_toBottomOf="@id/contenedorKira"
+        app:layout_constraintBottom_toTopOf="@id/contenedorHerramientas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 3. AVATAR KIRA (Superpuesto arriba con fondo sólido para contraste) -->
+    <LinearLayout
+        android:id="@+id/contenedorKira"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Hola c:"
-        android:textAlignment="center"
-        android:textColor="@color/boton2"
-        android:textSize="16sp"/>
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@drawable/bg_vinieta_redondeada"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-</LinearLayout>
+        <!-- bg_vinieta_redondeada debe usar el color @color/vinieta (#FFF8E8) -->
+        <ImageView
+            android:id="@+id/imgKira"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/kira"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:id="@+id/txtIndicacionKira"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:text="¡Hola! Vamos a excavar. Primero, seleccioná el Pico para romper la tierra dura."
+            android:textColor="@color/texto1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+    </LinearLayout>
+
+    <!-- 4. BOTONERA DE HERRAMIENTAS (Superpuesta abajo con contenedor protector) -->
+    <LinearLayout
+        android:id="@+id/contenedorHerramientas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:weightSum="3"
+        android:background="@drawable/bg_contenedor_herramientas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Botón Pico -->
+        <ImageButton
+            android:id="@+id/btnPico"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:src="@drawable/ic_pico"
+            android:backgroundTint="@color/selector_fondo_herramienta"
+            app:tint="@color/selector_icono_herramienta"
+            android:contentDescription="Herramienta Pico" />
+
+        <!-- Botón Pala -->
+        <ImageButton
+            android:id="@+id/btnPala"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:src="@drawable/ic_pala"
+            android:backgroundTint="@color/selector_fondo_herramienta"
+            app:tint="@color/selector_icono_herramienta"
+            android:contentDescription="Herramienta Pala" />
+
+        <!-- Botón Pincel -->
+        <ImageButton
+            android:id="@+id/btnPincel"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:src="@drawable/ic_pincel"
+            android:backgroundTint="@color/selector_fondo_herramienta"
+            app:tint="@color/selector_icono_herramienta"
+            android:contentDescription="Herramienta Pincel" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
