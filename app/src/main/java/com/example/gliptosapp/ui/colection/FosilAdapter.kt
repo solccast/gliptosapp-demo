@@ -7,7 +7,7 @@ import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.ItemFosilBinding
 
 class FosilAdapter(
-    private val lista: List<Fosil>,
+    private var lista: List<Fosil>,
     private val onDetalleClick: (Fosil) -> Unit
 ) : RecyclerView.Adapter<FosilAdapter.FosilViewHolder>() {
 
@@ -49,4 +49,8 @@ class FosilAdapter(
     }
 
     override fun getItemCount(): Int = lista.size
+    fun updateList(nuevaLista: List<Fosil>) {
+        this.lista = nuevaLista
+        notifyDataSetChanged()
+    }
 }

@@ -13,6 +13,7 @@ import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
 import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
 
 @AndroidEntryPoint
 class ExtraInfoFosileFragment : Fragment() {
@@ -20,6 +21,7 @@ class ExtraInfoFosileFragment : Fragment() {
     private var _binding: FragmentExtraInfoFosileBinding? = null
     private val binding get() = _binding!!
     private val args: ExtraInfoFosileFragmentArgs by navArgs()
+    private val viewModel by viewModels<ExtraInfoFosileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,25 +39,19 @@ class ExtraInfoFosileFragment : Fragment() {
         }
 
         val nombre = args.nombreFosil
+        viewModel.cargarFosil(nombre)
 
-        binding.tituloFosil.text = nombre
+        viewModel.fosil.observe(viewLifecycleOwner){fosil ->
+            binding.tituloFosil.text = nombre
 
-        binding.descripcionFosil.text = "Este fósil es muy interesante..."
-        binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
-
-        val listaMock = listOf(
-            Fosil("Gliptodonte", true, R.drawable.gliptodonte, null),
-            Fosil("Tiranosaurio", false, null, null),
-            Fosil("Trilobite", true, null, null)
-        )
-
-        val fosil = listaMock.find { it.nombre == nombre }
-
-        fosil?.img?.let {
-            binding.imagenFosil.setImageResource(it)
-            binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
-        } ?: run {
-            binding.imagenFosil.contentDescription = "Imagen no disponible del fósil $nombre"
+            binding.descripcionFosil.text = "Este fósil es muy interesante..." // TODO: reemplazar por el dato real
+            binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
+            fosil?.img?.let {
+                binding.imagenFosil.setImageResource(it)
+                binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
+            } ?: run {
+                binding.imagenFosil.contentDescription = "Imagen no disponible del fósil $nombre"
+            }
         }
 
         binding.btnJugar.setOnClickListener {
