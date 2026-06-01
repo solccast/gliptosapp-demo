@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -29,13 +29,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        app:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_fosil_desc"
         android:contentDescription="Lista de fósiles descubiertos y no descubiertos" />
 
-    <!-- Botón -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:icon="@drawable/ic_map"
+        app:iconGravity="textStart"
         android:text="@string/ir_al_mapa"
-        android:contentDescription="Ir al mapa para descubrir fósiles"/>
-
+        android:backgroundTint="@color/boton_verde_claro" />
 </LinearLayout>
