@@ -25,4 +25,11 @@
     <string name="recursos">Recursos</string>
     <string name="ir_al_mapa">Ir al mapa</string>
 
+    <!-- Mensajes de ayuda de la paleontóloga -->
+    <string name="como_usar_en_pantalla_ra">¡Apuntá a una superficie y tocá la pantalla para poner a tu fósil en tu entorno!</string>
+
+    <!-- Content Descriptions -->
+    <string name="rotacion_der">Rotar fósil hacia la derecha</string>
+    <string name="rotacion_izq">Rotar fósil hacia la izquierda</string>
+
 </resources>

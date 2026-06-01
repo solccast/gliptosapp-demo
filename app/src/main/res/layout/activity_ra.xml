@@ -32,10 +32,11 @@
         android:id="@+id/tvInstruccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apuntá al piso y tocá para colocar el fósil"
-        android:textColor="@android:color/white"
+        android:text="@string/como_usar_en_pantalla_ra"
+        android:accessibilityLiveRegion="polite"
+        android:textColor="@color/texto1"
         android:textSize="16sp"
-        android:background="#80000000"
+        android:background="@color/vinieta"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:layout_marginBottom="32dp"
@@ -43,4 +44,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Panel de controles -->
+    <LinearLayout
+        android:id="@+id/layoutControles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnRotarIzq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:text="Izq"
+                android:textSize="20sp"
+                android:backgroundTint="@color/boton3"
+                android:contentDescription="@string/rotacion_izq"
+                android:textColor="@color/boton1" />
+
+            <Button
+                android:id="@+id/btnRotarDer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:contentDescription="@string/rotacion_der"
+                android:text="Der"
+                android:textSize="20sp"
+                android:backgroundTint="@color/boton3"
+                android:textColor="@color/texto1" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
