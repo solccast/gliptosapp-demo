@@ -29,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.excavation.ExcavacionActivity"
+            android:exported="false"
+            android:label="Zona de Excavación" />
         <activity android:name=".ui.ra.RAFosilActivity"/>
         <meta-data
             android:name="com.google.ar.core"
