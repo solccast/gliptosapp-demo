@@ -29,6 +29,10 @@ class InitFragment : Fragment() {
         val navController = findNavController()
 
         binding.btnExcavacion.setOnClickListener {
+            navController.navigate(R.id.action_initFragment_to_excavacionActivity)
+        }
+
+        binding.btnExcavacion.setOnClickListener {
             // Llama a la acción que abre la ExcavacionActivity declarada en el grafo
             findNavController().navigate(R.id.action_initFragment_to_excavacionActivity)
         }
