@@ -30,7 +30,7 @@ class FosilAdapter(
         with(holder.binding) {
             nombreFosil.text = fosil.nombre
             estadoFosil.text = if (fosil.descubierto) "Descubierto" else "No descubierto"
-
+            imagenFosil.setImageResource(fosil.obtenerImagen())
             btnDetalle.isEnabled = fosil.descubierto
 
             // ♿ accesibilidad

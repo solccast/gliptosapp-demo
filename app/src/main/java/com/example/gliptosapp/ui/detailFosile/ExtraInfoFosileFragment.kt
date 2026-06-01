@@ -46,11 +46,9 @@ class ExtraInfoFosileFragment : Fragment() {
 
             binding.descripcionFosil.text = "Este fósil es muy interesante..." // TODO: reemplazar por el dato real
             binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
-            fosil?.img?.let {
+            fosil.obtenerImagen().let {
                 binding.imagenFosil.setImageResource(it)
                 binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
-            } ?: run {
-                binding.imagenFosil.contentDescription = "Imagen no disponible del fósil $nombre"
             }
         }
 

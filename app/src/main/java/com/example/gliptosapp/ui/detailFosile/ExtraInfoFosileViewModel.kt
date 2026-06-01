@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.gliptosapp.R
 import com.example.gliptosapp.data.Fosil
+import com.example.gliptosapp.repository.FosilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,13 +13,9 @@ import javax.inject.Inject
 class ExtraInfoFosileViewModel @Inject constructor(): ViewModel(){
     private val _fosil = MutableLiveData<Fosil>()
     val fosil: LiveData<Fosil> = _fosil
+    private val repository = FosilRepository()
 
     fun cargarFosil(nombre: String){
-        val listaMock = listOf(
-            Fosil("Gliptodonte", true, R.drawable.gliptodonte, null),
-            Fosil("Tiranosaurio", false, null, null),
-            Fosil("Trilobite", true, null, null)
-        )
-        _fosil.value = listaMock.find { it.nombre == nombre }
+        _fosil.value = repository.getFosilPorNombre(nombre)
     }
 }
