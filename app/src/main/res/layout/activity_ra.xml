@@ -12,6 +12,7 @@
         android:layout_height="48dp"
         android:src="@drawable/ic_arrow_back"
         android:contentDescription="Volver"
+        android:background="@drawable/bg_boton_ra"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
