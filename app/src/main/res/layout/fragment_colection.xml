@@ -21,8 +21,7 @@
         android:layout_height="wrap_content"
         android:text="@string/coleccion_fosiles"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:importantForAccessibility="yes"/>
+        android:textStyle="bold"/>
 
     <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
@@ -30,8 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:contentDescription="Lista de fósiles descubiertos y no descubiertos"
-        android:importantForAccessibility="yes"/>
+        android:contentDescription="Lista de fósiles descubiertos y no descubiertos" />
 
     <!-- Botón -->
     <Button

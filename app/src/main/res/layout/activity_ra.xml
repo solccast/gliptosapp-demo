@@ -56,26 +56,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-            <Button
-                android:id="@+id/btnRotarIzq"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:text="Izq"
-                android:textSize="20sp"
-                android:backgroundTint="@color/boton3"
-                android:contentDescription="@string/rotacion_izq"
-                android:textColor="@color/boton1" />
+        <ImageButton
+            android:id="@+id/btnRotarIzq"
+            android:layout_width="@dimen/boton_alto_medium"
+            android:layout_height="@dimen/boton_alto_medium"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/bg_boton_ra"
+            android:scaleType="center"
+            android:src="@drawable/arrow_left"
+            android:contentDescription="@string/rotacion_izq"/>
 
-            <Button
-                android:id="@+id/btnRotarDer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:contentDescription="@string/rotacion_der"
-                android:text="Der"
-                android:textSize="20sp"
-                android:backgroundTint="@color/boton3"
-                android:textColor="@color/texto1" />
+        <ImageButton
+            android:id="@+id/btnRotarDer"
+            android:layout_width="@dimen/boton_alto_medium"
+            android:layout_height="@dimen/boton_alto_medium"
+            android:layout_marginLeft="20dp"
+            android:contentDescription="@string/rotacion_der"
+            android:background="@drawable/bg_boton_ra"
+            android:scaleType="center"
+            android:src="@drawable/arrow_right" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

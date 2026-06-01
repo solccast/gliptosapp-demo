@@ -31,5 +31,7 @@
     <!-- Content Descriptions -->
     <string name="rotacion_der">Rotar fósil hacia la derecha</string>
     <string name="rotacion_izq">Rotar fósil hacia la izquierda</string>
+    <string name="jugar">¡Jugar!</string>
+    <string name="btn_ver_ra">Ver</string>
 
 </resources>
