@@ -42,7 +42,7 @@ class ExtraInfoFosileFragment : BaseFragment() {
         viewModel.fosil.observe(viewLifecycleOwner){fosil ->
             binding.tituloFosil.text = nombre
 
-            binding.descripcionFosil.text = "Este fósil es muy interesante..." // TODO: reemplazar por el dato real
+            binding.descripcionFosil.text = fosil.descripcion // TODO: reemplazar por el dato real
             binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
             fosil.obtenerImagen().let {
                 binding.imagenFosil.setImageResource(it)
