@@ -3,6 +3,11 @@ package com.example.gliptosapp.ui.excavation
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 
@@ -17,10 +22,40 @@ class ExcavacionActivity : AppCompatActivity() {
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Para que dibuje la pantalla
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Ocultamos las barras
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+
+        // Recupero el tamaño del statusBars y de navigationBars
+        ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { _, insets ->
+
+            val topBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
+            val bottomBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
+
+            // Esto es para posicionar el contenedor de kira por debajo de donde estaria el statusBar
+            val paramsKira = binding.contenedorKira.layoutParams as ConstraintLayout.LayoutParams
+            paramsKira.topMargin = topBarHeight
+            binding.contenedorKira.layoutParams = paramsKira
+
+            // // Esto es para posicionar el contenedor de herramientas por debajo de donde estaria el navigationBar
+            val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
+            paramsHerramientas.bottomMargin = bottomBarHeight
+            binding.contenedorHerramientas.layoutParams = paramsHerramientas
+
+            insets
+        }
+
+        // Métodos de inicialización del juego
         configurarHerramientas()
         configurarMecanicaExcavacion()
         actualizarDescripcionesAccesibles()
     }
+
     private fun configurarHerramientas() {
         val listaBotones = listOf(binding.btnPico, binding.btnPala, binding.btnPincel)
 
@@ -32,15 +67,10 @@ class ExcavacionActivity : AppCompatActivity() {
     private fun activarHerramienta(herramienta: String, botonActivo: ImageButton, botones: List<ImageButton>) {
         herramientaSeleccionada = herramienta
 
-        // SOLUCIÓN: Cambiamos la propiedad isSelected de los botones.
-        // Esto gatilla de manera automática los Selectores XML de fondo y de ícono (tint).
         botones.forEach { it.isSelected = false }
         botonActivo.isSelected = true
 
-        // Actualizamos los textos descriptivos para que TalkBack sepa cuál está seleccionado
         actualizarDescripcionesAccesibles()
-
-        // Anuncio inmediato para usuarios con discapacidad visual
         botonActivo.announceForAccessibility("Herramienta $herramienta lista para usar.")
     }
 
@@ -78,11 +108,9 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun actualizarEstado(resourceImg: Int, mensajeKira: String) {
         estadoActual++
-        // Cambia el fondo general de la pantalla
         binding.imgFosilFondo.setImageResource(resourceImg)
         binding.txtIndicacionKira.text = mensajeKira
 
-        // Accesibilidad: El área de juego describe lo que se ve en el fondo
         binding.areaExcavacionClick.contentDescription = "Fósil en etapa $estadoActual de 5. $mensajeKira"
         binding.areaExcavacionClick.announceForAccessibility(mensajeKira)
     }
@@ -93,7 +121,6 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun actualizarDescripcionesAccesibles() {
-        // Modificamos el contentDescription dinámicamente según el estado de selección
         binding.btnPico.contentDescription = if (binding.btnPico.isSelected)
             "Herramienta Pico seleccionada para romper roca" else "Seleccionar herramienta Pico"
 
@@ -106,6 +133,5 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun finalizarMecanica() {
         binding.areaExcavacionClick.isClickable = false
-        // El juego ha terminado con éxito. Podés agregar la navegación de regreso o un diálogo de premio.
     }
 }
