@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
 import com.example.gliptosapp.ui.BaseFragment
 import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
 
 @AndroidEntryPoint
 class ExtraInfoFosileFragment : BaseFragment() {
@@ -17,6 +19,7 @@ class ExtraInfoFosileFragment : BaseFragment() {
     private var _binding: FragmentExtraInfoFosileBinding? = null
     private val binding get() = _binding!!
     private val args: ExtraInfoFosileFragmentArgs by navArgs()
+    private val viewModel by viewModels<ExtraInfoFosileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,16 +31,24 @@ class ExtraInfoFosileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         val nombre = args.nombreFosil
+        viewModel.cargarFosil(nombre)
 
-        binding.tituloFosil.text = nombre
+        viewModel.fosil.observe(viewLifecycleOwner){fosil ->
+            binding.tituloFosil.text = nombre
 
-        binding.descripcionFosil.text = "Este fósil es muy interesante..."
-        binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
-
-        // accesibilidad dinámica
-        binding.imagenFosil.contentDescription =
-            "Imagen del fósil $nombre"
+            binding.descripcionFosil.text = "Este fósil es muy interesante..." // TODO: reemplazar por el dato real
+            binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
+            fosil.obtenerImagen().let {
+                binding.imagenFosil.setImageResource(it)
+                binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
+            }
+        }
 
         binding.btnJugar.setOnClickListener {
             // TODO navegación o acción

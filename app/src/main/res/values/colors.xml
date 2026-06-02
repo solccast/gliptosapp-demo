@@ -11,5 +11,8 @@
     <color name="texto1">#2D241E</color>
     <color name="texto2">#E8D7B0</color>
     <color name="boton1">#3E2A1F</color>
+    <color name="boton2">#1A3727</color>
     <color name="boton3">#E8D7B0</color>
+    <color name="fondo_polaroid">#F4E8CC</color>
+    <color name="boton_verde_claro">#6B8E23</color>
 </resources>

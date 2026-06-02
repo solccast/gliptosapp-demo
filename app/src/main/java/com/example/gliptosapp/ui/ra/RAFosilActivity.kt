@@ -19,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.sceneview.ar.ARSceneView
 import io.github.sceneview.ar.node.AnchorNode
 import io.github.sceneview.node.ModelNode
+import io.github.sceneview.math.Position
+import io.github.sceneview.math.Rotation
 
 @AndroidEntryPoint
 class RAFosilActivity : AppCompatActivity() {
@@ -28,12 +30,21 @@ class RAFosilActivity : AppCompatActivity() {
     // Guardamos el frame actual para hacer hitTest al tocar
     private var currentFrame: Frame? = null
     private var anchorNode: AnchorNode? = null
+    private var modelNode: ModelNode? = null
+
+    companion object {
+        private const val ROTATION_STEP = 15f  // grados por toq
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRaBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rafosile)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -42,14 +53,15 @@ class RAFosilActivity : AppCompatActivity() {
         }
 
         setupAR()
+        setupControles()
     }
 
     private fun setupAR() {
         binding.arSceneView.apply {
 
-            // ✅ Si ARCore no está disponible, cerramos la pantalla AR sin crashear
+            // Si ARCore no está disponible, cerramos la pantalla AR sin crashear
             onSessionFailed = { exception ->
-                // Podés mostrar un mensaje o simplemente cerrar la activity
+                // TODO: Reemplazar con otro aviso y asegurarse que el lector de pantalla lo lea
                 Toast.makeText(
                     this@RAFosilActivity,
                     "Este dispositivo no soporta Realidad Aumentada",
@@ -100,18 +112,19 @@ class RAFosilActivity : AppCompatActivity() {
 
         anchorNode = AnchorNode(sceneView.engine, anchor).also { node ->
 
-            // ✅ Correcto: agregar el nodo a la sceneView así
             sceneView.addChildNode(node)
 
-            ModelNode(
+            modelNode = ModelNode(
                 modelInstance = sceneView.modelLoader.createModelInstance("models/duck.glb"),
                 scaleToUnits = 0.3f
             ).apply {
-                parent = node   // el ModelNode sí usa parent = node (otro Node)
+                parent = node
                 isEditable = true
             }
 
             binding.tvInstruccion.visibility = View.GONE
+            binding.tvInstruccion.visibility = View.GONE
+            binding.layoutControles.visibility = View.VISIBLE
         }
     }
 
@@ -119,5 +132,17 @@ class RAFosilActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding.arSceneView.destroy()
+    }
+
+    private fun setupControles() {
+        binding.btnRotarIzq.setOnClickListener  { rotarModelo(-ROTATION_STEP) }
+        binding.btnRotarDer.setOnClickListener  { rotarModelo( ROTATION_STEP) }
+    }
+
+
+    private fun rotarModelo(degrees: Float) {
+        val node = modelNode ?: return
+        val rot = node.rotation
+        node.rotation = Rotation(rot.x, rot.y + degrees, rot.z)
     }
 }
