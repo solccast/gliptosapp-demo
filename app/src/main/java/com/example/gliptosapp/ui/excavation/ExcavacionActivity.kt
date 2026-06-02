@@ -38,9 +38,9 @@ class ExcavacionActivity : AppCompatActivity() {
             val bottomBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
 
             // Esto es para posicionar el contenedor de kira por debajo de donde estaria el statusBar
-            val paramsKira = binding.contenedorKira.layoutParams as ConstraintLayout.LayoutParams
-            paramsKira.topMargin = topBarHeight
-            binding.contenedorKira.layoutParams = paramsKira
+            val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
+            paramsBotones.topMargin = topBarHeight
+            binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
 
             // // Esto es para posicionar el contenedor de herramientas por debajo de donde estaria el navigationBar
             val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
@@ -52,6 +52,7 @@ class ExcavacionActivity : AppCompatActivity() {
 
         // Métodos de inicialización del juego
         configurarHerramientas()
+        configurarBotonesSuperiores()
         configurarMecanicaExcavacion()
         actualizarDescripcionesAccesibles()
     }
@@ -72,6 +73,30 @@ class ExcavacionActivity : AppCompatActivity() {
 
         actualizarDescripcionesAccesibles()
         botonActivo.announceForAccessibility("Herramienta $herramienta lista para usar.")
+    }
+
+    private fun configurarBotonesSuperiores() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+        binding.btnInfo.setOnClickListener {
+            // Por ahora un placeholder; reemplazá con tu diálogo o activity de info
+            mostrarDialogo("Información", "Usá las herramientas para desenterrar el fósil paso a paso.")
+        }
+
+        binding.btnConfig.setOnClickListener {
+            // Placeholder; reemplazá con tu activity de configuración
+            mostrarDialogo("Configuración", "Accedelo desde el menú principal....")
+        }
+    }
+
+    private fun mostrarDialogo(titulo: String, mensaje: String) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("Entendido", null)
+            .show()
     }
 
     private fun configurarMecanicaExcavacion() {

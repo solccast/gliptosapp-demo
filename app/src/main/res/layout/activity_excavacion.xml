@@ -9,8 +9,7 @@
     android:background="@color/fondo1"
     tools:context=".ui.excavation.ExcavacionActivity">
 
-    <!-- 1. IMAGEN DE FONDO (El Fósil dinámico) -->
-    <!-- Se marca como NO importante para accesibilidad porque el estado se maneja en el área interactiva -->
+    <!-- 1. IMAGEN DE FONDO -->
     <ImageView
         android:id="@+id/imgFosilFondo"
         android:layout_width="0dp"
@@ -23,20 +22,68 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 2. ÁREA INTERACTIVA DE EXCAVACIÓN -->
-    <!-- Mapea toda la zona central de la pantalla para capturar los clicks del niño -->
+    <!-- 2. ÁREA INTERACTIVA -->
     <View
         android:id="@+id/areaExcavacionClick"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:contentDescription="Zona de excavación. Toque aquí con la herramienta seleccionada para desenterrar el fósil."
-        app:layout_constraintTop_toBottomOf="@id/contenedorKira"
+        app:layout_constraintTop_toBottomOf="@id/contenedorBotonesSuperiores"
         app:layout_constraintBottom_toTopOf="@id/contenedorHerramientas"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 3. AVATAR KIRA (Superpuesto arriba con fondo sólido para contraste) -->
+    <!-- 3. FILA SUPERIOR: Botón volver + Botones info/config -->
+    <LinearLayout
+        android:id="@+id/contenedorBotonesSuperiores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Botón Volver (izquierda) -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="@drawable/bg_boton_ra"
+            android:contentDescription="Volver" />
+
+        <!-- Spacer para empujar info/config a la derecha -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- Botón Info -->
+        <ImageButton
+            android:id="@+id/btnInfo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_help"
+            android:background="@drawable/bg_boton_ra"
+            android:contentDescription="Información"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Botón Configuración -->
+        <ImageButton
+            android:id="@+id/btnConfig"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_settings"
+            android:background="@drawable/bg_boton_ra"
+            android:contentDescription="Configuración" />
+
+    </LinearLayout>
+
+    <!-- 4. AVATAR KIRA -->
     <LinearLayout
         android:id="@+id/contenedorKira"
         android:layout_width="0dp"
@@ -44,9 +91,11 @@
         android:orientation="horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:padding="12dp"
         android:background="@drawable/bg_vinieta_redondeada"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contenedorBotonesSuperiores"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
@@ -54,7 +103,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:src="@drawable/kira"
-            android:importantForAccessibility="no"/>
+            android:importantForAccessibility="no" />
 
         <TextView
             android:id="@+id/txtIndicacionKira"
@@ -69,7 +118,7 @@
             android:accessibilityHeading="true" />
     </LinearLayout>
 
-    <!-- 4. BOTONERA DE HERRAMIENTAS (Superpuesta abajo con contenedor protector) -->
+    <!-- 5. BOTONERA DE HERRAMIENTAS -->
     <LinearLayout
         android:id="@+id/contenedorHerramientas"
         android:layout_width="0dp"
@@ -85,7 +134,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Botón Pico -->
         <ImageButton
             android:id="@+id/btnPico"
             android:layout_width="0dp"
@@ -97,7 +145,6 @@
             app:tint="@color/selector_icono_herramienta"
             android:contentDescription="Herramienta Pico" />
 
-        <!-- Botón Pala -->
         <ImageButton
             android:id="@+id/btnPala"
             android:layout_width="0dp"
@@ -109,7 +156,6 @@
             app:tint="@color/selector_icono_herramienta"
             android:contentDescription="Herramienta Pala" />
 
-        <!-- Botón Pincel -->
         <ImageButton
             android:id="@+id/btnPincel"
             android:layout_width="0dp"
