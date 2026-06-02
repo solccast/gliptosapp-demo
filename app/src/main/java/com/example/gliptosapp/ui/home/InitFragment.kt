@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
-
-class InitFragment : Fragment() {
+import com.example.gliptosapp.ui.BaseFragment
+import com.example.gliptosapp.ui.settings.applyFontScale
+class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
     private val binding get() = _binding!!
 
@@ -44,6 +45,7 @@ class InitFragment : Fragment() {
         binding.btnAjustes.setOnClickListener {
             navController.navigate(R.id.settingsFragment)
         }
+        (binding.root as ViewGroup).applyFontScale()
     }
 
     override fun onResume() {

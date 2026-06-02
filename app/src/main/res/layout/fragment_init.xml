@@ -133,7 +133,7 @@
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="16dp"
                         android:backgroundTint="@color/post_its"
-                        android:text="@string/ajustes"
+                        android:text="@string/settings"
                         android:textColor="@color/texto1"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"

@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.gliptosapp.R
-import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
+import com.example.gliptosapp.ui.BaseFragment
 import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 
 @AndroidEntryPoint
-class ExtraInfoFosileFragment : Fragment() {
+class ExtraInfoFosileFragment : BaseFragment() {
 
     private var _binding: FragmentExtraInfoFosileBinding? = null
     private val binding get() = _binding!!

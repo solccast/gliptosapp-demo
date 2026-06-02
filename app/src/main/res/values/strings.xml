@@ -21,7 +21,6 @@
     <string name="titulo_app"> Caminando sobre Gliptodontes</string>
     <string name="excavacion">Realizar excavación</string>
     <string name="coleccion_fosiles">Mi colección de fósiles</string>
-    <string name="ajustes">Ajustes</string>
     <string name="recursos">Recursos</string>
     <string name="ir_al_mapa">Ir al mapa</string>
 
@@ -35,4 +34,6 @@
     <string name="btn_ver_ra">Ver</string>
     <string name="ver_detalle">Ver detalle</string>
 
+    <string name="back">Atrás</string>
+    <string name="settings">Ajustes</string>
 </resources>
