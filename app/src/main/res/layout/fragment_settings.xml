@@ -1,14 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:fillViewport="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="saludos desde ajustes" />
+        android:layout_height="wrap_content"
 
-</FrameLayout>
+        android:orientation="vertical"
+
+        android:padding="16dp">
+
+        <include
+            android:id="@+id/backButton"
+            layout="@layout/view_back_button"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+
+            android:layout_marginTop="16dp"
+
+            android:text="@string/settings"
+
+            android:textSize="32sp"
+
+            android:textStyle="bold"/>
+
+        <!-- MODO DE INTERACCIÓN -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Modo de interacción"
+
+                    android:textStyle="bold"/>
+
+                <RadioGroup
+                    android:id="@+id/rgInteractionMode"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rbDragToClean"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Arrastrar y mover"/>
+
+                    <RadioButton
+                        android:id="@+id/rbTapToClean"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Tocar y limpiar"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- APOYO VISUAL -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Soporte visual"
+                    android:textStyle="bold"/>
+
+                <!-- Alto contraste -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvContrast"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Alto contraste"/>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchContrast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Tamaño de texto -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tamaño de texto"/>
+
+                    <LinearLayout
+                        android:id="@+id/fontSizeContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardFontSmall"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:cardCornerRadius="12dp">
+
+                            <TextView
+                                android:id="@+id/tvFontSmall"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="A"
+                                android:textSize="14sp"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardFontMedium"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginStart="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:cardCornerRadius="12dp">
+
+                            <TextView
+                                android:id="@+id/tvFontMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="A"
+                                android:textSize="18sp"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardFontLarge"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginStart="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:cardCornerRadius="12dp">
+
+                            <TextView
+                                android:id="@+id/tvFontLarge"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="A"
+                                android:textSize="22sp"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <!-- APOYO AUDITIVO -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+
+                android:padding="16dp">
+
+                <TextView
+                    android:text="Apoyo auditivo"
+                    android:textStyle="bold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchNarration"
+                    android:text="Narración"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchSounds"
+                    android:text="Sonidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchVibration"
+                    android:text="Vibracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- INCLUSIÓN -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+
+                android:padding="16dp">
+
+                <TextView
+                    android:text="Soporte e inclusión"
+                    android:textStyle="bold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchLsa"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Activar Lengua de Señas (LSA)"/>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

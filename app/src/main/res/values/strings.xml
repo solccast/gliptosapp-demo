@@ -23,5 +23,6 @@
     <string name="coleccion_fosiles">Mi colección de fósiles</string>
     <string name="ajustes">Ajustes</string>
     <string name="recursos">Recursos</string>
-
+    <string name="back">Atrás</string>
+    <string name="settings">Ajustes</string>
 </resources>
