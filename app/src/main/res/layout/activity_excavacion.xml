@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Zona de excavación. Toque aquí con la herramienta seleccionada para desenterrar el fósil."
+        android:contentDescription="Zona de excavación. Selecciona la herramienta correcta para desenterrar el fósil."
         app:layout_constraintTop_toBottomOf="@id/contenedorBotonesSuperiores"
         app:layout_constraintBottom_toTopOf="@id/contenedorHerramientas"
         app:layout_constraintStart_toStartOf="parent"

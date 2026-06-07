@@ -1,13 +1,11 @@
 package com.example.gliptosapp.ui.excavation
 
-import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.activity.SystemBarStyle
 import android.graphics.Color
@@ -68,22 +66,22 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun activarHerramienta(herramienta: String, botonActivo: ImageButton, botones: List<ImageButton>) {
+        // Resetear todos los botones
+        botones.forEach { it.isSelected = false }
+
+        // Activar el botón tocado
+        botonActivo.isSelected = true
         herramientaSeleccionada = herramienta
 
-        // Marcar visualmente el botón seleccionado
-        botones.forEach { it.isSelected = false }
-        botonActivo.isSelected = true
+        // Intentar avanzar directamente al seleccionar
+        val avanzo = intentarAvanzar(herramienta)
+
+        // Si no avanzó, es herramienta incorrecta
+        if (!avanzo) {
+            errorFeedback()
+        }
 
         actualizarDescripcionesAccesibles()
-        botonActivo.announceForAccessibility("Herramienta $herramienta seleccionada.")
-
-        // Intentar avanzar directamente al seleccionar
-        val avanzo = intentarAvanzar()
-
-        // Si avanzó, deseleccionar todos los botones para indicar que hay que elegir de nuevo
-        if (avanzo) {
-            botones.forEach { it.isSelected = false }
-        }
     }
 
     private fun configurarBotonesSuperiores() {
@@ -111,29 +109,25 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     // Devuelve true si la herramienta era correcta y se avanzó
-    private fun intentarAvanzar(): Boolean {
+    private fun intentarAvanzar(herramienta: String): Boolean {
         return when (estadoActual) {
-            1 -> if (herramientaSeleccionada == "PICO") {
-                actualizarEstado(R.drawable.gliptodonte_2, "¡Crack! Rompiste la capa superior. ¡Usá el Pico de nuevo!")
+            1 -> if (herramienta == "PICO") {
+                actualizarEstado(R.drawable.gliptodonte_2, "Rompiste la capa superior. Dale otra vez con el Pico.")
                 true
-            } else { errorFeedback(); false }
-
-            2 -> if (herramientaSeleccionada == "PICO") {
-                actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. Ahora usá la Pala para limpiar los escombros.")
+            } else false
+            2 -> if (herramienta == "PICO") {
+                actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. Cambiá a la Pala para limpiar los escombros.")
                 true
-            } else { errorFeedback(); false }
-
-            3 -> if (herramientaSeleccionada == "PALA") {
-                actualizarEstado(R.drawable.gliptodonte_4, "¡Ya se ve la silueta! Usá el Pincel para limpiar el polvo.")
+            } else false
+            3 -> if (herramienta == "PALA") {
+                actualizarEstado(R.drawable.gliptodonte_4, "¡Uau! Ya se distingue la silueta. Usá el Pincel para limpiar el polvo de los huesos.")
                 true
-            } else { errorFeedback(); false }
-
-            4 -> if (herramientaSeleccionada == "PINCEL") {
+            } else false
+            4 -> if (herramienta == "PINCEL") {
                 actualizarEstado(R.drawable.gliptodonte_5, "¡Increíble! Desenterraste un Gliptodonte completo. ¡Sos un gran paleontólogo!")
                 finalizarMecanica()
                 true
-            } else { errorFeedback(); false }
-
+            } else false
             else -> false
         }
     }
@@ -149,22 +143,21 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun errorFeedback() {
-        val avisoError = "¡Huy! Esa herramienta no sirve acá. Escuchá la indicación de Kira arriba."
+        val avisoError = "¡Huy! Esa no es la herramienta. Escuchá la indicación de Kira arriba."
         binding.areaExcavacionClick.announceForAccessibility(avisoError)
     }
 
     private fun actualizarDescripcionesAccesibles() {
-        binding.btnPico.contentDescription = if (binding.btnPico.isSelected)
-            "Herramienta Pico seleccionada para romper roca" else "Seleccionar herramienta Pico"
+        binding.btnPico.contentDescription = "Herramienta Pico"
 
-        binding.btnPala.contentDescription = if (binding.btnPala.isSelected)
-            "Herramienta Pala seleccionada para quitar tierra suelta" else "Seleccionar herramienta Pala"
+        binding.btnPala.contentDescription = "Herramienta Pala"
 
-        binding.btnPincel.contentDescription = if (binding.btnPincel.isSelected)
-            "Herramienta Pincel seleccionada para limpiar detalles finos del fósil" else "Seleccionar herramienta Pincel"
+        binding.btnPincel.contentDescription = "Herramienta Pincel"
     }
 
     private fun finalizarMecanica() {
-        binding.areaExcavacionClick.isClickable = false
+        binding.btnPico.isEnabled = false
+        binding.btnPala.isEnabled = false
+        binding.btnPincel.isEnabled = false
     }
 }
