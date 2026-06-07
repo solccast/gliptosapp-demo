@@ -2,10 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GliptosApp" parent="Theme.Material3.DayNight.NoActionBar">
 
+        <!-- Configuración letra de la aplicación -->
         <item name="android:fontFamily">@font/patrick_hand</item>
         <item name="fontFamily">@font/patrick_hand</item>
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.GliptosApp" parent="Base.Theme.GliptosApp" />

@@ -1,5 +1,6 @@
 package com.example.gliptosapp.ui.excavation
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+import androidx.activity.SystemBarStyle
+import android.graphics.Color
+import androidx.activity.enableEdgeToEdge
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 
@@ -23,18 +29,40 @@ class ExcavacionActivity : AppCompatActivity() {
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D")),
+            navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D"))
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.decorView.post {
+                window.insetsController?.apply {
+                    setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS)
+                    setSystemBarsAppearance(0, APPEARANCE_LIGHT_NAVIGATION_BARS)
+                }
+            }
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            val margen8dp = (8 * resources.displayMetrics.density).toInt()
+
+            view.setPadding(0, 0, 0, 0)
+
+            // Margen superior: statusBar + 8dp
+            val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
+            paramsBotones.topMargin = bars.top + margen8dp
+            binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
+
+            // Margen inferior: navigationBar + 8dp
+            val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
+            paramsHerramientas.bottomMargin = bars.bottom + margen8dp
+            binding.contenedorHerramientas.layoutParams = paramsHerramientas
+
             insets
         }
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.barra_sistema)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.barra_sistema)
-
-        // Métodos de inicialización del juego
+        // Configuración del juego
         configurarHerramientas()
         configurarBotonesSuperiores()
         configurarMecanicaExcavacion()
