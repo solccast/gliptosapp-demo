@@ -1,5 +1,7 @@
 package com.example.gliptosapp.ui.settings
 
+import android.content.Context
+import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
 
@@ -28,4 +30,16 @@ fun ViewGroup.applyFontScale() {
             }
         }
     }
+}
+fun Context.getThemeColor(attr: Int): Int {
+
+    val typedValue = TypedValue()
+
+    theme.resolveAttribute(
+        attr,
+        typedValue,
+        true
+    )
+
+    return typedValue.data
 }

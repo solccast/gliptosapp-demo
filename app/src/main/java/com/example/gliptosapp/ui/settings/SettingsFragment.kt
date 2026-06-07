@@ -4,30 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.databinding.FragmentSettingsBinding
 import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.gliptosapp.R
+import com.google.android.material.card.MaterialCardView
+
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    private var fontChangeInProgress = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentSettingsBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,41 +40,54 @@ class SettingsFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
-        changeFontsSize()
+        setupFontButtons()
+        setupAccessibilitySwitches()
+        setupInteractionModeAccessibility()
 
         updateFontSelection(
             FontPreferences.get(requireContext())
         )
     }
 
-    private fun changeFontsSize() {
+    private fun setupFontButtons() {
 
-        binding.cardFontSmall.setOnClickListener {
-            selectFont(FontScale.SMALL)
-        }
-
-        binding.cardFontMedium.setOnClickListener {
-            selectFont(FontScale.MEDIUM)
-        }
-
-        binding.cardFontLarge.setOnClickListener {
-            selectFont(FontScale.LARGE)
+        mapOf(
+            binding.cardFontSmall to FontScale.SMALL,
+            binding.cardFontMedium to FontScale.MEDIUM,
+            binding.cardFontLarge to FontScale.LARGE
+        ).forEach { (view, scale) ->
+            view.setOnClickListener { selectFont(scale) }
         }
     }
+
     private fun selectFont(scale: FontScale) {
 
-        FontPreferences.save(requireContext(), scale)
+        if (fontChangeInProgress) return
 
-        updateFontSelection(
+        val currentScale =
             FontPreferences.get(requireContext())
-        )
-        requireActivity().recreate()
-    }
 
+        if (currentScale == scale) return
+
+        fontChangeInProgress = true
+
+        FontPreferences.save(
+            requireContext(),
+            scale
+        )
+
+        updateFontSelection(scale)
+
+        announceAccessibility(
+            "Tamaño de texto cambiado a ${scale.displayName}"
+        )
+
+        recreateAfterFontChange()
+    }
     private fun updateFontSelection(scale: FontScale) {
 
         val selectedBackground =
-            ContextCompat.getColor(requireContext(), R.color.fondo1)
+            requireContext().getThemeColor(R.attr.colorAppPrimary)
 
         val normalBackground =
             ContextCompat.getColor(requireContext(), android.R.color.white)
@@ -86,37 +98,176 @@ class SettingsFragment : BaseFragment() {
         val normalText =
             ContextCompat.getColor(requireContext(), android.R.color.black)
 
-        binding.cardFontSmall.setCardBackgroundColor(normalBackground)
-        binding.cardFontMedium.setCardBackgroundColor(normalBackground)
-        binding.cardFontLarge.setCardBackgroundColor(normalBackground)
+        val options = listOf(
+            FontOption(
+                FontScale.SMALL,
+                binding.cardFontSmall,
+                binding.tvFontSmall,
+                "pequeño"
+            ),
+            FontOption(
+                FontScale.MEDIUM,
+                binding.cardFontMedium,
+                binding.tvFontMedium,
+                "mediano"
+            ),
+            FontOption(
+                FontScale.LARGE,
+                binding.cardFontLarge,
+                binding.tvFontLarge,
+                "grande"
+            )
+        )
 
-        binding.tvFontSmall.setTextColor(normalText)
+        options.forEach { option ->
 
-        // Necesitas agregar ids a estos TextView
-        binding.tvFontMedium.setTextColor(normalText)
-        binding.tvFontLarge.setTextColor(normalText)
+            val selected = option.scale == scale
 
-        when (scale) {
+            option.card.setCardBackgroundColor(
+                if (selected) selectedBackground
+                else normalBackground
+            )
 
-            FontScale.SMALL -> {
-                binding.cardFontSmall.setCardBackgroundColor(selectedBackground)
-                binding.tvFontSmall.setTextColor(selectedText)
-            }
+            option.text.setTextColor(
+                if (selected) selectedText
+                else normalText
+            )
 
-            FontScale.MEDIUM -> {
-                binding.cardFontMedium.setCardBackgroundColor(selectedBackground)
-                binding.tvFontMedium.setTextColor(selectedText)
-            }
+            option.card.contentDescription =
+                buildString {
+                    append("Soporte visual. Tamaño de texto ")
+                    append(option.description)
 
-            FontScale.LARGE -> {
-                binding.cardFontLarge.setCardBackgroundColor(selectedBackground)
-                binding.tvFontLarge.setTextColor(selectedText)
-            }
+                    if (selected) {
+                        append(". Seleccionado")
+                    }
+                }
         }
+    }
+
+    private fun setupAccessibilitySwitches() {
+
+        binding.switchContrast.isChecked =
+            ContrastPreferences.isEnabled(requireContext())
+
+        binding.switchContrast.setOnCheckedChangeListener { _, enabled ->
+
+            ContrastPreferences.save(
+                requireContext(),
+                enabled
+            )
+
+            announceAccessibility(
+                if (enabled)
+                    "Alto contraste activado"
+                else
+                    "Alto contraste desactivado"
+            )
+
+            recreateActivity()
+        }
+
+        setupSwitch(
+            binding.switchNarration,
+            "Narración"
+        )
+
+        setupSwitch(
+            binding.switchSounds,
+            "Sonidos"
+        )
+
+        setupSwitch(
+            binding.switchVibration,
+            "Vibración"
+        )
+
+        setupSwitch(
+            binding.switchLsa,
+            "Lengua de Señas Argentina"
+        )
+    }
+
+    private fun setupSwitch(
+        switch: CompoundButton,
+        label: String
+    ) {
+        switch.setOnCheckedChangeListener { _, enabled ->
+            announceAccessibility(
+                "$label ${if (enabled) "activada" else "desactivada"}"
+            )
+        }
+    }
+
+    private fun setupInteractionModeAccessibility() {
+
+        binding.rgInteractionMode.setOnCheckedChangeListener { _, checkedId ->
+
+            val message = when (checkedId) {
+
+                binding.rbDragToClean.id ->
+                    "Modo de interacción cambiado a arrastrar y mover"
+
+                binding.rbTapToClean.id ->
+                    "Modo de interacción cambiado a tocar y limpiar"
+
+                else -> return@setOnCheckedChangeListener
+            }
+
+            announceAccessibility(message)
+        }
+    }
+    private fun announceAccessibility(message: String) {
+
+        _binding?.root?.announceForAccessibility(message)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.root.postDelayed({
+            announceAccessibility(
+                "Pantalla de configuración. Contiene opciones de interacción, soporte visual, apoyo auditivo e inclusión."
+            )
+        }, 500)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun recreateActivity() {
+
+        binding.root.postDelayed({
+
+            if (!isAdded) return@postDelayed
+
+            requireActivity().recreate()
+
+        }, 500)
+    }
+
+    private fun recreateAfterFontChange() {
+
+        binding.cardFontSmall.isEnabled = false
+        binding.cardFontMedium.isEnabled = false
+        binding.cardFontLarge.isEnabled = false
+
+        recreateActivity()
+    }
 }
+
+private data class FontOption(
+    val scale: FontScale,
+    val card: MaterialCardView,
+    val text: TextView,
+    val description: String
+)
+
+private val FontScale.label: String
+    get() = when (this) {
+        FontScale.SMALL -> "pequeño"
+        FontScale.MEDIUM -> "mediano"
+        FontScale.LARGE -> "grande"
+    }

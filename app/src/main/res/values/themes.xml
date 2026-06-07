@@ -1,13 +1,30 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GliptosApp" parent="Theme.Material3.DayNight.NoActionBar">
-
+<resources>
+    <style
+        name="Base.Theme.GliptosApp"
+        parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/patrick_hand</item>
         <item name="fontFamily">@font/patrick_hand</item>
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.GliptosApp" parent="Base.Theme.GliptosApp" />
-
+    <style
+        name="Theme.GliptosApp"
+        parent="Base.Theme.GliptosApp">
+        <item name="colorAppBackground">@color/vinieta</item>
+        <item name="colorAppSurface">@color/fondo_polaroid</item>
+        <item name="colorAppPrimary">@color/fondo1</item>
+        <item name="colorAppText">@color/texto1</item>
+        <item name="colorAppTextSecondary">@color/texto2</item>
+        <item name="colorAppButton">@color/boton1</item>
+        <item name="colorAppButtonSecondary">@color/boton2</item>
+    </style>
+    <style
+        name="Theme.GliptosApp.HighContrast"
+        parent="Base.Theme.GliptosApp">
+        <item name="colorAppBackground">@color/hc_vinieta</item>
+        <item name="colorAppSurface">@color/hc_fondo_polaroid</item>
+        <item name="colorAppPrimary">@color/hc_fondo1</item>
+        <item name="colorAppText">@color/hc_texto1</item>
+        <item name="colorAppTextSecondary">@color/hc_texto2</item>
+        <item name="colorAppButton">@color/hc_boton1</item>
+        <item name="colorAppButtonSecondary">@color/hc_boton2</item>
+    </style>
 </resources>

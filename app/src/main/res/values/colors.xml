@@ -15,4 +15,14 @@
     <color name="boton3">#E8D7B0</color>
     <color name="fondo_polaroid">#F4E8CC</color>
     <color name="boton_verde_claro">#6B8E23</color>
+
+    <color name="hc_fondo1">#7B2D2A</color>
+    <color name="hc_fondo2">#FF5722</color>
+    <color name="hc_vinieta">#56814C</color>
+    <color name="hc_texto1">#000000</color>
+    <color name="hc_texto2">#FFB200</color>
+    <color name="hc_boton1">#E91E63</color>
+    <color name="hc_boton2">#2196F3</color>
+    <color name="hc_boton3">#009688</color>
+    <color name="hc_fondo_polaroid">#FDC443</color>
 </resources>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo1"
+    android:background="?attr/colorAppPrimary"
     tools:context=".ui.home.InitFragment">
 
     <ImageView
@@ -110,7 +110,7 @@
                         android:layout_marginTop="32dp"
                         android:backgroundTint="@color/boton1"
                         android:text="@string/excavacion"
-                        android:textColor="@color/texto2"
+                        android:textColor="@android:color/white"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
                         android:contentDescription="Realizar excavación para descubrir fósiles"/>
@@ -122,7 +122,7 @@
                         android:layout_marginTop="16dp"
                         android:backgroundTint="@color/boton2"
                         android:text="@string/coleccion_fosiles"
-                        android:textColor="@color/texto2"
+                        android:textColor="@android:color/white"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
                         android:contentDescription="Abrir colección de fósiles"/>
@@ -132,9 +132,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="16dp"
-                        android:backgroundTint="@color/post_its"
                         android:text="@string/settings"
-                        android:textColor="@color/texto1"
+                        android:backgroundTint="@color/post_its"
+                        android:textColor="@android:color/white"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
                         android:contentDescription="Abrir ajustes de la aplicación"/>

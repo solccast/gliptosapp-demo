@@ -3,10 +3,24 @@ package com.example.gliptosapp.ui.settings
 import android.content.Context
 import androidx.core.content.edit
 
-enum class FontScale(val multiplier: Float) {
-    SMALL(0.9f),
-    MEDIUM(1.0f),
-    LARGE(1.2f)
+enum class FontScale(
+    val displayName: String,
+    val multiplier: Float
+) {
+    SMALL(
+        displayName = "pequeño",
+        multiplier = 0.85f
+    ),
+
+    MEDIUM(
+        displayName = "mediano",
+        multiplier = 1.0f
+    ),
+
+    LARGE(
+        displayName = "grande",
+        multiplier = 1.25f
+    )
 }
 
 object FontPreferences {
