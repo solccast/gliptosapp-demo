@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentColectionBinding
 import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,10 @@ class ColectionFragment : BaseFragment() {
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.btnAjustes.setOnClickListener {
+            findNavController().navigate(R.id.action_colectionFragment_to_settingsFragment)
         }
 
         binding.listaFosiles.layoutManager = LinearLayoutManager(requireContext())

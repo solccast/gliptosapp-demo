@@ -12,6 +12,7 @@ import com.example.gliptosapp.ui.BaseFragment
 import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
+import com.example.gliptosapp.R
 
 @AndroidEntryPoint
 class ExtraInfoFosileFragment : BaseFragment() {
@@ -30,16 +31,20 @@ class ExtraInfoFosileFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+            super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+            binding.btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
-        val nombre = args.nombreFosil
-        viewModel.cargarFosil(nombre)
+            binding.btnAjustes.setOnClickListener {
+                findNavController().navigate(R.id.action_extraInfoFosileFragment_to_settingsFragment)
+            }
 
-        viewModel.fosil.observe(viewLifecycleOwner){fosil ->
+            val nombre = args.nombreFosil
+            viewModel.cargarFosil(nombre)
+
+            viewModel.fosil.observe(viewLifecycleOwner){fosil ->
             binding.tituloFosil.text = nombre
 
             binding.descripcionFosil.text = fosil.descripcion // TODO: reemplazar por el dato real

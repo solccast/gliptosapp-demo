@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_colectionFragment_to_extraInfoFosileFragment"
             app:destination="@+id/extraInfoFosileFragment" />
+        <action
+            android:id="@+id/action_colectionFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -60,5 +63,8 @@
         <argument
             android:name="nombreFosil"
             app:argType="string" />
+        <action
+            android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>
