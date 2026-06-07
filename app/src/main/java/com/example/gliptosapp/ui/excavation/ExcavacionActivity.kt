@@ -8,6 +8,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 
@@ -22,33 +23,16 @@ class ExcavacionActivity : AppCompatActivity() {
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Para que dibuje la pantalla
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // Ocultamos las barras
-        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-
-        // Recupero el tamaño del statusBars y de navigationBars
-        ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { _, insets ->
-
-            val topBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
-            val bottomBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
-
-            // Esto es para posicionar el contenedor de kira por debajo de donde estaria el statusBar
-            val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
-            paramsBotones.topMargin = topBarHeight
-            binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
-
-            // // Esto es para posicionar el contenedor de herramientas por debajo de donde estaria el navigationBar
-            val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
-            paramsHerramientas.bottomMargin = bottomBarHeight
-            binding.contenedorHerramientas.layoutParams = paramsHerramientas
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.barra_sistema)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.barra_sistema)
 
         // Métodos de inicialización del juego
         configurarHerramientas()
