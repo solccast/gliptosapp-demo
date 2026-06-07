@@ -44,12 +44,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/RAumentadaFragment"
-        android:name="com.example.gliptosapp.ui.ra.RAumentadaFragment"
-        android:label="fragment_r_aumentada"
-        tools:layout="@layout/fragment_r_aumentada" />
-
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.gliptosapp.ui.settings.SettingsFragment"
         android:label="fragment_settings"

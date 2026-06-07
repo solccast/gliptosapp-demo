@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Instrucción al usuario -->
+    <!-- Instrucción al usuario
     <TextView
         android:id="@+id/tvInstruccion"
         android:layout_width="wrap_content"
@@ -44,7 +44,42 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    -->
+    <!-- Kira con instrucción -->
+    <LinearLayout
+        android:id="@+id/contenedorKira"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:padding="12dp"
+        android:background="@drawable/bg_vinieta_redondeada"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/imgKira"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/kira"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:id="@+id/tvInstruccion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:text="@string/como_usar_en_pantalla_ra"
+            android:accessibilityLiveRegion="polite"
+            android:textColor="@color/texto1"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
     <!-- Panel de controles -->
     <LinearLayout
         android:id="@+id/layoutControles"
