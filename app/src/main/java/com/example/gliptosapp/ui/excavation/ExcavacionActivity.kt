@@ -9,9 +9,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
 import androidx.activity.SystemBarStyle
 import android.graphics.Color
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +21,7 @@ class ExcavacionActivity : AppCompatActivity() {
     private var estadoActual = 1
     private var herramientaSeleccionada = ""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
@@ -34,14 +32,9 @@ class ExcavacionActivity : AppCompatActivity() {
             navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D"))
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.decorView.post {
-                window.insetsController?.apply {
-                    setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS)
-                    setSystemBarsAppearance(0, APPEARANCE_LIGHT_NAVIGATION_BARS)
-                }
-            }
-        }
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.isAppearanceLightStatusBars = false
+        windowInsetsController.isAppearanceLightNavigationBars = false
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -49,12 +42,10 @@ class ExcavacionActivity : AppCompatActivity() {
 
             view.setPadding(0, 0, 0, 0)
 
-            // Margen superior: statusBar + 8dp
             val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
             paramsBotones.topMargin = bars.top + margen8dp
             binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
 
-            // Margen inferior: navigationBar + 8dp
             val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
             paramsHerramientas.bottomMargin = bars.bottom + margen8dp
             binding.contenedorHerramientas.layoutParams = paramsHerramientas
@@ -65,7 +56,6 @@ class ExcavacionActivity : AppCompatActivity() {
         // Configuración del juego
         configurarHerramientas()
         configurarBotonesSuperiores()
-        configurarMecanicaExcavacion()
         actualizarDescripcionesAccesibles()
     }
 
@@ -80,11 +70,20 @@ class ExcavacionActivity : AppCompatActivity() {
     private fun activarHerramienta(herramienta: String, botonActivo: ImageButton, botones: List<ImageButton>) {
         herramientaSeleccionada = herramienta
 
+        // Marcar visualmente el botón seleccionado
         botones.forEach { it.isSelected = false }
         botonActivo.isSelected = true
 
         actualizarDescripcionesAccesibles()
-        botonActivo.announceForAccessibility("Herramienta $herramienta lista para usar.")
+        botonActivo.announceForAccessibility("Herramienta $herramienta seleccionada.")
+
+        // Intentar avanzar directamente al seleccionar
+        val avanzo = intentarAvanzar()
+
+        // Si avanzó, deseleccionar todos los botones para indicar que hay que elegir de nuevo
+        if (avanzo) {
+            botones.forEach { it.isSelected = false }
+        }
     }
 
     private fun configurarBotonesSuperiores() {
@@ -111,37 +110,34 @@ class ExcavacionActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun configurarMecanicaExcavacion() {
-        binding.areaExcavacionClick.setOnClickListener {
-            valzarProgreso()
+    // Devuelve true si la herramienta era correcta y se avanzó
+    private fun intentarAvanzar(): Boolean {
+        return when (estadoActual) {
+            1 -> if (herramientaSeleccionada == "PICO") {
+                actualizarEstado(R.drawable.gliptodonte_2, "¡Crack! Rompiste la capa superior. ¡Usá el Pico de nuevo!")
+                true
+            } else { errorFeedback(); false }
+
+            2 -> if (herramientaSeleccionada == "PICO") {
+                actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. Ahora usá la Pala para limpiar los escombros.")
+                true
+            } else { errorFeedback(); false }
+
+            3 -> if (herramientaSeleccionada == "PALA") {
+                actualizarEstado(R.drawable.gliptodonte_4, "¡Ya se ve la silueta! Usá el Pincel para limpiar el polvo.")
+                true
+            } else { errorFeedback(); false }
+
+            4 -> if (herramientaSeleccionada == "PINCEL") {
+                actualizarEstado(R.drawable.gliptodonte_5, "¡Increíble! Desenterraste un Gliptodonte completo. ¡Sos un gran paleontólogo!")
+                finalizarMecanica()
+                true
+            } else { errorFeedback(); false }
+
+            else -> false
         }
     }
 
-    private fun valzarProgreso() {
-        when (estadoActual) {
-            1 -> {
-                if (herramientaSeleccionada == "PICO") {
-                    actualizarEstado(R.drawable.gliptodonte_2, "¡Crack! Rompiste la capa superior. Dale otra vez con el Pico.")
-                } else { errorFeedback() }
-            }
-            2 -> {
-                if (herramientaSeleccionada == "PICO") {
-                    actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. Cambiá a la Pala para limpiar los escombros.")
-                } else { errorFeedback() }
-            }
-            3 -> {
-                if (herramientaSeleccionada == "PALA") {
-                    actualizarEstado(R.drawable.gliptodonte_4, "¡Uau! Ya se distingue la silueta. Usá el Pincel para limpiar el polvo de los huesos.")
-                } else { errorFeedback() }
-            }
-            4 -> {
-                if (herramientaSeleccionada == "PINCEL") {
-                    actualizarEstado(R.drawable.gliptodonte_5, "¡Increíble! Desenterraste un Gliptodonte completo. ¡Sos un gran paleontólogo!")
-                    finalizarMecanica()
-                } else { errorFeedback() }
-            }
-        }
-    }
 
     private fun actualizarEstado(resourceImg: Int, mensajeKira: String) {
         estadoActual++
