@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado Seleccionado: Color claro texto2/boton3 -->
+    <item android:state_selected="true" android:color="@color/texto2" />
+
+    <!-- Estado Por Defecto: Forzamos el color oscuro texto1 para garantizar contraste -->
+    <item android:color="@color/texto1" />
+</selector>

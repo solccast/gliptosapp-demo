@@ -122,8 +122,7 @@ class RAFosilActivity : AppCompatActivity() {
                 isEditable = true
             }
 
-            binding.tvInstruccion.visibility = View.GONE
-            binding.tvInstruccion.visibility = View.GONE
+            binding.contenedorKira.visibility = View.GONE
             binding.layoutControles.visibility = View.VISIBLE
         }
     }

@@ -6,7 +6,7 @@
     android:id="@+id/layoutPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorAppPrimary"
+    android:background="@color/fondo1"
     tools:context=".ui.excavation.ExcavacionActivity">
 
     <!-- 1. IMAGEN DE FONDO -->
@@ -112,7 +112,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:text="¡Hola! Vamos a excavar. Primero, seleccioná el Pico para romper la tierra dura."
-            android:textColor="?attr/colorAppText"
+            android:textColor="@color/texto1"
             android:textSize="16sp"
             android:textStyle="bold"
             android:accessibilityHeading="true" />

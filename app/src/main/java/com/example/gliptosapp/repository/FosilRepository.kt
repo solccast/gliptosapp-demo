@@ -12,7 +12,7 @@ class FosilRepository @Inject constructor(){
             nombre = "Gliptodonte",
             imgDescubierto = R.drawable.gliptodonte,
             imgSinDescubrir = R.drawable.gliptodonte_sin_descubrir,
-            descripcion = "Mamífero acorazado del Pleistoceno"
+            descripcion = "El gliptodonte fue un mamífero acorazado que habitó Sudamérica durante el Pleistoceno. Emparentado con los armadillos actuales, poseía un caparazón rígido formado por placas óseas y una cola fuerte, a veces con maza. Era herbívoro y de gran tamaño, comparable a un automóvil pequeño. Se extinguió hace unos 10.000 años, probablemente por cambios climáticos y la acción humana."
         ),
         Fosil(
             descubierto = false,
@@ -26,7 +26,7 @@ class FosilRepository @Inject constructor(){
             nombre = "Euphactus",
             imgDescubierto = R.drawable.euphractus_descubierto,
             imgSinDescubrir = R.drawable.euphractus_sin_descubrir,
-            descripcion = "Artrópodo marino del Paleozoico"
+            descripcion = "Euphactus es un género de armadillo extinto que vivió en Sudamérica durante el Pleistoceno. Formaba parte de los dasipódidos, parientes de los armadillos modernos, aunque de mayor tamaño. Poseía un caparazón flexible compuesto por bandas móviles que le permitían cierta agilidad. Era un animal terrestre, probablemente insectívoro u omnívoro, adaptado a ambientes abiertos y secos."
         )
     )
 
