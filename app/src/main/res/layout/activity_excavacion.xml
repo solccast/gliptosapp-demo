@@ -72,14 +72,6 @@
             android:contentDescription="Información"
             android:layout_marginEnd="8dp" />
 
-        <!-- Botón Configuración -->
-        <ImageButton
-            android:id="@+id/btnConfig"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_settings"
-            android:background="@drawable/bg_boton_ra"
-            android:contentDescription="Configuración" />
 
     </LinearLayout>
 

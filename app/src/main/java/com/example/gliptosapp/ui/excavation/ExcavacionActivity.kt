@@ -94,10 +94,6 @@ class ExcavacionActivity : AppCompatActivity() {
             mostrarDialogo("Información", "Usá las herramientas para desenterrar el fósil paso a paso.")
         }
 
-        binding.btnConfig.setOnClickListener {
-            // Placeholder; reemplazá con tu activity de configuración
-            mostrarDialogo("Configuración", "Accedelo desde el menú principal....")
-        }
     }
 
     private fun mostrarDialogo(titulo: String, mensaje: String) {
