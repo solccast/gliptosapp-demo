@@ -3,7 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="pink">#FF0099</color>
     <color name="fondo1">#4A2C1D</color>
+    <color name="fondo2">#7B4B2A</color>
     <color name="errores">#D85A3C</color>
     <color name="post_its">#D89B3C</color>
     <color name="cinta">#66D6C3BA</color>
@@ -11,5 +13,8 @@
     <color name="texto1">#2D241E</color>
     <color name="texto2">#E8D7B0</color>
     <color name="boton1">#3E2A1F</color>
+    <color name="boton2">#1A3727</color>
     <color name="boton3">#E8D7B0</color>
+    <color name="fondo_polaroid">#F4E8CC</color>
+    <color name="boton_verde_claro">#6B8E23</color>
 </resources>

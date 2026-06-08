@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@color/vinieta">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingBottom="14dp">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  Marco tipo fotografía polaroid         -->
+        <!-- ═══════════════════════════════════════ -->
+        <FrameLayout
+            android:id="@+id/frameImagen"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="#A6825A"
+            android:elevation="2dp"
+            android:padding="6dp">
+
+            <!-- Sombra interna / borde foto -->
+            <ImageView
+                android:id="@+id/imagenFosil"
+                android:layout_width="match_parent"
+                android:layout_height="149dp"
+                android:background="@color/fondo_polaroid"
+                android:scaleType="centerInside"
+                tools:src="@drawable/ic_launcher_foreground" />
+
+        </FrameLayout>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  Nombre del fósil                       -->
+        <!-- ═══════════════════════════════════════ -->
+        <TextView
+            android:id="@+id/nombreFosil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frameImagen"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Gliptodonte"
+            android:textColor="@color/texto1"
+            android:textSize="@dimen/texto_boton_medium"
+            android:textStyle="italic"
+            tools:text="Gliptodonte" />
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  Botón "Ver detalle"                    -->
+        <!-- ═══════════════════════════════════════ -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDetalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_detalle"
+            app:icon="@drawable/ic_info"
+            app:iconGravity="textStart"
+            android:layout_below="@id/nombreFosil"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:backgroundTint="@color/boton1"
+            />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

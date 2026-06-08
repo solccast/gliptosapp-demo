@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -62,4 +63,8 @@ dependencies {
     // DaggerHilt
     implementation("com.google.dagger:hilt-android:2.57.1")
     kapt("com.google.dagger:hilt-android-compiler:2.57.1")
+
+    // RA
+    implementation("com.google.ar:core:1.38.0")
+    implementation("io.github.sceneview:arsceneview:2.2.1")
 }

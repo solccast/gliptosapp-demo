@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rafosile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Volver"
+        android:background="@drawable/bg_boton_ra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        android:elevation="8dp"/>
+
+    <!-- Vista AR ocupa toda la pantalla -->
+    <io.github.sceneview.ar.ARSceneView
+        android:id="@+id/arSceneView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Instrucción al usuario
+    <TextView
+        android:id="@+id/tvInstruccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/como_usar_en_pantalla_ra"
+        android:accessibilityLiveRegion="polite"
+        android:textColor="@color/texto1"
+        android:textSize="16sp"
+        android:background="@color/vinieta"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    -->
+    <!-- Kira con instrucción -->
+    <LinearLayout
+        android:id="@+id/contenedorKira"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:padding="12dp"
+        android:background="@drawable/bg_vinieta_redondeada"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgKira"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/kira"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:id="@+id/tvInstruccion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:text="@string/como_usar_en_pantalla_ra"
+            android:accessibilityLiveRegion="polite"
+            android:textColor="@color/texto1"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+    <!-- Panel de controles -->
+    <LinearLayout
+        android:id="@+id/layoutControles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnRotarIzq"
+            android:layout_width="@dimen/boton_alto_medium"
+            android:layout_height="@dimen/boton_alto_medium"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/bg_boton_ra"
+            android:scaleType="center"
+            android:src="@drawable/arrow_left"
+            android:contentDescription="@string/rotacion_izq"/>
+
+        <ImageButton
+            android:id="@+id/btnRotarDer"
+            android:layout_width="@dimen/boton_alto_medium"
+            android:layout_height="@dimen/boton_alto_medium"
+            android:layout_marginLeft="20dp"
+            android:contentDescription="@string/rotacion_der"
+            android:background="@drawable/bg_boton_ra"
+            android:scaleType="center"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
