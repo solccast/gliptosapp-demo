@@ -101,6 +101,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/texto1"
                     android:padding="16dp"
+                    android:focusable="true"
                     android:accessibilityHeading="true"/>
 
                 <!-- Lista -->
