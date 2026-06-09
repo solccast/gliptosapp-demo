@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.activity.SystemBarStyle
+import android.graphics.Color
+import androidx.activity.enableEdgeToEdge
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 
@@ -15,118 +17,85 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExcavacionBinding
     private var estadoActual = 1
-    private var herramientaSeleccionada = ""
+    private lateinit var herramientas: List<ImageButton>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Para que dibuje la pantalla
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D")),
+            navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D"))
+        )
 
-        // Ocultamos las barras
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+        windowInsetsController.isAppearanceLightStatusBars = false
+        windowInsetsController.isAppearanceLightNavigationBars = false
 
-        // Recupero el tamaño del statusBars y de navigationBars
-        ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { _, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val margen8dp = (8 * resources.displayMetrics.density).toInt()
 
-            val topBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
-            val bottomBarHeight = insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
+            view.setPadding(0, 0, 0, 0)
 
-            // Esto es para posicionar el contenedor de kira por debajo de donde estaria el statusBar
             val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
-            paramsBotones.topMargin = topBarHeight
+            paramsBotones.topMargin = bars.top + margen8dp
             binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
 
-            // // Esto es para posicionar el contenedor de herramientas por debajo de donde estaria el navigationBar
             val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
-            paramsHerramientas.bottomMargin = bottomBarHeight
+            paramsHerramientas.bottomMargin = bars.bottom + margen8dp
             binding.contenedorHerramientas.layoutParams = paramsHerramientas
 
             insets
         }
 
-        // Métodos de inicialización del juego
+        herramientas = listOf(binding.btnPico, binding.btnPala, binding.btnPincel)
+
+        // Configuración del juego
         configurarHerramientas()
         configurarBotonesSuperiores()
-        configurarMecanicaExcavacion()
-        actualizarDescripcionesAccesibles()
+        //actualizarDescripcionesAccesibles()
+        actualizarInformacionFosil("¡Hola! Vamos a excavar. Primero, seleccioná el Pico para romper la tierra dura.")
     }
 
     private fun configurarHerramientas() {
-        val listaBotones = listOf(binding.btnPico, binding.btnPala, binding.btnPincel)
-
-        binding.btnPico.setOnClickListener { activarHerramienta("PICO", binding.btnPico, listaBotones) }
-        binding.btnPala.setOnClickListener { activarHerramienta("PALA", binding.btnPala, listaBotones) }
-        binding.btnPincel.setOnClickListener { activarHerramienta("PINCEL", binding.btnPincel, listaBotones) }
+        binding.btnPico.setOnClickListener { activarHerramienta("PICO", binding.btnPico) }
+        binding.btnPala.setOnClickListener { activarHerramienta("PALA", binding.btnPala) }
+        binding.btnPincel.setOnClickListener { activarHerramienta("PINCEL", binding.btnPincel) }
     }
 
-    private fun activarHerramienta(herramienta: String, botonActivo: ImageButton, botones: List<ImageButton>) {
-        herramientaSeleccionada = herramienta
+    private fun activarHerramienta(herramienta: String, botonActivo: ImageButton) {
+        val esCorrecta = verificarHerramientaCorrecta(herramienta)
+        if (esCorrecta) {
+            herramientas.forEach { it.isSelected = false }
+            botonActivo.isSelected = true
 
-        botones.forEach { it.isSelected = false }
-        botonActivo.isSelected = true
-
-        actualizarDescripcionesAccesibles()
-        botonActivo.announceForAccessibility("Herramienta $herramienta lista para usar.")
-    }
-
-    private fun configurarBotonesSuperiores() {
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
-
-        binding.btnInfo.setOnClickListener {
-            // Por ahora un placeholder; reemplazá con tu diálogo o activity de info
-            mostrarDialogo("Información", "Usá las herramientas para desenterrar el fósil paso a paso.")
-        }
-
-        binding.btnConfig.setOnClickListener {
-            // Placeholder; reemplazá con tu activity de configuración
-            mostrarDialogo("Configuración", "Accedelo desde el menú principal....")
+            botonActivo.announceForAccessibility("Usando herramienta $herramienta.")
+            avanzarProgreso()
+        } else {
+            // Pasamos la herramienta intentada para armar un mensaje dinámico y educativo
+            errorFeedback(herramienta)
         }
     }
 
-    private fun mostrarDialogo(titulo: String, mensaje: String) {
-        android.app.AlertDialog.Builder(this)
-            .setTitle(titulo)
-            .setMessage(mensaje)
-            .setPositiveButton("Entendido", null)
-            .show()
-    }
-
-    private fun configurarMecanicaExcavacion() {
-        binding.areaExcavacionClick.setOnClickListener {
-            valzarProgreso()
+    private fun verificarHerramientaCorrecta(herramienta: String): Boolean {
+        return when (estadoActual) {
+            1, 2 -> herramienta == "PICO"
+            3 -> herramienta == "PALA"
+            4 -> herramienta == "PINCEL"
+            else -> false
         }
     }
 
-    private fun valzarProgreso() {
+    private fun avanzarProgreso() {
         when (estadoActual) {
-            1 -> {
-                if (herramientaSeleccionada == "PICO") {
-                    actualizarEstado(R.drawable.gliptodonte_2, "¡Crack! Rompiste la capa superior. Dale otra vez con el Pico.")
-                } else { errorFeedback() }
-            }
-            2 -> {
-                if (herramientaSeleccionada == "PICO") {
-                    actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. Cambiá a la Pala para limpiar los escombros.")
-                } else { errorFeedback() }
-            }
-            3 -> {
-                if (herramientaSeleccionada == "PALA") {
-                    actualizarEstado(R.drawable.gliptodonte_4, "¡Uau! Ya se distingue la silueta. Usá el Pincel para limpiar el polvo de los huesos.")
-                } else { errorFeedback() }
-            }
+            1 -> actualizarEstado(R.drawable.gliptodonte_2, "Rompiste la capa superior. ¡Dale otra vez con el Pico!")
+            2 -> actualizarEstado(R.drawable.gliptodonte_3, "Piedras removidas. ¡Cambiá a la Pala para limpiar los escombros!")
+            3 -> actualizarEstado(R.drawable.gliptodonte_4, "¡Uau! Ya se distingue la silueta. ¡Usá el Pincel para limpiar el polvo de los huesos!")
             4 -> {
-                if (herramientaSeleccionada == "PINCEL") {
-                    actualizarEstado(R.drawable.gliptodonte_5, "¡Increíble! Desenterraste un Gliptodonte completo. ¡Sos un gran paleontólogo!")
-                    finalizarMecanica()
-                } else { errorFeedback() }
+                actualizarEstado(R.drawable.gliptodonte_5, "¡Increíble! Desenterraste un Gliptodonte completo. ¡Sos un gran paleontólogo!")
+                finalizarMecanica()
             }
         }
     }
@@ -136,27 +105,74 @@ class ExcavacionActivity : AppCompatActivity() {
         binding.imgFosilFondo.setImageResource(resourceImg)
         binding.txtIndicacionKira.text = mensajeKira
 
-        binding.areaExcavacionClick.contentDescription = "Fósil en etapa $estadoActual de 5. $mensajeKira"
-        binding.areaExcavacionClick.announceForAccessibility(mensajeKira)
+        actualizarInformacionFosil(mensajeKira)
     }
 
-    private fun errorFeedback() {
-        val avisoError = "¡Huy! Esa herramienta no sirve acá. Escuchá la indicación de Kira arriba."
-        binding.areaExcavacionClick.announceForAccessibility(avisoError)
+    private fun actualizarInformacionFosil(mensajeKira: String) {
+        val descripcionAccesible = "Fósil en etapa $estadoActual de 5. $mensajeKira"
+        binding.imgFosilFondo.contentDescription = descripcionAccesible
+
+        binding.imgFosilFondo.announceForAccessibility(mensajeKira)
+        actualizarDescripcionesBotones()
     }
 
-    private fun actualizarDescripcionesAccesibles() {
-        binding.btnPico.contentDescription = if (binding.btnPico.isSelected)
-            "Herramienta Pico seleccionada para romper roca" else "Seleccionar herramienta Pico"
+    private fun errorFeedback(herramientaIntentada: String) {
+        val herramientaCorrecta = obtenerNombreHerramientaRequerida()
+        val avisoError = "¡Uy! Esa no es la herramienta. Tenés que seleccionar la herramienta $herramientaCorrecta."
+        //Feedback para el niño que no usa el talkback
+        binding.txtIndicacionKira.text = avisoError
+        binding.txtIndicacionKira.announceForAccessibility(avisoError)
+    }
 
-        binding.btnPala.contentDescription = if (binding.btnPala.isSelected)
-            "Herramienta Pala seleccionada para quitar tierra suelta" else "Seleccionar herramienta Pala"
+    private fun obtenerNombreHerramientaRequerida(): String {
+        return when (estadoActual) {
+            1, 2 -> "Pico"
+            3 -> "Pala"
+            4 -> "Pincel"
+            else -> ""
+        }
+    }
 
-        binding.btnPincel.contentDescription = if (binding.btnPincel.isSelected)
-            "Herramienta Pincel seleccionada para limpiar detalles finos del fósil" else "Seleccionar herramienta Pincel"
+    private fun actualizarDescripcionesBotones() {
+        binding.btnPico.contentDescription = "Herramienta Pico"
+
+        binding.btnPala.contentDescription = "Herramienta Pala"
+
+        binding.btnPincel.contentDescription = "Herramienta Pincel"
     }
 
     private fun finalizarMecanica() {
-        binding.areaExcavacionClick.isClickable = false
+        herramientas.forEach {
+            it.setOnClickListener(null)
+            it.isSelected = false
+            it.contentDescription = "Juego completado"
+        }
     }
+
+    //Botones superiores
+    private fun configurarBotonesSuperiores() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+        binding.btnInfo.setOnClickListener {
+            mostrarDialogo(
+                "¿Cómo jugar?",
+                "¡Ayudá a Kira a desenterrar el fósil del Gliptodonte! " +
+                        "Escuchá o leé con atención su pista. Abajo vas a encontrar tres herramientas: " +
+                        "el Pico (para romper la tierra dura y piedras), la Pala (para limpiar los escombros sueltos) " +
+                        "y el Pincel (para limpiar el polvo de los huesos). ¡Tocá la herramienta correcta para avanzar paso a paso!"
+            )
+        }
+
+    }
+
+    private fun mostrarDialogo(titulo: String, mensaje: String) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("¡Entendido!", null)
+            .show()
+    }
+
 }

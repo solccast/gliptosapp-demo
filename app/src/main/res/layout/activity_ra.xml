@@ -16,35 +16,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
-        android:elevation="8dp"/>
+        android:elevation="8dp"
+        android:accessibilityTraversalBefore="@id/contenedorKira"/>
 
-    <!-- Vista AR ocupa toda la pantalla -->
+    <!-- Vista AR: excluida del foco de accesibilidad -->
     <io.github.sceneview.ar.ARSceneView
         android:id="@+id/arSceneView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Instrucción al usuario
-    <TextView
-        android:id="@+id/tvInstruccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/como_usar_en_pantalla_ra"
-        android:accessibilityLiveRegion="polite"
-        android:textColor="?attr/colorAppText"
-        android:textSize="16sp"
-        android:background="@color/vinieta"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    -->
     <!-- Kira con instrucción -->
     <LinearLayout
         android:id="@+id/contenedorKira"
@@ -57,6 +44,9 @@
         android:padding="12dp"
         android:background="@drawable/bg_vinieta_redondeada"
         android:gravity="center_vertical"
+        android:focusable="true"
+        android:screenReaderFocusable="true"
+        android:accessibilityTraversalAfter="@id/btnBack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -80,6 +70,7 @@
             android:textSize="16sp"/>
 
     </LinearLayout>
+
     <!-- Panel de controles -->
     <LinearLayout
         android:id="@+id/layoutControles"
@@ -88,6 +79,7 @@
         android:orientation="horizontal"
         android:layout_marginBottom="32dp"
         android:visibility="gone"
+        android:accessibilityTraversalAfter="@id/btnBack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

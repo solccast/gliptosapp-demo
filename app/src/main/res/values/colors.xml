@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="pink">#FF0099</color>
     <color name="fondo1">#4A2C1D</color>
     <color name="fondo2">#7B4B2A</color>
     <color name="errores">#D85A3C</color>

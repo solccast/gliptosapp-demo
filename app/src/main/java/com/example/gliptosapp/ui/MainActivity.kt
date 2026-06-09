@@ -1,6 +1,8 @@
 package com.example.gliptosapp.ui
 
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import android.graphics.Color
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +13,7 @@ import com.example.gliptosapp.ui.settings.ContrastPreferences
 import com.example.gliptosapp.ui.settings.ThemeManager
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +23,12 @@ class MainActivity : AppCompatActivity() {
         setTheme(ThemeManager.getTheme(this))
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
+
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.parseColor("#3E2A1F")),
+            navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#3E2A1F"))
+        )
+
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
