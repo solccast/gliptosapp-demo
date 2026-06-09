@@ -124,6 +124,7 @@ class RAFosilActivity : AppCompatActivity() {
 
             binding.contenedorKira.visibility = View.GONE
             binding.layoutControles.visibility = View.VISIBLE
+            binding.layoutControles.requestFocus()
         }
     }
 

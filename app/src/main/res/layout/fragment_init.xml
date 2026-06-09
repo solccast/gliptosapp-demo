@@ -38,6 +38,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+            <!-- Perforaciones del cuaderno (Decorativo) -->
             <LinearLayout
                 android:layout_width="34dp"
                 android:layout_height="match_parent"
@@ -46,7 +47,8 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:weightSum="18"
-                android:importantForAccessibility="no">
+                android:importantForAccessibility="no"
+                tools:ignore="DisableAccessibility">
 
                 <ImageView android:layout_width="14dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/perforacion_hoja" android:scaleType="center" android:importantForAccessibility="no" />
                 <ImageView android:layout_width="14dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/perforacion_hoja" android:scaleType="center" android:importantForAccessibility="no" />
@@ -66,7 +68,6 @@
                 <ImageView android:layout_width="14dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/perforacion_hoja" android:scaleType="center" android:importantForAccessibility="no" />
                 <ImageView android:layout_width="14dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/perforacion_hoja" android:scaleType="center" android:importantForAccessibility="no" />
                 <ImageView android:layout_width="14dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/perforacion_hoja" android:scaleType="center" android:importantForAccessibility="no" />
-
             </LinearLayout>
 
             <ScrollView
@@ -83,37 +84,51 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <TextView
-                        android:id="@+id/txtTitulo"
-                        android:layout_width="wrap_content"
+                      <LinearLayout
+                        android:id="@+id/contenedorCabecera"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Caminando sobre\nGliptodontes"
-                        android:textAlignment="center"
-                        android:textColor="@color/texto1"
-                        android:textStyle="bold"
-                        android:textSize="28sp"
-                        android:accessibilityHeading="true"/>
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:focusable="true"
+                        android:clickable="false"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Descubrí los gigantes que habitaron\nLa Plata hace miles de años"
-                        android:textAlignment="center"
-                        android:textColor="@color/boton2"
-                        android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txtTitulo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Caminando sobre\nGliptodontes"
+                            android:textAlignment="center"
+                            android:textColor="@color/texto1"
+                            android:textStyle="bold"
+                            android:textSize="28sp"
+                            android:accessibilityHeading="true"/>
 
+                        <TextView
+                            android:id="@+id/txtSubtitulo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Descubrí los gigantes que habitaron\nLa Plata hace miles de años"
+                            android:textAlignment="center"
+                            android:textColor="@color/boton2"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                    <!-- ACCIONES INTERACTIVAS -->
                     <Button
                         android:id="@+id/btnExcavacion"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="24dp"
                         android:backgroundTint="@color/boton1"
                         android:text="@string/excavacion"
                         android:textColor="@color/texto2"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Realizar excavación para descubrir fósiles"/>
+                        android:contentDescription="Comenzar excavación para descubrir fósiles"/>
 
                     <Button
                         android:id="@+id/btnColeccion"
@@ -125,7 +140,7 @@
                         android:textColor="@color/texto2"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Abrir colección de fósiles"/>
+                        android:contentDescription="Ver mi colección de fósiles guardados"/>
 
                     <Button
                         android:id="@+id/btnAjustes"
@@ -137,8 +152,7 @@
                         android:textColor="@color/texto1"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Abrir ajustes de la aplicación"/>
-
+                        android:contentDescription="Abrir opciones y ajustes de la aplicación"/>
 
                 </LinearLayout>
             </ScrollView>
