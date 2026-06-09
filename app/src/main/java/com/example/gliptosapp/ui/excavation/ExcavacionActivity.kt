@@ -9,9 +9,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.activity.SystemBarStyle
 import android.graphics.Color
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
+import com.example.gliptosapp.ui.settings.applyFontScale
 
 class ExcavacionActivity : AppCompatActivity() {
 
@@ -168,9 +172,15 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun mostrarDialogo(titulo: String, mensaje: String) {
-        android.app.AlertDialog.Builder(this)
+
+        val view = layoutInflater.inflate(R.layout.dialog_ayuda, null)
+
+        val txtAyuda = view.findViewById<TextView>(R.id.txtAyuda)
+        txtAyuda.text = mensaje
+        (view as? ViewGroup)?.applyFontScale()
+        AlertDialog.Builder(this)
             .setTitle(titulo)
-            .setMessage(mensaje)
+            .setView(view)
             .setPositiveButton("¡Entendido!", null)
             .show()
     }

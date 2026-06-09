@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo1">
+    android:background="?attr/colorAppPrimary">
 
     <!-- Botón volver FUERA de la card -->
     <ImageButton
@@ -179,11 +179,10 @@
                     android:layout_margin="16dp"
                     android:text="@string/jugar"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/boton2"
+                    app:backgroundTint="?attr/colorAppButtonSecondary"
                     app:icon="@drawable/gamepad_2"
                     app:iconGravity="textStart"
                     app:iconPadding="8dp"/>
-
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
