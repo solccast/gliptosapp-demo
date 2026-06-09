@@ -29,28 +29,34 @@ class FosilAdapter(
     override fun onBindViewHolder(holder: FosilViewHolder, position: Int) {
         val fosil = lista[position]
 
-        // TODO: hay que reemplazar este código feo por menos if
         with(holder.binding) {
             nombreFosil.text = fosil.nombre
-            //estadoFosil.text = if (fosil.descubierto) "Descubierto" else "No descubierto"
             imagenFosil.setImageResource(fosil.obtenerImagen())
-            btnDetalle.isEnabled = fosil.descubierto
-            btnDetalle.visibility = if (!fosil.descubierto) View.GONE else View.VISIBLE
-            // accesibilidad clau clau
-            root.contentDescription =
-                "Fósil ${fosil.nombre}, " +
-                        if (fosil.descubierto) "descubierto" else "no descubierto"
 
-            btnDetalle.contentDescription =
-                "Ver detalle del fósil ${fosil.nombre}"
-            btnDetalle.setOnClickListener {
-                if (fosil.descubierto) {
-                    onDetalleClick(fosil)
-                }
+            if (fosil.descubierto) {
+                btnDetalle.visibility = View.VISIBLE
+                btnDetalle.isEnabled = true
+                btnDetalle.alpha = 1f
+                btnDetalle.contentDescription = "Ver detalle del fósil ${fosil.nombre}"
+                btnDetalle.setOnClickListener { onDetalleClick(fosil) }
+
+                root.isClickable = true
+                root.setOnClickListener { onDetalleClick(fosil) }
+                root.contentDescription = "Fósil ${fosil.nombre}, descubierto."
+            } else {
+                btnDetalle.visibility = View.INVISIBLE
+                btnDetalle.isEnabled = false
+                btnDetalle.alpha = 0f
+                btnDetalle.contentDescription = null
+                btnDetalle.setOnClickListener(null)
+
+                root.isClickable = false
+                root.setOnClickListener(null)   // nunca pisado por código de abajo
+                root.contentDescription = "Fósil ${fosil.nombre}, aún no descubierto."
             }
+            root.isFocusable = true
         }
     }
-
     override fun getItemCount(): Int = lista.size
     fun updateList(nuevaLista: List<Fosil>) {
         this.lista = nuevaLista

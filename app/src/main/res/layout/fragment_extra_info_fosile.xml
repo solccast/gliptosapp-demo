@@ -111,7 +111,9 @@
                             android:text="Nombre fósil"
                             android:textSize="@dimen/texto_boton_large"
                             android:textStyle="bold"
+                            android:focusable="true"
                             android:textColor="@color/texto1"
+                            android:accessibilityHeading="true"
                             android:importantForAccessibility="yes"/>
 
                         <!-- Imagen con botón AR -->
@@ -153,12 +155,14 @@
                             android:layout_height="wrap_content"
                             android:text="Descripción del fósil"
                             android:textColor="@color/texto1"
+                            android:focusable="true"
                             android:layout_marginTop="12dp"/>
 
                         <!-- Info extra -->
                         <TextView
                             android:id="@+id/infoExtra"
                             android:layout_width="match_parent"
+                            android:focusable="true"
                             android:layout_height="wrap_content"
                             android:text="Época, tamaño, dieta..."
                             android:textColor="@color/texto1"
