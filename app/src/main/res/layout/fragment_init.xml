@@ -91,7 +91,7 @@
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
                         android:focusable="true"
-                        android:clickable="true"
+                        android:clickable="false"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="8dp">
 

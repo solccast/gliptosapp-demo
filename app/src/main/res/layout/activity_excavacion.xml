@@ -87,7 +87,7 @@
         android:padding="12dp"
         android:background="@drawable/bg_vinieta_redondeada"
         android:focusable="true"
-        android:clickable="true"
+        android:clickable="false"
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/contenedorBotonesSuperiores"
         app:layout_constraintStart_toStartOf="parent"
