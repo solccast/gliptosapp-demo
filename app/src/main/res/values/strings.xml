@@ -36,4 +36,12 @@
     <string name="coleccion_lista">Lista de fosiles descubiertos y sin descubrir</string>
     <string name="back">Atrás</string>
     <string name="settings">Ajustes</string>
+    <string name="recursos_libro_caminando">Caminando sobre gliptodontes y tigres dientes de sable</string>
+    <string name="btn_descargar">Descargar recurso</string>
+    <string name="btn_descargar_libro_caminando">Descargar libro "Caminando sobre gliptodontes y tigres dientes de sable"</string>
+    <string name="recursos_documental_caminando">Documental: "Caminando sobre gliptodontess y tigres dientes de sable"</string>
+    <string name="btn_ver">Ver</string>
+    <string name="btn_ver_documental_caminando">Ver documental: "Caminando sobre gliptodontes y tigres dientes de sable"</string>
+    <string name="recursos_libro_caminando_tierras_nuevas">Caminando hacia tierras nuevas</string>
+    <string name="btn_descargar_caminando_tierras_nuevas">Descargar libro: "Caminando hacia tierras nuevas"</string>
 </resources>

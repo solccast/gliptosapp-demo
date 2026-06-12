@@ -45,6 +45,11 @@ class InitFragment : BaseFragment() {
         binding.btnAjustes.setOnClickListener {
             navController.navigate(R.id.settingsFragment)
         }
+
+        binding.btnRecursos.setOnClickListener {
+            navController.navigate(R.id.action_initFragment_to_recursosFragment)
+        }
+
         (binding.root as ViewGroup).applyFontScale()
     }
 

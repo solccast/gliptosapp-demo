@@ -154,6 +154,18 @@
                         android:textSize="@dimen/texto_boton_medium"
                         android:contentDescription="Abrir opciones y ajustes de la aplicación"/>
 
+                    <Button
+                        android:id="@+id/btnRecursos"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/boton_alto_medium"
+                        android:layout_marginTop="16dp"
+                        android:textSize="@dimen/texto_boton_medium"
+                        android:text="@string/recursos"
+                        android:textColor="@color/texto2"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/boton_recursos_azul"
+                        android:contentDescription="@string/recursos"/>
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
