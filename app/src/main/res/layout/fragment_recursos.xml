@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/fondo1"
+    tools:context=".ui.recursos.RecursosFragment"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ══════════════════════════════════════ -->
+        <!--  TOOLBAR / ENCABEZADO                 -->
+        <!-- ══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:importantForAccessibility="yes"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_boton_ra"
+                android:contentDescription="Volver"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleRecursos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/texto_boton_large"
+                android:accessibilityHeading="true"
+                android:gravity="center"
+                android:importantForAccessibility="yes"
+                android:text="@string/recursos"
+                android:textColor="@color/texto2"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+        </LinearLayout>
+
+        <!-- ══════════════════════════════════════ -->
+        <!--  TARJETA 1 – LIBRO / DESCARGA          -->
+        <!-- ══════════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            android:focusable="true"
+            android:clickable="false"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/vinieta"
+            android:importantForAccessibility="yes">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Portada del libro -->
+                <ImageView
+                    android:id="@+id/img_libro_caminando"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/caminando_libro"
+                    android:contentDescription="@string/recursos_libro_caminando"
+                    android:importantForAccessibility="yes"
+                    android:layout_marginBottom="12dp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Título del libro -->
+                <TextView
+                    android:id="@+id/tv_libro_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recursos_libro_caminando"
+                    android:textColor="@color/texto1"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:accessibilityHeading="false"
+                    android:importantForAccessibility="yes" />
+
+                <!-- Botón Descargar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_descargar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/btn_descargar"
+                    android:textColor="@color/texto2"
+                    android:backgroundTint="@color/boton2"
+                    android:paddingEnd="24dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:icon="@drawable/ic_download"
+                    android:drawablePadding="8dp"
+                    android:contentDescription="@string/btn_descargar_libro_caminando"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:minHeight="48dp" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ══════════════════════════════════════ -->
+        <!--  TARJETA 2 – DOCUMENTAL / VER          -->
+        <!-- ══════════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_documental"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:focusable="true"
+            android:clickable="false"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/vinieta"
+            android:importantForAccessibility="yes">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                        android:id="@+id/img_documental_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/portada_documental_caminando"
+                        android:contentDescription="@string/recursos_documental_caminando"
+                        android:importantForAccessibility="yes" />
+
+
+                <!-- Título del documental -->
+                <TextView
+                    android:id="@+id/tv_documental_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recursos_documental_caminando"
+                    android:textColor="@color/texto1"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAccessibility="yes" />
+
+                <!-- Botón Ver -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_ver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/btn_ver"
+                    android:textColor="@color/texto2"
+                    android:backgroundTint="#C0392B"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:icon="@drawable/ic_youtube"
+                    android:drawablePadding="8dp"
+                    android:contentDescription="@string/btn_ver_documental_caminando"
+                    android:focusable="true"
+                    android:clickable="true"
+                    app:cornerRadius="24dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_libroCaminandoHaciaTierrasNuevas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:focusable="true"
+            android:clickable="false"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/vinieta"
+            android:importantForAccessibility="yes">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/PortadalibroCaminandoTierrasNuevas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/portada_libro_caminando_tierras_nuevas"
+                    android:contentDescription="@string/recursos_libro_caminando_tierras_nuevas"
+                    android:importantForAccessibility="yes" />
+
+                <TextView
+                    android:id="@+id/libro_title_caminando_tierras_nuevas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recursos_documental_caminando"
+                    android:textColor="@color/texto1"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAccessibility="yes" />
+
+                <!-- Botón Ver -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_verCaminandoTierrasNuevas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/btn_descargar"
+                    android:textColor="@color/texto2"
+                    android:backgroundTint="@color/boton2"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:icon="@drawable/ic_download"
+                    android:drawablePadding="8dp"
+                    android:contentDescription="@string/btn_descargar_caminando_tierras_nuevas"
+                    android:focusable="true"
+                    android:clickable="true"
+                    app:cornerRadius="24dp" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_redes_sociales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/vinieta">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tv_redes_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/redes_seguinos"
+                    android:textColor="@color/texto1"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"
+                    android:importantForAccessibility="yes" />
+                <!-- Íconos de redes sociales -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_instagram"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_instagram"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/redes_instagram"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:minHeight="48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_facebook"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_facebook"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/redes_facebook"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:minHeight="48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_youtube"
+                        android:layout_width="48dp"
+                        android:layout_weight="1"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_youtube"
+                        android:tint="@color/fondo1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/redes_youtube"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:minHeight="48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_web"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_web"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/redes_web"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:minHeight="48dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

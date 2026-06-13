@@ -45,7 +45,20 @@ class InitFragment : BaseFragment() {
         binding.btnAjustes.setOnClickListener {
             navController.navigate(R.id.settingsFragment)
         }
+
+        binding.btnRecursos.setOnClickListener {
+            navController.navigate(R.id.action_initFragment_to_recursosFragment)
+        }
+
         (binding.root as ViewGroup).applyFontScale()
+
+        binding.btnInfo.setOnClickListener {
+            mostrarDialogoMasInfo("¿Cómo funciona?",
+                "- Realizar Excavación: Descubrí grandes mamíferos presentes en la ciudad para agregarlos al cuadernillo.\n" +
+                        "- Mi colección de fósiles: Descubrí datos interesantes de los fósiles que descubriste jugando juegos!\n" +
+                        "- Ajustes: Configurá el sitio web a tu gusto, incluyendo opciones de accesibilidad.\n" +
+                        "- Recursos: Si te quedaste con ganas de más, acá vas a encontrar más información.")
+        }
     }
 
     override fun onResume() {
@@ -74,7 +87,7 @@ class InitFragment : BaseFragment() {
         val tamanoTextoSp = resources.getDimension(textoSizeDimen) / resources.displayMetrics.scaledDensity
 
         // Lista de botones a los que se les aplicará el cambio de accesibilidad
-        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes)
+        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes, binding.btnRecursos)
 
         listaBotones.forEach { boton ->
             // 1. Modificar dinámicamente el alto manteniendo los LayoutParams del LinearLayout interno
@@ -94,4 +107,11 @@ class InitFragment : BaseFragment() {
         _binding = null // Evita memory leaks (Fuga de memoria), una excelente práctica de desarrollo
     }
 
+    private fun mostrarDialogoMasInfo(titulo: String, mensaje: String) {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("¡Entendido!", null)
+            .show()
+    }
 }

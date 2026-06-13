@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_initFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_initFragment_to_recursosFragment"
+            app:destination="@id/recursosFragment" />
     </fragment>
 
     <activity
@@ -61,4 +64,8 @@
             android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recursosFragment"
+        android:name="com.example.gliptosapp.ui.recursos.RecursosFragment"
+        android:label="RecursosFragment" />
 </navigation>
