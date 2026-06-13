@@ -79,7 +79,7 @@ class InitFragment : BaseFragment() {
         val tamanoTextoSp = resources.getDimension(textoSizeDimen) / resources.displayMetrics.scaledDensity
 
         // Lista de botones a los que se les aplicará el cambio de accesibilidad
-        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes)
+        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes, binding.btnRecursos)
 
         listaBotones.forEach { boton ->
             // 1. Modificar dinámicamente el alto manteniendo los LayoutParams del LinearLayout interno
