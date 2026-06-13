@@ -51,6 +51,14 @@ class InitFragment : BaseFragment() {
         }
 
         (binding.root as ViewGroup).applyFontScale()
+
+        binding.btnInfo.setOnClickListener {
+            mostrarDialogoMasInfo("¿Cómo funciona?",
+                "- Realizar Excavación: Descubrí grandes mamíferos presentes en la ciudad para agregarlos al cuadernillo.\n" +
+                        "- Mi colección de fósiles: Descubrí datos interesantes de los fósiles que descubriste jugando juegos!\n" +
+                        "- Ajustes: Configurá el sitio web a tu gusto, incluyendo opciones de accesibilidad.\n" +
+                        "- Recursos: Si te quedaste con ganas de más, acá vas a encontrar más información.")
+        }
     }
 
     override fun onResume() {
@@ -99,4 +107,11 @@ class InitFragment : BaseFragment() {
         _binding = null // Evita memory leaks (Fuga de memoria), una excelente práctica de desarrollo
     }
 
+    private fun mostrarDialogoMasInfo(titulo: String, mensaje: String) {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("¡Entendido!", null)
+            .show()
+    }
 }

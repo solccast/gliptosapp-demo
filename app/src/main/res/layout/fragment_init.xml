@@ -20,6 +20,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+
+    <ImageButton
+        android:id="@+id/btnInfo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:tint="@color/fondo1"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_help"
+        android:background="@drawable/bg_boton_ra"
+        android:contentDescription="Más información"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCuaderno"
         android:layout_width="0dp"
