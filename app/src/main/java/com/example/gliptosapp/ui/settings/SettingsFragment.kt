@@ -4,29 +4,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.databinding.FragmentSettingsBinding
 import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.gliptosapp.R
 import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.launch
+import kotlin.getValue
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private var fontChangeInProgress = false
+
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        _binding =
+            FragmentSettingsBinding.inflate(
+                inflater,
+                container,
+                false
+            )
+
         return binding.root
     }
 
@@ -34,57 +47,90 @@ class SettingsFragment : BaseFragment() {
         view: View,
         savedInstanceState: Bundle?
     ) {
-        super.onViewCreated(view, savedInstanceState)
+
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
+
+        setupListeners()
+        observeUiState()
+        observeEvents()
+    }
+
+    private fun observeUiState() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            repeatOnLifecycle(
+                Lifecycle.State.STARTED
+            ) {
+
+                viewModel.uiState.collect { state ->
+
+                    updateFontSelection(
+                        state.selectedFont
+                    )
+
+                    binding.switchContrast.isChecked =
+                        state.highContrastEnabled
+                }
+            }
+        }
+    }
+    private fun observeEvents() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            repeatOnLifecycle(
+                Lifecycle.State.STARTED
+            ) {
+
+                viewModel.events.collect { event ->
+
+                    when (event) {
+
+                        is SettingsEvent.AccessibilityAnnouncement -> {
+
+                            binding.root
+                                .announceForAccessibility(
+                                    event.message
+                                )
+                        }
+
+                        SettingsEvent.RecreateActivity -> {
+
+                            requireActivity().recreate()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun setupListeners() {
+
+        binding.cardFontSmall.setOnClickListener {
+            viewModel.selectFont(FontScale.SMALL)
+        }
+
+        binding.cardFontMedium.setOnClickListener {
+            viewModel.selectFont(FontScale.MEDIUM)
+        }
+
+        binding.cardFontLarge.setOnClickListener {
+            viewModel.selectFont(FontScale.LARGE)
+        }
+
+        binding.switchContrast.setOnCheckedChangeListener { _, enabled ->
+            viewModel.toggleContrast(enabled)
+        }
 
         binding.backButton.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
-
-        setupFontButtons()
-        setupAccessibilitySwitches()
-        setupInteractionModeAccessibility()
-
-        updateFontSelection(
-            FontPreferences.get(requireContext())
-        )
     }
 
-    private fun setupFontButtons() {
-
-        mapOf(
-            binding.cardFontSmall to FontScale.SMALL,
-            binding.cardFontMedium to FontScale.MEDIUM,
-            binding.cardFontLarge to FontScale.LARGE
-        ).forEach { (view, scale) ->
-            view.setOnClickListener { selectFont(scale) }
-        }
-    }
-
-    private fun selectFont(scale: FontScale) {
-
-        if (fontChangeInProgress) return
-
-        val currentScale =
-            FontPreferences.get(requireContext())
-
-        if (currentScale == scale) return
-
-        fontChangeInProgress = true
-
-        FontPreferences.save(
-            requireContext(),
-            scale
-        )
-
-        updateFontSelection(scale)
-
-        announceAccessibility(
-            "Tamaño de texto cambiado a ${scale.displayName}"
-        )
-
-        recreateAfterFontChange()
-    }
-    private fun updateFontSelection(scale: FontScale) {
+  private fun updateFontSelection(scale: FontScale) {
 
         val selectedBackground =
             requireContext().getThemeColor(R.attr.colorAppPrimary)
@@ -145,78 +191,7 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun setupAccessibilitySwitches() {
 
-        binding.switchContrast.isChecked =
-            ContrastPreferences.isEnabled(requireContext())
-
-        binding.switchContrast.setOnCheckedChangeListener { _, enabled ->
-
-            ContrastPreferences.save(
-                requireContext(),
-                enabled
-            )
-
-            announceAccessibility(
-                if (enabled)
-                    "Alto contraste activado"
-                else
-                    "Alto contraste desactivado"
-            )
-
-            recreateActivity()
-        }
-
-        setupSwitch(
-            binding.switchNarration,
-            "Narración"
-        )
-
-        setupSwitch(
-            binding.switchSounds,
-            "Sonidos"
-        )
-
-        setupSwitch(
-            binding.switchVibration,
-            "Vibración"
-        )
-
-        setupSwitch(
-            binding.switchLsa,
-            "Lengua de Señas Argentina"
-        )
-    }
-
-    private fun setupSwitch(
-        switch: CompoundButton,
-        label: String
-    ) {
-        switch.setOnCheckedChangeListener { _, enabled ->
-            announceAccessibility(
-                "$label ${if (enabled) "activada" else "desactivada"}"
-            )
-        }
-    }
-
-    private fun setupInteractionModeAccessibility() {
-
-        binding.rgInteractionMode.setOnCheckedChangeListener { _, checkedId ->
-
-            val message = when (checkedId) {
-
-                binding.rbDragToClean.id ->
-                    "Modo de interacción cambiado a arrastrar y mover"
-
-                binding.rbTapToClean.id ->
-                    "Modo de interacción cambiado a tocar y limpiar"
-
-                else -> return@setOnCheckedChangeListener
-            }
-
-            announceAccessibility(message)
-        }
-    }
     private fun announceAccessibility(message: String) {
 
         _binding?.root?.announceForAccessibility(message)
@@ -247,15 +222,6 @@ class SettingsFragment : BaseFragment() {
 
         }, 500)
     }
-
-    private fun recreateAfterFontChange() {
-
-        binding.cardFontSmall.isEnabled = false
-        binding.cardFontMedium.isEnabled = false
-        binding.cardFontLarge.isEnabled = false
-
-        recreateActivity()
-    }
 }
 
 private data class FontOption(
@@ -264,10 +230,3 @@ private data class FontOption(
     val text: TextView,
     val description: String
 )
-
-private val FontScale.label: String
-    get() = when (this) {
-        FontScale.SMALL -> "pequeño"
-        FontScale.MEDIUM -> "mediano"
-        FontScale.LARGE -> "grande"
-    }
