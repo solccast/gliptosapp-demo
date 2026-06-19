@@ -47,12 +47,12 @@ class SettingsFragment : BaseFragment() {
         view: View,
         savedInstanceState: Bundle?
     ) {
-
         super.onViewCreated(
             view,
             savedInstanceState
         )
 
+        setupInteractionMode()
         setupListeners()
         observeUiState()
         observeEvents()
@@ -65,7 +65,6 @@ class SettingsFragment : BaseFragment() {
             repeatOnLifecycle(
                 Lifecycle.State.STARTED
             ) {
-
                 viewModel.uiState.collect { state ->
 
                     updateFontSelection(
@@ -74,6 +73,10 @@ class SettingsFragment : BaseFragment() {
 
                     binding.switchContrast.isChecked =
                         state.highContrastEnabled
+
+                    updateInteractionMode(
+                        state.interactionMode
+                    )
                 }
             }
         }
@@ -212,15 +215,66 @@ class SettingsFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun recreateActivity() {
+    private fun setupInteractionMode() {
 
-        binding.root.postDelayed({
+        binding.cardDragMode.setOnClickListener {
 
-            if (!isAdded) return@postDelayed
+            viewModel.selectInteractionMode(
+                InteractionMode.PIECE_FIRST
+            )
+        }
 
-            requireActivity().recreate()
+        binding.cardTapMode.setOnClickListener {
 
-        }, 500)
+            viewModel.selectInteractionMode(
+                InteractionMode.DESTINATION_FIRST
+            )
+        }
+    }
+    private fun updateInteractionMode(
+        mode: InteractionMode
+    ) {
+
+        val dragSelected =
+            mode == InteractionMode.PIECE_FIRST
+
+        binding.indicatorDragMode.visibility =
+            if (dragSelected) View.VISIBLE
+            else View.INVISIBLE
+
+        binding.indicatorTapMode.visibility =
+            if (dragSelected) View.INVISIBLE
+            else View.VISIBLE
+
+        binding.cardDragMode.strokeWidth =
+            if (dragSelected) 6 else 2
+
+        binding.cardTapMode.strokeWidth =
+            if (dragSelected) 2 else 6
+
+        binding.cardDragMode.animate()
+            .scaleX(if (dragSelected) 1.02f else 1f)
+            .scaleY(if (dragSelected) 1.02f else 1f)
+            .setDuration(150)
+            .start()
+
+        binding.cardTapMode.animate()
+            .scaleX(if (dragSelected) 1f else 1.02f)
+            .scaleY(if (dragSelected) 1f else 1.02f)
+            .setDuration(150)
+            .start()
+
+        binding.cardDragMode.contentDescription =
+            if (dragSelected)
+                "Arrastrar piezas. Seleccionado"
+            else
+                "Arrastrar piezas"
+
+        binding.cardTapMode.contentDescription =
+            if (dragSelected)
+                "Tocar pieza y destino"
+            else
+                "Tocar pieza y destino. Seleccionado"
     }
 }
 

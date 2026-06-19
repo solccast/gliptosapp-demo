@@ -41,51 +41,138 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tvInteractionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Modo de interacción"
+                    android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:accessibilityHeading="true" />
+                    android:accessibilityHeading="true"/>
+
+                <!-- OPCIÓN ARRASTRAR -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardDragMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
                     android:clickable="true"
                     android:focusable="true"
+                    app:cardCornerRadius="18dp"
                     app:strokeWidth="2dp"
-                    app:cardCornerRadius="16dp">
+                    >
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="Arrastrar piezas" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <!-- Indicador -->
+
+                        <View
+                            android:id="@+id/indicatorDragMode"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/bg_circle_indicator"/>
+
+                        <!-- Texto -->
+
+                        <TextView
+                            android:id="@+id/tvDragMode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Arrastrar piezas"/>
+
+                        <!-- Mano -->
+                        <ImageView
+                            android:id="@+id/imgDragHand"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_touch_destination"/>
+
+                        <ImageView
+                            android:id="@+id/imgArrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_arrow_back"/>
+
+                        <!-- Pieza -->
+
+                        <ImageView
+                            android:id="@+id/imgPiece"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_touch_piece"/>
+
+                    </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <!-- OPCIÓN TOCAR -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardTapMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
                     android:clickable="true"
                     android:focusable="true"
-                    app:strokeWidth="2dp"
-                    app:cardCornerRadius="16dp">
+                    app:cardCornerRadius="18dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="?attr/colorSurface">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="Tocar pieza y destino" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <View
+                            android:id="@+id/indicatorTapMode"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/bg_circle_indicator"/>
+
+                        <TextView
+                            android:id="@+id/tvTapMode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Tocar pieza y destino"/>
+
+                        <ImageView
+                            android:id="@+id/imgTouchPiece"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_touch_piece"/>
+
+                        <ImageView
+                            android:id="@+id/imgTouchDestination"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_touch_destination"/>
+
+                    </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
+        </com.google.android.material.card.MaterialCardView>
         <!-- APOYO VISUAL -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

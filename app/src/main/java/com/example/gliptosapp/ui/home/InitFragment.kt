@@ -3,6 +3,7 @@ package com.example.gliptosapp.ui.home
 import android.content.Context
 import android.util.TypedValue
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +64,15 @@ class InitFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        Log.d(
+            "FONT",
+            binding.btnExcavacion.textSize.toString()
+        )
         aplicarConfiguracionDeAccesibilidad()
+        Log.d(
+            "FONT",
+            binding.btnExcavacion.textSize.toString()
+        )
     }
 
     private fun aplicarConfiguracionDeAccesibilidad() {

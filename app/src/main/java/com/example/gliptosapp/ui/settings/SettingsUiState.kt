@@ -6,5 +6,9 @@ data class SettingsUiState(
     val narrationEnabled: Boolean = false,
     val soundsEnabled: Boolean = false,
     val vibrationEnabled: Boolean = false,
-    val lsaEnabled: Boolean = false
+    val interactionMode: InteractionMode = InteractionMode.PIECE_FIRST
 )
+enum class InteractionMode {
+    PIECE_FIRST,
+    DESTINATION_FIRST
+}

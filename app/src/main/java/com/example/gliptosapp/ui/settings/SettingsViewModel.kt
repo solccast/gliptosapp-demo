@@ -38,7 +38,9 @@ class SettingsViewModel @Inject constructor(
             _uiState.value.copy(
                 selectedFont = repository.getFontScale(),
                 highContrastEnabled =
-                    repository.isHighContrastEnabled()
+                    repository.isHighContrastEnabled(),
+                interactionMode =
+                    repository.getInteractionMode()
             )
     }
 
@@ -80,18 +82,29 @@ class SettingsViewModel @Inject constructor(
         emitRecreate()
     }
 
-    fun interactionModeChanged(message: String) {
-
-        emitAnnouncement(message)
-    }
-
-    fun switchChanged(
-        label: String,
-        enabled: Boolean
+    fun selectInteractionMode(
+        mode: InteractionMode
     ) {
 
+        if (_uiState.value.interactionMode == mode)
+            return
+
+        repository.saveInteractionMode(mode)
+
+        _uiState.value =
+            _uiState.value.copy(
+                interactionMode = mode
+            )
+
         emitAnnouncement(
-            "$label ${if (enabled) "activada" else "desactivada"}"
+            when (mode) {
+
+                InteractionMode.PIECE_FIRST ->
+                    "Modo tocar pieza y destino seleccionado"
+
+                InteractionMode.DESTINATION_FIRST ->
+                    "Modo tocar destino y pieza seleccionado"
+            }
         )
     }
 
