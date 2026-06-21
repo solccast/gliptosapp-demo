@@ -5,7 +5,7 @@ object RecursosLinks {
     const val DOCUMENTAL_CAMINANDO = "https://www.youtube.com/watch?v=cZy5PtevwfU"
     const val LIBRO_TIERRAS_NUEVAS = "https://www.dropbox.com/scl/fi/xv653r6jcc392bvj7o6hl/Caminando-hacia-tierras-nuevas-2019.pdf?rlkey=k1y1eerl3n6ruh0p5kfcr3pdt&dl=1"
     const val INSTAGRAM = "https://www.instagram.com/caminando_unlp/"
-    const val FACEBOOK = "https://www.instagram.com/caminando_unlp/"
+    const val FACEBOOK = "https://www.facebook.com/CaminandoUNLP"
     const val YOUTUBE = "https://www.youtube.com/@CaminandoUNLP"
-    const val WEB = "/https://caminando.unlp.edu.ar/"
+    const val WEB = "https://caminando.unlp.edu.ar/"
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:layout_height="wrap_content"
+    app:cardElevation="0dp"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:paddingEnd="0dp">
+
+        <FrameLayout
+            android:id="@+id/frameImagenBloqueado"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:background="#A6825A"
+            android:padding="6dp">
+
+            <!-- Silueta del fósil bloqueado -->
+            <ImageView
+                android:id="@+id/imagenFosilSilueta"
+                android:layout_width="match_parent"
+                android:layout_height="149dp"
+                android:background="@color/fondo_polaroid"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                tools:src="@drawable/gliptodonte_sin_descubrir" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/lblBloqueado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frameImagenBloqueado"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-18dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_chip_bloqueado"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:importantForAccessibility="yes"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_lock"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fosil_no_desc"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
