@@ -1,7 +1,6 @@
 package com.example.gliptosapp.ui.settings
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.gliptosapp.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -9,7 +8,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -23,7 +21,7 @@ class SettingsViewModel @Inject constructor(
         _uiState
 
     private val _events =
-        MutableSharedFlow<SettingsEvent>()
+        MutableSharedFlow<SettingsEvent>(extraBufferCapacity = 1)
 
     val events =
         _events.asSharedFlow()
@@ -37,10 +35,9 @@ class SettingsViewModel @Inject constructor(
         _uiState.value =
             _uiState.value.copy(
                 selectedFont = repository.getFontScale(),
-                highContrastEnabled =
-                    repository.isHighContrastEnabled(),
-                interactionMode =
-                    repository.getInteractionMode()
+                highContrastEnabled = repository.isHighContrastEnabled(),
+                interactionMode = repository.getInteractionMode(),
+                soundsEnabled = repository.isSoundEnabled()
             )
     }
 
@@ -108,24 +105,32 @@ class SettingsViewModel @Inject constructor(
         )
     }
 
-    private fun emitAnnouncement(
-        message: String
+    fun toggleSounds(
+        enabled: Boolean
     ) {
-        viewModelScope.launch {
-            _events.emit(
-                SettingsEvent.AccessibilityAnnouncement(
-                    message
-                )
+
+        repository.saveSoundEnabled(
+            enabled
+        )
+
+        _uiState.value =
+            _uiState.value.copy(
+                soundsEnabled = enabled
             )
-        }
+
+        emitAnnouncement(
+            if (enabled)
+                "Sonidos activados"
+            else
+                "Sonidos desactivados"
+        )
+    }
+
+    private fun emitAnnouncement(message: String){
+        _events.tryEmit(SettingsEvent.AccessibilityAnnouncement(message))
     }
 
     private fun emitRecreate() {
-
-        viewModelScope.launch {
-            _events.emit(
-                SettingsEvent.RecreateActivity
-            )
-        }
+        _events.tryEmit(SettingsEvent.RecreateActivity)
     }
 }

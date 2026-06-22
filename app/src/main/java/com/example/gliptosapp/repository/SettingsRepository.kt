@@ -14,6 +14,10 @@ class SettingsRepository @Inject constructor(
     private val context: Context
 ) {
 
+    private val prefs by lazy {
+        context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    }
+
     fun getFontScale(): FontScale {
         return FontPreferences.get(context)
     }
@@ -31,17 +35,20 @@ class SettingsRepository @Inject constructor(
     }
     fun getInteractionMode(): InteractionMode {
 
-        val value = context
-            .getSharedPreferences("settings", Context.MODE_PRIVATE)
-            .getString("interaction_mode", InteractionMode.PIECE_FIRST.name)
+        val value = prefs.getString("interaction_mode", InteractionMode.PIECE_FIRST.name)
 
         return InteractionMode.valueOf(value!!)
     }
 
     fun saveInteractionMode(mode: InteractionMode) {
+        prefs.edit { putString("interaction_mode", mode.name) }
+    }
 
-        context
-            .getSharedPreferences("settings", Context.MODE_PRIVATE)
-            .edit { putString("interaction_mode", mode.name) }
+    fun isSoundEnabled(): Boolean {
+        return prefs.getBoolean("sound_enabled", true)
+    }
+
+    fun saveSoundEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean("sound_enabled", enabled).apply()
     }
 }

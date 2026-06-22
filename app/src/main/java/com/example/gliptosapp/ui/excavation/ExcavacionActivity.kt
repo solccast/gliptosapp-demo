@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
+import com.example.gliptosapp.ui.settings.SoundManager
 import com.example.gliptosapp.ui.settings.applyFontScale
 
 class ExcavacionActivity : AppCompatActivity() {
@@ -72,14 +73,23 @@ class ExcavacionActivity : AppCompatActivity() {
     private fun activarHerramienta(herramienta: String, botonActivo: ImageButton) {
         val esCorrecta = verificarHerramientaCorrecta(herramienta)
         if (esCorrecta) {
+            selectedToolSound(herramienta)
             herramientas.forEach { it.isSelected = false }
             botonActivo.isSelected = true
-
             botonActivo.announceForAccessibility("Usando herramienta $herramienta.")
             avanzarProgreso()
         } else {
             // Pasamos la herramienta intentada para armar un mensaje dinámico y educativo
+            SoundManager.playError()
             errorFeedback(herramienta)
+        }
+    }
+
+    private fun selectedToolSound(herramienta: String) {
+        when (herramienta) {
+            "PICO" -> SoundManager.playPico()
+            "PALA" -> SoundManager.playPala()
+            "PINCEL" -> SoundManager.playPincel()
         }
     }
 
@@ -185,4 +195,13 @@ class ExcavacionActivity : AppCompatActivity() {
             .show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        SoundManager.refreshAudioState(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SoundManager.pauseBackgroundMusic()
+    }
 }

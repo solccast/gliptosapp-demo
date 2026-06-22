@@ -66,17 +66,10 @@ class SettingsFragment : BaseFragment() {
                 Lifecycle.State.STARTED
             ) {
                 viewModel.uiState.collect { state ->
-
-                    updateFontSelection(
-                        state.selectedFont
-                    )
-
-                    binding.switchContrast.isChecked =
-                        state.highContrastEnabled
-
-                    updateInteractionMode(
-                        state.interactionMode
-                    )
+                    binding.switchContrast.isChecked = state.highContrastEnabled
+                    binding.switchSounds.isChecked = state.soundsEnabled
+                    updateFontSelection(state.selectedFont)
+                    updateInteractionMode(state.interactionMode)
                 }
             }
         }
@@ -127,9 +120,12 @@ class SettingsFragment : BaseFragment() {
         binding.switchContrast.setOnCheckedChangeListener { _, enabled ->
             viewModel.toggleContrast(enabled)
         }
-
-        binding.backButton.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+        binding.switchSounds.setOnCheckedChangeListener { _, enabled ->
+                viewModel.toggleSounds(enabled)
+            SoundManager.refreshAudioState(requireContext())
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
