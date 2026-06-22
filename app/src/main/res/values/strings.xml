@@ -31,6 +31,7 @@
     <string name="rotacion_der">Rotar fósil hacia la derecha</string>
     <string name="rotacion_izq">Rotar fósil hacia la izquierda</string>
     <string name="jugar">¡Jugar!</string>
+    <string name="fosil_no_desc">Fósil no descubierto</string>
     <string name="btn_ver_ra">Ver en realidad aumentada</string>
     <string name="ver_detalle">Ver detalle</string>
     <string name="coleccion_lista">Lista de fosiles descubiertos y sin descubrir</string>
