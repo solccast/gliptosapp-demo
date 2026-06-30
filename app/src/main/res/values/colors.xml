@@ -28,4 +28,8 @@
     <color name="hc_boton3">#009688</color>
     <color name="hc_fondo_polaroid">#FDC443</color>
     <color name="boton_recursos_azul">#282E53</color>
+    <color name="fondo_correcto">#F0F7E0</color>
+    <color name="borde_correcto">#6B8E23</color>
+    <color name="fondo_incorrecto">#FFF4E6</color>
+    <color name="borde_incorrecto">#F4A261</color>
 </resources>

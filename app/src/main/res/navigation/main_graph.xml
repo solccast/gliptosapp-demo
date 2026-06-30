@@ -63,9 +63,25 @@
         <action
             android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_extraInfoFosileFragment_to_comparativeGameInfoFragment"
+            app:destination="@id/comparativeGameInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/recursosFragment"
         android:name="com.example.gliptosapp.ui.recursos.RecursosFragment"
-        android:label="RecursosFragment" />
+        android:label="RecursosFragment"
+        tools:layout="@layout/fragment_recursos"/>
+    <fragment
+        android:id="@+id/comparativeGameInfoFragment"
+        android:name="com.example.gliptosapp.ui.comparativeGameInfo.ComparativeGameInfoFragment"
+        android:label="ComparativeGameInfoFragment"
+        tools:layout="@layout/fragment_comparative_game_info">
+        <argument
+            android:name="nombreFosil"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_comparativeGameInfoFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 </navigation>

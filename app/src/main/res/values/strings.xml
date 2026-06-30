@@ -26,6 +26,7 @@
 
     <!-- Mensajes de ayuda de la paleontóloga -->
     <string name="como_usar_en_pantalla_ra">¡Apuntá a una superficie y tocá la pantalla para poner a tu fósil en tu entorno!</string>
+    <string name="como_jugar_minijuego">¡Toca una de las opciones para ver si es cierta la comparación!</string>
 
     <!-- Content Descriptions -->
     <string name="rotacion_der">Rotar fósil hacia la derecha</string>
@@ -50,4 +51,12 @@
     <string name="redes_facebook">Facebook</string>
     <string name="redes_youtube">YouTube</string>
     <string name="redes_web">Sitio web</string>
+
+    <!-- Textos minijuego -->
+    <string name="pregunta_cual_es_mas_grande">¿Cuál es más grande?</string>
+    <string name="opcion_camion">Un camión</string>
+    <string name="opcion_fosil">Un gliptodonte</string>
+    <string name="feedback_correcto">¡Gracias por tu ayuda! Ahora tenemos más información</string>
+    <string name="feedback_incorrecto">¡Tenemos que volverlo a intentar!</string>
+    <string name="ver_informacion">Ver información</string>
 </resources>
