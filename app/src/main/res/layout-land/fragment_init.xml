@@ -13,10 +13,11 @@
         android:layout_height="130dp"
         android:src="@drawable/patitas"
         android:contentDescription="@null"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Segunda columna: btnInfo arriba a la derecha -->
     <ImageButton
         android:id="@+id/btnInfo"
         android:layout_width="48dp"
@@ -30,21 +31,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Primera columna: CardView anclada a la izquierda y a la derecha del btnInfo -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCuaderno"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="42dp"
         android:layout_marginStart="42dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="42dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="6dp"
         app:cardBackgroundColor="@color/vinieta"
-        app:layout_constraintTop_toBottomOf="@id/btnInfo"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toStartOf="@id/btnInfo">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,15 +60,15 @@
                 android:orientation="vertical"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp">
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" />
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/perforacion_hoja" />
-
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
+                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
             </LinearLayout>
 
             <ScrollView
@@ -98,7 +100,8 @@
                             android:text="Caminando sobre Gliptodontes"
                             android:textStyle="bold"
                             android:textSize="24sp"
-                            android:textColor="@color/texto1"/>
+                            android:textColor="@color/texto1"
+                            android:accessibilityHeading="true"/>
 
                         <TextView
                             android:id="@+id/txtSubtitulo"
@@ -170,7 +173,8 @@
                             android:contentDescription="@string/recursos"/>
 
                     </GridLayout>
-                </LinearLayout>    </ScrollView>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
