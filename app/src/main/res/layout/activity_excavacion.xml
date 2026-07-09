@@ -113,7 +113,6 @@
             android:accessibilityHeading="true" />
     </LinearLayout>
 
-    <!-- 5. BOTONERA DE HERRAMIENTAS -->
     <LinearLayout
         android:id="@+id/contenedorHerramientas"
         android:layout_width="0dp"
@@ -129,38 +128,101 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/btnPico"
+        <LinearLayout
+            android:id="@+id/btnPicoContenedor"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:layout_weight="1"
             android:layout_margin="6dp"
-            android:src="@drawable/ic_pico"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pico" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pico">
 
-        <ImageButton
-            android:id="@+id/btnPala"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:layout_margin="6dp"
-            android:src="@drawable/ic_pala"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pala" />
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_pico"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
 
-        <ImageButton
-            android:id="@+id/btnPincel"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pico"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPalaContenedor"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:layout_weight="1"
             android:layout_margin="6dp"
-            android:src="@drawable/ic_pincel"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pincel" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pala">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_pala"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pala"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPincelContenedor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pincel">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_pincel"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pincel"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
