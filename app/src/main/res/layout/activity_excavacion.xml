@@ -9,7 +9,7 @@
     android:background="?attr/colorAppPrimary"
     tools:context=".ui.excavation.ExcavacionActivity">
 
-    <!-- 1. IMAGEN DE FONDO -->
+    <!-- IMAGEN DE FONDO -->
     <ImageView
         android:id="@+id/imgFosilFondo"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 2. ÁREA INTERACTIVA -->
+    <!-- ÁREA INTERACTIVA -->
     <View
         android:id="@+id/areaExcavacionClick"
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 3. FILA SUPERIOR: Botón volver + Botones info/config -->
+    <!-- FILA SUPERIOR: Botón volver + Botones info/config -->
     <LinearLayout
         android:id="@+id/contenedorBotonesSuperiores"
         android:layout_width="0dp"
@@ -75,7 +75,7 @@
 
     </LinearLayout>
 
-    <!-- 4. AVATAR KIRA -->
+    <!-- AVATAR KIRA -->
     <LinearLayout
         android:id="@+id/contenedorKira"
         android:layout_width="0dp"
@@ -113,6 +113,7 @@
             android:accessibilityHeading="true" />
     </LinearLayout>
 
+    <!-- CONTENEDOR DE HERRAMIENTAS -->
     <LinearLayout
         android:id="@+id/contenedorHerramientas"
         android:layout_width="0dp"

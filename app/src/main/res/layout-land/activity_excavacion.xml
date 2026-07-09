@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     android:background="?attr/colorAppPrimary">
 
+
+    <!-- IMAGEN DE FONDO -->
     <ImageView
         android:id="@+id/imgFosilFondo"
         android:layout_width="0dp"
@@ -15,6 +17,18 @@
         android:scaleType="centerCrop"
         android:src="@drawable/gliptodonte_1"
         android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ÁREA INTERACTIVA -->
+    <View
+        android:id="@+id/areaExcavacionClick"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Zona de excavación. Selecciona la herramienta correcta para desenterrar el fósil."
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,30 +45,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+    <LinearLayout
+        android:id="@+id/contenedorBotonesSuperiores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_arrow_back"
-        android:background="@drawable/bg_boton_ra"
-        android:contentDescription="Volver"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnInfo"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_help"
-        android:background="@drawable/bg_boton_ra"
-        android:contentDescription="Información"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="@drawable/bg_boton_ra"
+            android:contentDescription="Volver" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/btnInfo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_help"
+            android:background="@drawable/bg_boton_ra"
+            android:contentDescription="Información" />
+    </LinearLayout>
+
+    <!-- CONTENEDOR DE HERRAMIENTAS -->
     <LinearLayout
         android:id="@+id/contenedorHerramientas"
         android:layout_width="wrap_content"
@@ -66,7 +93,7 @@
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnInfo"
+        app:layout_constraintTop_toBottomOf="@id/contenedorBotonesSuperiores"
         app:layout_constraintVertical_bias="0.458">
 
         <LinearLayout
@@ -80,14 +107,12 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_pico"
                 app:tint="@color/selector_icono_herramienta" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,14 +134,12 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_pala"
                 app:tint="@color/selector_icono_herramienta" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,14 +161,12 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_pincel"
                 app:tint="@color/selector_icono_herramienta" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,6 +178,7 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- AVATAR KIRA -->
     <LinearLayout
         android:id="@+id/contenedorKira"
         android:layout_width="0dp"
@@ -187,7 +209,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:fillViewport="true">
-
             <TextView
                 android:id="@+id/txtIndicacionKira"
                 android:layout_width="match_parent"
