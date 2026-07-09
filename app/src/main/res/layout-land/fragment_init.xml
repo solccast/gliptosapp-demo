@@ -107,7 +107,7 @@
                             android:id="@+id/txtSubtitulo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Descubrí los gigantes que habitaron La Plata"
+                            android:text="Descubrí los gigantes que habitaron La Plata hace miles de años"
                             android:textSize="14sp"
                             android:textColor="@color/boton2"/>
                     </LinearLayout>
