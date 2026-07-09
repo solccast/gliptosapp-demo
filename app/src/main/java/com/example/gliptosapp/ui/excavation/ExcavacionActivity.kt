@@ -43,21 +43,36 @@ class ExcavacionActivity : AppCompatActivity() {
         windowInsetsController.isAppearanceLightNavigationBars = false
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.layoutPrincipal) { view, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val margen8dp = (8 * resources.displayMetrics.density).toInt()
+            // Sumamos los insets de las barras del sistema Y de los recortes de cámara (notches)
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            val margen = (8 * resources.displayMetrics.density).toInt()
 
             view.setPadding(0, 0, 0, 0)
 
+            // Botones Superiores: Protegemos Arriba, Izquierda y Derecha
             val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
-            paramsBotones.topMargin = bars.top + margen8dp
+            paramsBotones.topMargin = bars.top + margen
+            paramsBotones.leftMargin = bars.left + margen
+            paramsBotones.rightMargin = bars.right + margen
             binding.contenedorBotonesSuperiores.layoutParams = paramsBotones
 
+            // Herramientas: Protegemos Abajo y Derecha (clave para landscape)
             val paramsHerramientas = binding.contenedorHerramientas.layoutParams as ConstraintLayout.LayoutParams
-            paramsHerramientas.bottomMargin = bars.bottom + margen8dp
+            paramsHerramientas.bottomMargin = bars.bottom + margen
+            paramsHerramientas.rightMargin = bars.right + margen
             binding.contenedorHerramientas.layoutParams = paramsHerramientas
+
+            //  Avatar de Kira: Protegemos Abajo e Izquierda (para evitar la cámara o navbar del lado izquierdo)
+            val paramsKira = binding.contenedorKira.layoutParams as ConstraintLayout.LayoutParams
+            paramsKira.bottomMargin = bars.bottom + margen
+            paramsKira.leftMargin = bars.left + margen
+            binding.contenedorKira.layoutParams = paramsKira
 
             insets
         }
+
 
         // Actualizamos los IDs a los nuevos contenedores
         herramientas = listOf(
