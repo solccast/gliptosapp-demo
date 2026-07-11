@@ -27,12 +27,6 @@
             app:destination="@id/recursosFragment" />
     </fragment>
 
-    <activity
-        android:id="@+id/excavacionActivity"
-        android:name="com.example.gliptosapp.ui.excavation.ExcavacionActivity"
-        android:label="activity_excavacion"
-        tools:layout="@layout/activity_excavacion" />
-
     <fragment
         android:id="@+id/colectionFragment"
         android:name="com.example.gliptosapp.ui.colection.ColectionFragment"

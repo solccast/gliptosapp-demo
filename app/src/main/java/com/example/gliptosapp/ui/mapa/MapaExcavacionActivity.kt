@@ -1,5 +1,13 @@
 package com.example.gliptosapp.ui.mapa
 
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.SystemBarStyle
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowCompat
+import android.graphics.Color
+import androidx.constraintlayout.widget.ConstraintLayout
+import android.content.Intent
 import androidx.core.content.ContextCompat
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.MapTileIndex
@@ -14,7 +22,9 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import android.widget.Button
 import android.preference.PreferenceManager
+import android.widget.ImageButton
 import com.example.gliptosapp.R
+import com.example.gliptosapp.ui.excavation.ExcavacionActivity
 
 class MapaExcavacionActivity : AppCompatActivity() {
 
@@ -23,7 +33,14 @@ class MapaExcavacionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. IMPORTANTE: Inicializar la configuración de osmdroid ANTES del layout
+        // 1. Configuración de pantalla completa (Edge-to-Edge)
+        // Se debe llamar ANTES de setContentView
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D")),
+            navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D"))
+        )
+
+        // 2. Inicializar osmdroid
         Configuration.getInstance().load(
             applicationContext,
             PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -31,15 +48,31 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_mapa_excavacion)
 
+        // 3. Control de apariencia de las barras (iconos claros/oscuros)
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.isAppearanceLightStatusBars = false
+        windowInsetsController.isAppearanceLightNavigationBars = false
+
+        // Referencias
+        val layoutPrincipal = findViewById<ConstraintLayout>(R.id.layoutPrincipalMapa)
         mapView = findViewById(R.id.mapView)
-        val btnVolver = findViewById<Button>(R.id.btnVolver)
+        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+
+        // 4. Lógica de Insets (La clave para evitar que el navbar tape el mapa)
+        ViewCompat.setOnApplyWindowInsetsListener(layoutPrincipal) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            // Aplicamos padding a la raíz: esto mueve todo el contenido a la zona segura
+            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
 
         configurarMapa()
-        //aplicarFiltroCartografico()
-        agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536)) // Plaza Moreno (Ejemplo)
+        agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
 
         btnVolver.setOnClickListener {
-            finish() // Cierra la actividad y vuelve al menú
+            finish()
         }
     }
 
@@ -138,22 +171,28 @@ class MapaExcavacionActivity : AppCompatActivity() {
     private fun agregarMarcadorExcavacion(punto: GeoPoint) {
         val marcador = Marker(mapView)
         marcador.position = punto
-        // Centramos el ancla para que el toque de los niños coincida con el centro visual de la silueta
+        // Centramos el ancla para que el toque coincida con el centro visual
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
 
-        // Lenguaje simple e instrucciones claras para TalkBack y para niños
-        marcador.title = "Fósil detectado"
-        marcador.subDescription = "Toca una vez para excavar"
+        // MEJORA A11Y: Lenguaje descriptivo. Evitamos instrucciones de hardware ("Toca una vez")
+        // porque TalkBack maneja sus propias instrucciones ("Tocar dos veces para activar").
+        marcador.title = "Punto de excavación"
+        marcador.subDescription = "Fósil de Gliptodonte oculto"
 
-        // Aquí iría tu VectorDrawable (SVG convertido a XML)
-        // Asegúrate de que el XML de este icono defina android:width="48dp" y android:height="48dp"
+        // El VectorDrawable debe medir 48dp x 48dp para cumplir WCAG (Target Size)
         marcador.icon = ContextCompat.getDrawable(mapView.context, R.drawable.ic_gliptodonte)
 
         marcador.setOnMarkerClickListener { _, _ ->
-            // Aquí debe ir la lógica para abrir las herramientas, no un simple 'true'
-            // Por ejemplo: mostrarMenuHerramientas()
+            // UX Heurística 3: Control y libertad / Visibilidad del estado
+            // Redirigimos a la pantalla de excavación usando un Intent.
+            val intent = Intent(this@MapaExcavacionActivity, ExcavacionActivity::class.java)
 
-            // Retornamos true para indicar que consumimos el evento de clic
+            // Opcional pero recomendado: Pasamos qué fósil es para que la ExcavacionActivity sepa qué cargar
+            // intent.putExtra("TIPO_FOSIL", "gliptodonte")
+
+            startActivity(intent)
+
+            // Retornamos 'true' para consumir el evento y que el mapa no intente centrarse o mostrar la burbuja por defecto de osmdroid.
             true
         }
 
