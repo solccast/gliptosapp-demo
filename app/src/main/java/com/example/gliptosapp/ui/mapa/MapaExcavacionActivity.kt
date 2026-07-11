@@ -1,9 +1,8 @@
 package com.example.gliptosapp.ui.mapa
 
-import org.osmdroid.tileprovider.tilesource.XYTileSource
+import androidx.core.content.ContextCompat
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.MapTileIndex
-
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
@@ -139,25 +138,27 @@ class MapaExcavacionActivity : AppCompatActivity() {
     private fun agregarMarcadorExcavacion(punto: GeoPoint) {
         val marcador = Marker(mapView)
         marcador.position = punto
-        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        // Centramos el ancla para que el toque de los niños coincida con el centro visual de la silueta
+        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
 
-        // ACCESIBILIDAD (WCAG): Descripción para lectores de pantalla
-        marcador.title = "Zona de excavación disponible"
-        marcador.subDescription = "Toca dos veces para usar tus herramientas aquí."
+        // Lenguaje simple e instrucciones claras para TalkBack y para niños
+        marcador.title = "Fósil detectado"
+        marcador.subDescription = "Toca una vez para excavar"
 
-        // TODO: Aquí debes cargar tu ícono personalizado.
-        // Asegúrate de que el ícono (drawable) tenga al menos 48x48dp
-        // y use el color "errores" (#D85A3C) para garantizar alto contraste sobre el mapa filtrado.
-        // marcador.icon = ContextCompat.getDrawable(this, R.drawable.ic_pin_excavacion_rojo)
+        // Aquí iría tu VectorDrawable (SVG convertido a XML)
+        // Asegúrate de que el XML de este icono defina android:width="48dp" y android:height="48dp"
+        marcador.icon = ContextCompat.getDrawable(mapView.context, R.drawable.ic_gliptodonte)
 
-        marcador.setOnMarkerClickListener { marker, _ ->
-            // Iniciar la lógica/Activity de las herramientas de excavación
-            // Pasar el ID del fósil por intent
+        marcador.setOnMarkerClickListener { _, _ ->
+            // Aquí debe ir la lógica para abrir las herramientas, no un simple 'true'
+            // Por ejemplo: mostrarMenuHerramientas()
+
+            // Retornamos true para indicar que consumimos el evento de clic
             true
         }
 
         mapView.overlays.add(marcador)
-        mapView.invalidate() // Refrescar el mapa
+        mapView.invalidate()
     }
 
     override fun onResume() {

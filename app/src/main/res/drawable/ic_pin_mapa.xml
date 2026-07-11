@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="28dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <!-- Cabeza del alfiler (rojo, contraste ~6:1 sobre blanco) -->
+    <path
+        android:fillColor="#EE2E24"
+        android:strokeColor="#1A1A1A"
+        android:strokeWidth="16"
+        android:pathData="M640,480L720,560L720,640L520,640L440,640L240,640L240,560L320,480L320,200L280,200L280,120L680,120L680,200L640,200L640,480Z"/>
+    <!-- Punta del alfiler (gris oscuro, contraste ~11:1 sobre blanco) -->
+    <path
+        android:fillColor="#C4C4C4"
+        android:strokeColor="#1A1A1A"
+        android:strokeWidth="16"
+        android:pathData="M520,640L520,880L480,920L440,880L440,640Z"/>
+</vector>
