@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_initFragment_to_excavacionActivity"
-            app:destination="@id/excavacionActivity" />
+            app:destination="@id/mapaExcavacionActivity" />
 
         <action
             android:id="@+id/action_initFragment_to_colectionFragment"
@@ -84,4 +84,8 @@
             android:id="@+id/action_comparativeGameInfoFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mapaExcavacionActivity"
+        android:name="com.example.gliptosapp.ui.mapa.MapaExcavacionActivity"
+        android:label="MapaExcavacionActivity" />
 </navigation>

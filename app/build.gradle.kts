@@ -67,4 +67,7 @@ dependencies {
     // RA
     implementation("com.google.ar:core:1.38.0")
     implementation("io.github.sceneview:arsceneview:2.2.1")
+
+    //OpenStreetMap
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
 }
