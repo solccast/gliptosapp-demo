@@ -14,8 +14,6 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.MapTileIndex
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.osmdroid.config.Configuration
@@ -23,7 +21,6 @@ import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import android.widget.Button
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.ImageButton
@@ -36,6 +33,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.graphics.DashPathEffect
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
@@ -83,7 +81,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         configurarMapa()
         agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
         agregarMarcadorExcavacion(GeoPoint(-34.9150, -57.9480))
-        agregarOverlayDebug()
+        agregarZonasDePista()
         // Agregá todos los que quieras sin impacto de performance
         configurarTapEnZonaVacia()
 
@@ -252,34 +250,41 @@ class MapaExcavacionActivity : AppCompatActivity() {
         )
     }
 
-    private fun agregarOverlayDebug() {
-        val overlayDebug = object : org.osmdroid.views.overlay.Overlay() {
+    private fun agregarZonasDePista() {
+        val overlayPistas = object : org.osmdroid.views.overlay.Overlay() {
             override fun draw(
                 canvas: android.graphics.Canvas,
                 mapView: MapView,
                 shadow: Boolean
             ) {
                 if (shadow) return
-                val paint = android.graphics.Paint().apply {
-                    color = android.graphics.Color.argb(120, 0, 200, 0)
+
+                // Fondo del círculo: Un terracota muy sutil y transparente
+                val paintFondo = android.graphics.Paint().apply {
+                    color = android.graphics.Color.parseColor("#33D85A3C") // 20% de opacidad del color #D85A3C
                     style = android.graphics.Paint.Style.FILL
                 }
+
+                // Borde del círculo: Línea punteada de mapa de expedición
                 val paintBorde = android.graphics.Paint().apply {
-                    color = android.graphics.Color.GREEN
+                    color = android.graphics.Color.parseColor("#D85A3C")
                     style = android.graphics.Paint.Style.STROKE
-                    strokeWidth = 3f
+                    strokeWidth = 5f
+                    // Crea un efecto de línea punteada (15px de línea, 10px de espacio)
+                    pathEffect = DashPathEffect(floatArrayOf(15f, 10f), 0f)
                 }
+
                 marcadores.forEach { marcador ->
                     val pixel = mapView.projection.toPixels(marcador.position, null)
                     val radio = 54 * resources.displayMetrics.density
-                    canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paint)
+
+                    canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintFondo)
                     canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintBorde)
                 }
             }
         }
-        mapView.overlays.add(overlayDebug)
+        mapView.overlays.add(overlayPistas)
     }
-
     private fun navegarAExcavacion() {
         val intent = Intent(this, ExcavacionActivity::class.java)
         startActivity(intent)

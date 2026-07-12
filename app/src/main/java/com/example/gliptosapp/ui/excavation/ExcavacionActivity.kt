@@ -86,6 +86,16 @@ class ExcavacionActivity : AppCompatActivity() {
 
         // Al crear o rotar la pantalla, restauramos cómo se veía
         restaurarEstadoVisual()
+
+        // Anunciar el cambio de pantalla a TalkBack
+        ViewCompat.setAccessibilityPaneTitle(window.decorView, "Pantalla de Excavación")
+
+        // Forzar el foco de accesibilidad en la indicación de Kira tras un breve retraso
+        binding.txtIndicacionKira.postDelayed({
+            binding.txtIndicacionKira.sendAccessibilityEvent(
+                android.view.accessibility.AccessibilityEvent.TYPE_VIEW_FOCUSED
+            )
+        }, 500) // Medio segundo de retraso para asegurar que la actividad ya cargó visualmente
     }
 
     private fun restaurarEstadoVisual() {

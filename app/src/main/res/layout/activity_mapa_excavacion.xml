@@ -69,6 +69,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:importantForAccessibility="yes"
+        android:contentDescription="Terreno inexplorado. Deslizá el dedo para buscar fósiles."
         app:layout_constraintTop_toBottomOf="@id/btnVolver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
