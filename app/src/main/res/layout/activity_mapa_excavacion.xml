@@ -56,7 +56,20 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:importantForAccessibility="no"
-        android:contentDescription="Mapa estilo antiguo de La Plata."
+        android:contentDescription="Mapa de la ciudad de La Plata."
+        app:layout_constraintTop_toBottomOf="@id/btnVolver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- View transparente sobre el mapa, solo para TalkBack -->
+    <View
+        android:id="@+id/viewAccesibilidad"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Transparencia sobre el mapa**//"
+        android:importantForAccessibility="yes"
         app:layout_constraintTop_toBottomOf="@id/btnVolver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

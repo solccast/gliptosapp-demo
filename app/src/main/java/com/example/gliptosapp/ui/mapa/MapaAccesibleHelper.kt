@@ -34,9 +34,9 @@ class MapaAccesibleHelper(
 
     // ¿Qué nodo virtual hay en esta coordenada de pantalla?
     override fun getVirtualViewAt(x: Float, y: Float): Int {
-        val radio = (48 * hostView.resources.displayMetrics.density) / 2
+        val radio = 72 * hostView.resources.displayMetrics.density // radio más generoso
         return marcadores.firstOrNull { marcador ->
-            val pixel = mapView.projection.toPixels(marcador.position, null)
+            val pixel = pixelEnHostView(marcador.position)
             Math.abs(pixel.x - x) < radio && Math.abs(pixel.y - y) < radio
         }?.id ?: INVALID_ID
     }
@@ -55,8 +55,8 @@ class MapaAccesibleHelper(
         node: AccessibilityNodeInfoCompat
     ) {
         val marcador = marcadores.getOrNull(virtualViewId) ?: return
-        val pixel = mapView.projection.toPixels(marcador.position, null)
-        val size = (48 * hostView.resources.displayMetrics.density).toInt()
+        val pixel = pixelEnHostView(marcador.position)
+        val size = (72 * hostView.resources.displayMetrics.density).toInt()
 
         node.contentDescription = marcador.descripcion
         node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
@@ -85,5 +85,25 @@ class MapaAccesibleHelper(
             }
             else -> false
         }
+    }
+
+    private fun pixelEnHostView(position: GeoPoint): android.graphics.Point {
+        // Coordenada en el sistema del mapView
+        val pixelEnMapa = mapView.projection.toPixels(position, null)
+
+        // Offset entre los dos views en pantalla
+        val locationMapa = IntArray(2)
+        mapView.getLocationOnScreen(locationMapa)
+
+        val locationHost = IntArray(2)
+        hostView.getLocationOnScreen(locationHost)
+
+        val offsetX = locationMapa[0] - locationHost[0]
+        val offsetY = locationMapa[1] - locationHost[1]
+
+        return android.graphics.Point(
+            pixelEnMapa.x + offsetX,
+            pixelEnMapa.y + offsetY
+        )
     }
 }

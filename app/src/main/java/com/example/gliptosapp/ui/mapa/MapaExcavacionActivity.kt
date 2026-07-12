@@ -25,15 +25,22 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import android.widget.Button
 import android.preference.PreferenceManager
+import android.view.View
 import android.widget.ImageButton
 import com.example.gliptosapp.R
 import com.example.gliptosapp.ui.excavation.ExcavacionActivity
-
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
+import org.osmdroid.events.MapListener
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private val marcadores = mutableListOf<Marker>()
-    private var ultimoMarcadorAnunciado: Marker? = null
+    private lateinit var accessibilityHelper: MapaAccesibleHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +76,15 @@ class MapaExcavacionActivity : AppCompatActivity() {
             insets
         }
 
+        val viewAccesibilidad = findViewById<View>(R.id.viewAccesibilidad)
+        accessibilityHelper = MapaAccesibleHelper(viewAccesibilidad, mapView)
+        ViewCompat.setAccessibilityDelegate(viewAccesibilidad, accessibilityHelper)
+
         configurarMapa()
         agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
+        agregarMarcadorExcavacion(GeoPoint(-34.9150, -57.9480))
+        agregarOverlayDebug()
+        // Agregá todos los que quieras sin impacto de performance
         configurarTapEnZonaVacia()
 
         // TalkBack: anunciar instrucciones al entrar
@@ -113,6 +127,29 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
     }
 
+    private fun feedbackZonaVacia() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(80, VibrationEffect.DEFAULT_AMPLITUDE)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(150)
+        }
+
+        mapView.announceForAccessibility(
+            "En esta zona no se encontraron fósiles. " +
+                    "Intentá explorar hacia el centro de la ciudad."
+        )
+    }
+
     private fun configurarTapEnZonaVacia() {
         val receptor = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
@@ -123,16 +160,13 @@ class MapaExcavacionActivity : AppCompatActivity() {
                         (pixelMarcador.x - pixelTap.x).toDouble(),
                         (pixelMarcador.y - pixelTap.y).toDouble()
                     )
-                    distancia < 80
+                    distancia < radioEnPixeles()
                 }
 
                 if (!tapCercaDeMarcador) {
-                    ultimoMarcadorAnunciado = null
-                    mapView.announceForAccessibility(
-                        "En esta zona no se encontraron fósiles. " +
-                                "Intentá explorar hacia el centro de la ciudad."
-                    )
+                    feedbackZonaVacia()
                 }
+
                 return true
             }
 
@@ -141,6 +175,16 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         mapView.overlays.add(0, MapEventsOverlay(receptor))
     }
+
+    // Radio dinámico según zoom
+    private fun radioEnPixeles(): Float {
+        return when {
+            mapView.zoomLevelDouble >= 15 -> 60f
+            mapView.zoomLevelDouble >= 13 -> 80f
+            else -> 100f
+        }
+    }
+
 
     private fun configurarMapa() {
         mapView.setMultiTouchControls(true)
@@ -172,37 +216,68 @@ class MapaExcavacionActivity : AppCompatActivity() {
         mapView.setScrollableAreaLimitDouble(BoundingBox(-34.88, -57.90, -34.97, -58.00))
         mapView.setMinZoomLevel(12.0)
         mapView.setMaxZoomLevel(16.0)
+
+        // Actualizar nodos accesibles cuando el mapa se mueve
+        mapView.addMapListener(object : MapListener {
+            override fun onScroll(event: ScrollEvent): Boolean {
+                accessibilityHelper.actualizarPosiciones()
+                return false
+            }
+            override fun onZoom(event: ZoomEvent): Boolean {
+                accessibilityHelper.actualizarPosiciones()
+                return false
+            }
+        })
     }
 
     private fun agregarMarcadorExcavacion(punto: GeoPoint) {
+        // Marcador visual (igual que antes)
         val marcador = Marker(mapView)
         marcador.position = punto
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-        marcador.title = "Punto de excavación"
-        marcador.subDescription = "Fósil de Gliptodonte oculto"
         marcador.icon = ContextCompat.getDrawable(mapView.context, R.drawable.ic_gliptodonte)
-
-        marcador.setOnMarkerClickListener { m, _ ->
-            if (isTalkBackActivo()) {
-                if (ultimoMarcadorAnunciado == m) {
-                    // Segunda interacción → navegar
-                    navegarAExcavacion()
-                } else {
-                    // Primera interacción → anunciar
-                    ultimoMarcadorAnunciado = m
-                    mapView.announceForAccessibility(
-                        "Zona de excavación encontrada. Tocá dos veces para inspeccionar."
-                    )
-                }
-            } else {
-                navegarAExcavacion()
-            }
+        marcador.setOnMarkerClickListener { _, _ ->
+            if (!isTalkBackActivo()) navegarAExcavacion()
             true
         }
-
         marcadores.add(marcador)
         mapView.overlays.add(marcador)
         mapView.invalidate()
+
+        // Nodo virtual para TalkBack (sin View real)
+        accessibilityHelper.agregarMarcador(
+            position = punto,
+            descripcion = "Zona de excavación. Fósil de Gliptodonte oculto.",
+            onActivar = { navegarAExcavacion() }
+        )
+    }
+
+    private fun agregarOverlayDebug() {
+        val overlayDebug = object : org.osmdroid.views.overlay.Overlay() {
+            override fun draw(
+                canvas: android.graphics.Canvas,
+                mapView: MapView,
+                shadow: Boolean
+            ) {
+                if (shadow) return
+                val paint = android.graphics.Paint().apply {
+                    color = android.graphics.Color.argb(120, 0, 200, 0)
+                    style = android.graphics.Paint.Style.FILL
+                }
+                val paintBorde = android.graphics.Paint().apply {
+                    color = android.graphics.Color.GREEN
+                    style = android.graphics.Paint.Style.STROKE
+                    strokeWidth = 3f
+                }
+                marcadores.forEach { marcador ->
+                    val pixel = mapView.projection.toPixels(marcador.position, null)
+                    val radio = 54 * resources.displayMetrics.density
+                    canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paint)
+                    canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintBorde)
+                }
+            }
+        }
+        mapView.overlays.add(overlayDebug)
     }
 
     private fun navegarAExcavacion() {
