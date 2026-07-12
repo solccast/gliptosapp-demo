@@ -137,7 +137,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(
-                VibrationEffect.createOneShot(80, VibrationEffect.DEFAULT_AMPLITUDE)
+                VibrationEffect.createOneShot(150, 230)
             )
         } else {
             @Suppress("DEPRECATION")

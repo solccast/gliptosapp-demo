@@ -68,7 +68,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="Transparencia sobre el mapa**//"
         android:importantForAccessibility="yes"
         app:layout_constraintTop_toBottomOf="@id/btnVolver"
         app:layout_constraintBottom_toBottomOf="parent"
