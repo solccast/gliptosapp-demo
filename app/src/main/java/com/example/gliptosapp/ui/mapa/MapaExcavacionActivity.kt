@@ -1,5 +1,8 @@
 package com.example.gliptosapp.ui.mapa
 
+import android.view.accessibility.AccessibilityManager
+import org.osmdroid.events.MapEventsReceiver
+import org.osmdroid.views.overlay.MapEventsOverlay
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.SystemBarStyle
 import androidx.core.view.ViewCompat
@@ -29,18 +32,17 @@ import com.example.gliptosapp.ui.excavation.ExcavacionActivity
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
+    private val marcadores = mutableListOf<Marker>()
+    private var ultimoMarcadorAnunciado: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. Configuración de pantalla completa (Edge-to-Edge)
-        // Se debe llamar ANTES de setContentView
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D")),
             navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D"))
         )
 
-        // 2. Inicializar osmdroid
         Configuration.getInstance().load(
             applicationContext,
             PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -48,86 +50,114 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_mapa_excavacion)
 
-        // 3. Control de apariencia de las barras (iconos claros/oscuros)
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = false
         windowInsetsController.isAppearanceLightNavigationBars = false
 
-        // Referencias
         val layoutPrincipal = findViewById<ConstraintLayout>(R.id.layoutPrincipalMapa)
         mapView = findViewById(R.id.mapView)
         val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+        val btnZoomIn = findViewById<ImageButton>(R.id.btnZoomIn)
+        val btnZoomOut = findViewById<ImageButton>(R.id.btnZoomOut)
+        val btnAyuda = findViewById<ImageButton>(R.id.btnAyuda)
 
-        // 4. Lógica de Insets (La clave para evitar que el navbar tape el mapa)
         ViewCompat.setOnApplyWindowInsetsListener(layoutPrincipal) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
-            // Aplicamos padding a la raíz: esto mueve todo el contenido a la zona segura
             view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
 
         configurarMapa()
         agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
+        configurarTapEnZonaVacia()
 
-        btnVolver.setOnClickListener {
-            finish()
+        // TalkBack: anunciar instrucciones al entrar
+        mapView.post {
+            mostrarInstruccionesIniciales()
+        }
+
+        btnVolver.setOnClickListener { finish() }
+
+        // Zoom accesible
+        btnZoomIn.setOnClickListener {
+            mapView.controller.zoomIn()
+            mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
+        }
+
+        btnZoomOut.setOnClickListener {
+            mapView.controller.zoomOut()
+            mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
+        }
+
+        // Botón de ayuda: re-anuncia instrucciones
+        btnAyuda.setOnClickListener {
+            mostrarInstruccionesIniciales()
         }
     }
 
-    /*
-    private fun configurarMapa() {
-        mapView.setMultiTouchControls(true)
-        val mapController = mapView.controller
-
-        // 1. CONFIGURACIÓN DEL MAPA LIMPIO (Sin comercios, ideal para niños)
-        // Usamos el servidor de CARTO Voyager, que resalta calles e instituciones sin ruido visual.
-        val mapaLimpioTileSource = XYTileSource(
-            "CartoVoyager",
-            1,
-            20, // Zoom máximo
-            256,
-            ".png",
-            arrayOf(
-                "https://a.basemaps.cartocdn.com/rastertiles/voyager/",
-                "https://b.basemaps.cartocdn.com/rastertiles/voyager/",
-                "https://c.basemaps.cartocdn.com/rastertiles/voyager/"
-            )
-        )
-        mapView.setTileSource(mapaLimpioTileSource)
-
-        // Nivel de zoom y centro
-        mapController.setZoom(16.0)
-        val laPlataCenter = GeoPoint(-34.9205, -57.9536)
-        mapController.setCenter(laPlataCenter)
-
-        // Límites para evitar que se pierdan
-        val limitesLaPlata = BoundingBox(-34.88, -57.90, -34.97, -58.00)
-        mapView.setScrollableAreaLimitDouble(limitesLaPlata)
-        mapView.setMinZoomLevel(12.0)
-        mapView.setMaxZoomLevel(20.0)
+    private fun isTalkBackActivo(): Boolean {
+        val am = getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
+        return am.isEnabled && am.isTouchExplorationEnabled
     }
-    */
 
+    private fun mostrarInstruccionesIniciales() {
+        if (isTalkBackActivo()) {
+            mapView.announceForAccessibility(
+                "Mapa de La Plata. Explorá la pantalla para encontrar " +
+                        "zonas de excavación marcadas con chinches rojas. " +
+                        "Cuando encuentres una, tocá dos veces para excavar. " +
+                        "Usá los botones de acercar y alejar para navegar el mapa."
+            )
+        }
+    }
+
+    private fun configurarTapEnZonaVacia() {
+        val receptor = object : MapEventsReceiver {
+            override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
+                val tapCercaDeMarcador = marcadores.any { marcador ->
+                    val pixelMarcador = mapView.projection.toPixels(marcador.position, null)
+                    val pixelTap = mapView.projection.toPixels(p, null)
+                    val distancia = Math.hypot(
+                        (pixelMarcador.x - pixelTap.x).toDouble(),
+                        (pixelMarcador.y - pixelTap.y).toDouble()
+                    )
+                    distancia < 80
+                }
+
+                if (!tapCercaDeMarcador) {
+                    ultimoMarcadorAnunciado = null
+                    mapView.announceForAccessibility(
+                        "En esta zona no se encontraron fósiles. " +
+                                "Intentá explorar hacia el centro de la ciudad."
+                    )
+                }
+                return true
+            }
+
+            override fun longPressHelper(p: GeoPoint): Boolean = false
+        }
+
+        mapView.overlays.add(0, MapEventsOverlay(receptor))
+    }
 
     private fun configurarMapa() {
         mapView.setMultiTouchControls(true)
+        // Deshabilitamos los botones nativos de osmdroid
+        // porque no son accesibles para TalkBack
+        mapView.zoomController.setVisibility(
+            org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER
+        )
+
         val mapController = mapView.controller
 
-        // 1. EL PROVEEDOR PERSONALIZADO PARA STAMEN WATERCOLOR
         val mapaWatercolor = object : OnlineTileSourceBase(
-            "StadiaStamenWatercolor",
-            1,  // Nivel de zoom mínimo
-            16, // Nivel de zoom máximo (¡Crítico para Acuarela!)
-            256,
-            ".jpg", // Formato requerido por Stadia para Acuarela
+            "StadiaStamenWatercolor", 1, 16, 256, ".jpg",
             arrayOf("https://tiles.stadiamaps.com/tiles/stamen_watercolor/")
         ) {
             override fun getTileURLString(pMapTileIndex: Long): String {
-                // Aquí construimos la URL e INYECTAMOS LA API KEY
                 val apiKey = "ffacce07-a9c2-4d8a-9f4a-6e6cb7598fac"
-
                 return baseUrl +
                         MapTileIndex.getZoom(pMapTileIndex) + "/" +
                         MapTileIndex.getX(pMapTileIndex) + "/" +
@@ -137,76 +167,49 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
 
         mapView.setTileSource(mapaWatercolor)
-
-        // 2. Nivel de zoom inicial y centro
-        mapController.setZoom(14.0) // Lo alejamos un poco porque el máximo es 16
-        val laPlataCenter = GeoPoint(-34.9205, -57.9536)
-        mapController.setCenter(laPlataCenter)
-
-        // 3. UX: Prevención de errores (Límites)
-        val limitesLaPlata = BoundingBox(-34.88, -57.90, -34.97, -58.00)
-        mapView.setScrollableAreaLimitDouble(limitesLaPlata)
+        mapController.setZoom(14.0)
+        mapController.setCenter(GeoPoint(-34.9205, -57.9536))
+        mapView.setScrollableAreaLimitDouble(BoundingBox(-34.88, -57.90, -34.97, -58.00))
         mapView.setMinZoomLevel(12.0)
         mapView.setMaxZoomLevel(16.0)
-    }
-
-    private fun aplicarFiltroCartografico() {
-        // Generamos un tono pergamino usando el color "vinieta" / "texto2"
-        val colorMatrix = ColorMatrix()
-        colorMatrix.setSaturation(0f) // Quitamos los colores chillones de las calles (Sobrecarga cognitiva)
-
-        // Tinte tierra/pergamino
-        val sepiaMatrix = ColorMatrix(floatArrayOf(
-            1.2f, 0.0f, 0.0f, 0.0f, 40.0f,
-            0.0f, 1.0f, 0.0f, 0.0f, 20.0f,
-            0.0f, 0.0f, 0.8f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
-        ))
-        colorMatrix.postConcat(sepiaMatrix)
-
-        val filter = ColorMatrixColorFilter(colorMatrix)
-        mapView.overlayManager.tilesOverlay.setColorFilter(filter)
     }
 
     private fun agregarMarcadorExcavacion(punto: GeoPoint) {
         val marcador = Marker(mapView)
         marcador.position = punto
-        // Centramos el ancla para que el toque coincida con el centro visual
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-
-        // MEJORA A11Y: Lenguaje descriptivo. Evitamos instrucciones de hardware ("Toca una vez")
-        // porque TalkBack maneja sus propias instrucciones ("Tocar dos veces para activar").
         marcador.title = "Punto de excavación"
         marcador.subDescription = "Fósil de Gliptodonte oculto"
-
-        // El VectorDrawable debe medir 48dp x 48dp para cumplir WCAG (Target Size)
         marcador.icon = ContextCompat.getDrawable(mapView.context, R.drawable.ic_gliptodonte)
 
-        marcador.setOnMarkerClickListener { _, _ ->
-            // UX Heurística 3: Control y libertad / Visibilidad del estado
-            // Redirigimos a la pantalla de excavación usando un Intent.
-            val intent = Intent(this@MapaExcavacionActivity, ExcavacionActivity::class.java)
-
-            // Opcional pero recomendado: Pasamos qué fósil es para que la ExcavacionActivity sepa qué cargar
-            // intent.putExtra("TIPO_FOSIL", "gliptodonte")
-
-            startActivity(intent)
-
-            // Retornamos 'true' para consumir el evento y que el mapa no intente centrarse o mostrar la burbuja por defecto de osmdroid.
+        marcador.setOnMarkerClickListener { m, _ ->
+            if (isTalkBackActivo()) {
+                if (ultimoMarcadorAnunciado == m) {
+                    // Segunda interacción → navegar
+                    navegarAExcavacion()
+                } else {
+                    // Primera interacción → anunciar
+                    ultimoMarcadorAnunciado = m
+                    mapView.announceForAccessibility(
+                        "Zona de excavación encontrada. Tocá dos veces para inspeccionar."
+                    )
+                }
+            } else {
+                navegarAExcavacion()
+            }
             true
         }
 
+        marcadores.add(marcador)
         mapView.overlays.add(marcador)
         mapView.invalidate()
     }
 
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
+    private fun navegarAExcavacion() {
+        val intent = Intent(this, ExcavacionActivity::class.java)
+        startActivity(intent)
     }
 
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
-    }
+    override fun onResume() { super.onResume(); mapView.onResume() }
+    override fun onPause() { super.onPause(); mapView.onPause() }
 }
