@@ -32,18 +32,9 @@ class MapaAccesibleHelper(
 
     // Convierte coordenadas del mapView al sistema del hostView
     private fun pixelEnHostView(position: GeoPoint): android.graphics.Point {
-        val pixelEnMapa = mapView.projection.toPixels(position, null)
-
-        val locationMapa = IntArray(2)
-        mapView.getLocationOnScreen(locationMapa)
-
-        val locationHost = IntArray(2)
-        hostView.getLocationOnScreen(locationHost)
-
-        return android.graphics.Point(
-            pixelEnMapa.x + (locationMapa[0] - locationHost[0]),
-            pixelEnMapa.y + (locationMapa[1] - locationHost[1])
-        )
+        // Al estar superpuestas al 100%, la proyección del mapa
+        // coincide perfectamente con los píxeles de la pantalla.
+        return mapView.projection.toPixels(position, null)
     }
 
     override fun getVirtualViewAt(x: Float, y: Float): Int {

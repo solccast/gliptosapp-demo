@@ -34,6 +34,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.graphics.DashPathEffect
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
@@ -78,6 +80,27 @@ class MapaExcavacionActivity : AppCompatActivity() {
         accessibilityHelper = MapaAccesibleHelper(viewAccesibilidad, mapView)
         ViewCompat.setAccessibilityDelegate(viewAccesibilidad, accessibilityHelper)
 
+        // Dejar que los toques físicos pasen de largo (Permite panear el mapa y clics nativos)
+        viewAccesibilidad.isClickable = false
+        viewAccesibilidad.isFocusable = false
+
+        // Pasar la exploración táctil al Helper (se mantiene igual)
+        viewAccesibilidad.setOnHoverListener { _, event ->
+            accessibilityHelper.dispatchHoverEvent(event)
+        }
+
+        // Interceptar el doble toque de TalkBack SIN bloquear toques físicos
+        ViewCompat.replaceAccessibilityAction(
+            viewAccesibilidad,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Explorar zona"
+        ) { _, _ ->
+            if (isTalkBackActivo()) {
+                feedbackZonaVacia()
+            }
+            true
+        }
+
         configurarMapa()
         agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
         agregarMarcadorExcavacion(GeoPoint(-34.9150, -57.9480))
@@ -118,7 +141,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         if (isTalkBackActivo()) {
             mapView.announceForAccessibility(
                 "Mapa de La Plata. Explorá la pantalla para encontrar " +
-                        "zonas de excavación marcadas con chinches rojas. " +
+                        "zonas de excavación. " +
                         "Cuando encuentres una, tocá dos veces para excavar. " +
                         "Usá los botones de acercar y alejar para navegar el mapa."
             )
@@ -143,7 +166,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
 
         mapView.announceForAccessibility(
-            "En esta zona no se encontraron fósiles. " +
+            "En esta zona no hicieron denuncias de fósiles. " +
                     "Intentá explorar hacia el centro de la ciudad."
         )
     }
@@ -151,6 +174,9 @@ class MapaExcavacionActivity : AppCompatActivity() {
     private fun configurarTapEnZonaVacia() {
         val receptor = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
+                // Si TalkBack está activo, osmdroid ignora el toque.
+                if (isTalkBackActivo()) return false
+
                 val tapCercaDeMarcador = marcadores.any { marcador ->
                     val pixelMarcador = mapView.projection.toPixels(marcador.position, null)
                     val pixelTap = mapView.projection.toPixels(p, null)
@@ -259,13 +285,13 @@ class MapaExcavacionActivity : AppCompatActivity() {
             ) {
                 if (shadow) return
 
-                // Fondo del círculo: Un terracota muy sutil y transparente
+                // Color del circulo
                 val paintFondo = android.graphics.Paint().apply {
                     color = android.graphics.Color.parseColor("#33D85A3C") // 20% de opacidad del color #D85A3C
                     style = android.graphics.Paint.Style.FILL
                 }
 
-                // Borde del círculo: Línea punteada de mapa de expedición
+                // Borde punteado
                 val paintBorde = android.graphics.Paint().apply {
                     color = android.graphics.Color.parseColor("#D85A3C")
                     style = android.graphics.Paint.Style.STROKE
