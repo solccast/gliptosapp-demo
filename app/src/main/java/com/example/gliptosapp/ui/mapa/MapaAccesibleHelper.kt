@@ -7,7 +7,6 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.customview.widget.ExploreByTouchHelper
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-
 class MapaAccesibleHelper(
     private val hostView: View,
     private val mapView: MapView
@@ -27,21 +26,35 @@ class MapaAccesibleHelper(
         invalidateRoot()
     }
 
-    // Llamar cuando el mapa se mueve o hace zoom
     fun actualizarPosiciones() {
         invalidateRoot()
     }
 
-    // ¿Qué nodo virtual hay en esta coordenada de pantalla?
+    // Convierte coordenadas del mapView al sistema del hostView
+    private fun pixelEnHostView(position: GeoPoint): android.graphics.Point {
+        val pixelEnMapa = mapView.projection.toPixels(position, null)
+
+        val locationMapa = IntArray(2)
+        mapView.getLocationOnScreen(locationMapa)
+
+        val locationHost = IntArray(2)
+        hostView.getLocationOnScreen(locationHost)
+
+        return android.graphics.Point(
+            pixelEnMapa.x + (locationMapa[0] - locationHost[0]),
+            pixelEnMapa.y + (locationMapa[1] - locationHost[1])
+        )
+    }
+
     override fun getVirtualViewAt(x: Float, y: Float): Int {
-        val radio = 72 * hostView.resources.displayMetrics.density // radio más generoso
+        // Radio generoso para facilitar la detección con TalkBack
+        val radio = 80 * hostView.resources.displayMetrics.density
         return marcadores.firstOrNull { marcador ->
             val pixel = pixelEnHostView(marcador.position)
             Math.abs(pixel.x - x) < radio && Math.abs(pixel.y - y) < radio
         }?.id ?: INVALID_ID
     }
 
-    // Solo reporta los marcadores visibles en el viewport actual
     override fun getVisibleVirtualViews(virtualViewIds: MutableList<Int>) {
         val bounds = mapView.boundingBox
         marcadores
@@ -49,14 +62,13 @@ class MapaAccesibleHelper(
             .forEach { virtualViewIds.add(it.id) }
     }
 
-    // Define qué dice TalkBack cuando focaliza un marcador
     override fun onPopulateNodeForVirtualView(
         virtualViewId: Int,
         node: AccessibilityNodeInfoCompat
     ) {
         val marcador = marcadores.getOrNull(virtualViewId) ?: return
         val pixel = pixelEnHostView(marcador.position)
-        val size = (72 * hostView.resources.displayMetrics.density).toInt()
+        val size = (80 * hostView.resources.displayMetrics.density).toInt()
 
         node.contentDescription = marcador.descripcion
         node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
@@ -71,7 +83,6 @@ class MapaAccesibleHelper(
         )
     }
 
-    // Maneja las acciones del usuario sobre el nodo virtual
     override fun onPerformActionForVirtualView(
         virtualViewId: Int,
         action: Int,
@@ -85,25 +96,5 @@ class MapaAccesibleHelper(
             }
             else -> false
         }
-    }
-
-    private fun pixelEnHostView(position: GeoPoint): android.graphics.Point {
-        // Coordenada en el sistema del mapView
-        val pixelEnMapa = mapView.projection.toPixels(position, null)
-
-        // Offset entre los dos views en pantalla
-        val locationMapa = IntArray(2)
-        mapView.getLocationOnScreen(locationMapa)
-
-        val locationHost = IntArray(2)
-        hostView.getLocationOnScreen(locationHost)
-
-        val offsetX = locationMapa[0] - locationHost[0]
-        val offsetY = locationMapa[1] - locationHost[1]
-
-        return android.graphics.Point(
-            pixelEnMapa.x + offsetX,
-            pixelEnMapa.y + offsetY
-        )
     }
 }

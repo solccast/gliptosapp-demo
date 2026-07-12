@@ -144,8 +144,8 @@
             android:contentDescription="Herramienta Pico">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="44dp"
+                android:layout_height="42dp"
                 android:src="@drawable/ic_pico"
                 app:tint="@color/selector_icono_herramienta"
                 android:importantForAccessibility="no" />
