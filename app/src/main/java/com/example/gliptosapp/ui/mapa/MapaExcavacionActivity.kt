@@ -1,46 +1,55 @@
 package com.example.gliptosapp.ui.mapa
 
-import android.view.accessibility.AccessibilityManager
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.views.overlay.MapEventsOverlay
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.SystemBarStyle
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowCompat
-import android.graphics.Color
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.content.Intent
-import androidx.core.content.ContextCompat
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
-import org.osmdroid.util.MapTileIndex
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import org.osmdroid.config.Configuration
-import org.osmdroid.util.BoundingBox
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import android.preference.PreferenceManager
-import android.view.View
-import android.widget.ImageButton
-import com.example.gliptosapp.R
-import com.example.gliptosapp.ui.excavation.ExcavacionActivity
-import org.osmdroid.events.ScrollEvent
-import org.osmdroid.events.ZoomEvent
-import org.osmdroid.events.MapListener
+import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Rect
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.graphics.DashPathEffect
+import android.preference.PreferenceManager
+import android.view.View
+import android.view.accessibility.AccessibilityManager
+import android.widget.ImageButton
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.customview.widget.ExploreByTouchHelper
+import androidx.lifecycle.lifecycleScope
+import com.example.gliptosapp.R
+import com.example.gliptosapp.data.entities.Excavacion
+import com.example.gliptosapp.ui.excavation.ExcavacionActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.osmdroid.config.Configuration
+import org.osmdroid.events.MapEventsReceiver
+import org.osmdroid.events.MapListener
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
+import org.osmdroid.util.BoundingBox
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.util.MapTileIndex
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
 
+@AndroidEntryPoint // <-- Hilt inyecta todo lo necesario aquí
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private val marcadores = mutableListOf<Marker>()
     private lateinit var accessibilityHelper: MapaAccesibleHelper
+    private val viewModel: MapaViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,16 +89,13 @@ class MapaExcavacionActivity : AppCompatActivity() {
         accessibilityHelper = MapaAccesibleHelper(viewAccesibilidad, mapView)
         ViewCompat.setAccessibilityDelegate(viewAccesibilidad, accessibilityHelper)
 
-        // Dejar que los toques físicos pasen de largo (Permite panear el mapa y clics nativos)
         viewAccesibilidad.isClickable = false
         viewAccesibilidad.isFocusable = false
 
-        // Pasar la exploración táctil al Helper (se mantiene igual)
         viewAccesibilidad.setOnHoverListener { _, event ->
             accessibilityHelper.dispatchHoverEvent(event)
         }
 
-        // Interceptar el doble toque de TalkBack SIN bloquear toques físicos
         ViewCompat.replaceAccessibilityAction(
             viewAccesibilidad,
             AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
@@ -102,20 +108,21 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
 
         configurarMapa()
-        agregarMarcadorExcavacion(GeoPoint(-34.9205, -57.9536))
-        agregarMarcadorExcavacion(GeoPoint(-34.9150, -57.9480))
-        agregarZonasDePista()
-        // Agregá todos los que quieras sin impacto de performance
         configurarTapEnZonaVacia()
 
-        // TalkBack: anunciar instrucciones al entrar
+        // OBSERVAMOS LA BASE DE DATOS REACTIVAMENTE
+        lifecycleScope.launch {
+            viewModel.excavaciones.collect { listaFosiles ->
+                pintarMarcadores(listaFosiles)
+            }
+        }
+
         mapView.post {
             mostrarInstruccionesIniciales()
         }
 
         btnVolver.setOnClickListener { finish() }
 
-        // Zoom accesible
         btnZoomIn.setOnClickListener {
             mapView.controller.zoomIn()
             mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
@@ -126,9 +133,60 @@ class MapaExcavacionActivity : AppCompatActivity() {
             mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
         }
 
-        // Botón de ayuda: re-anuncia instrucciones
         btnAyuda.setOnClickListener {
             mostrarInstruccionesIniciales()
+        }
+    }
+
+    private fun pintarMarcadores(listaFosiles: List<Excavacion>) {
+        // Limpiamos overlays anteriores (marcadores y pistas)
+        mapView.overlays.clear()
+        marcadores.clear()
+
+        // Es vital volver a agregar el overlay de eventos de tap vacío al principio
+        configurarTapEnZonaVacia()
+
+        listaFosiles.forEach { fosil ->
+            agregarMarcadorExcavacion(fosil)
+        }
+
+        agregarZonasDePista()
+        mapView.invalidate()
+    }
+
+    private fun agregarMarcadorExcavacion(fosil: Excavacion) {
+        val punto = GeoPoint(fosil.latitud, fosil.longitud)
+
+        val marcador = Marker(mapView)
+        marcador.position = punto
+        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+
+        val idIcono = obtenerIdDrawable(fosil.icResName)
+        marcador.icon = ContextCompat.getDrawable(mapView.context, idIcono)
+
+        marcador.setOnMarkerClickListener { _, _ ->
+            if (!isTalkBackActivo()) navegarAExcavacion(fosil.id)
+            true
+        }
+
+        marcadores.add(marcador)
+        mapView.overlays.add(marcador)
+
+        // Nodo virtual para TalkBack usando el nombre real de la BD
+        accessibilityHelper.agregarMarcador(
+            position = punto,
+            descripcion = "Zona de excavación. Posible fósil de ${fosil.nombre} oculto.",
+            onActivar = { navegarAExcavacion(fosil.id) }
+        )
+    }
+
+    private fun obtenerIdDrawable(nombreIcono: String): Int {
+        return when(nombreIcono) {
+            "ic_gliptodonte" -> R.drawable.ic_gliptodonte
+            "ic_neosclerocalyptus" -> R.drawable.ic_neosclerocalyptus
+            "ic_panochthus" -> R.drawable.ic_panochthus
+            "ic_doedicurus" -> R.drawable.ic_doedicurus
+            else -> R.drawable.ic_gliptodonte
         }
     }
 
@@ -174,7 +232,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
     private fun configurarTapEnZonaVacia() {
         val receptor = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                // Si TalkBack está activo, osmdroid ignora el toque.
                 if (isTalkBackActivo()) return false
 
                 val tapCercaDeMarcador = marcadores.any { marcador ->
@@ -190,7 +247,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
                 if (!tapCercaDeMarcador) {
                     feedbackZonaVacia()
                 }
-
                 return true
             }
 
@@ -200,7 +256,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
         mapView.overlays.add(0, MapEventsOverlay(receptor))
     }
 
-    // Radio dinámico según zoom
     private fun radioEnPixeles(): Float {
         return when {
             mapView.zoomLevelDouble >= 15 -> 60f
@@ -209,11 +264,8 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
     }
 
-
     private fun configurarMapa() {
         mapView.setMultiTouchControls(true)
-        // Deshabilitamos los botones nativos de osmdroid
-        // porque no son accesibles para TalkBack
         mapView.zoomController.setVisibility(
             org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER
         )
@@ -241,7 +293,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
         mapView.setMinZoomLevel(12.0)
         mapView.setMaxZoomLevel(16.0)
 
-        // Actualizar nodos accesibles cuando el mapa se mueve
         mapView.addMapListener(object : MapListener {
             override fun onScroll(event: ScrollEvent): Boolean {
                 accessibilityHelper.actualizarPosiciones()
@@ -254,28 +305,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
         })
     }
 
-    private fun agregarMarcadorExcavacion(punto: GeoPoint) {
-        // Marcador visual (igual que antes)
-        val marcador = Marker(mapView)
-        marcador.position = punto
-        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-        marcador.icon = ContextCompat.getDrawable(mapView.context, R.drawable.ic_gliptodonte)
-        marcador.setOnMarkerClickListener { _, _ ->
-            if (!isTalkBackActivo()) navegarAExcavacion()
-            true
-        }
-        marcadores.add(marcador)
-        mapView.overlays.add(marcador)
-        mapView.invalidate()
-
-        // Nodo virtual para TalkBack (sin View real)
-        accessibilityHelper.agregarMarcador(
-            position = punto,
-            descripcion = "Zona de excavación. Fósil de Gliptodonte oculto.",
-            onActivar = { navegarAExcavacion() }
-        )
-    }
-
     private fun agregarZonasDePista() {
         val overlayPistas = object : org.osmdroid.views.overlay.Overlay() {
             override fun draw(
@@ -284,26 +313,20 @@ class MapaExcavacionActivity : AppCompatActivity() {
                 shadow: Boolean
             ) {
                 if (shadow) return
-
-                // Color del circulo
                 val paintFondo = android.graphics.Paint().apply {
-                    color = android.graphics.Color.parseColor("#33D85A3C") // 20% de opacidad del color #D85A3C
+                    color = android.graphics.Color.parseColor("#33D85A3C")
                     style = android.graphics.Paint.Style.FILL
                 }
-
-                // Borde punteado
                 val paintBorde = android.graphics.Paint().apply {
                     color = android.graphics.Color.parseColor("#D85A3C")
                     style = android.graphics.Paint.Style.STROKE
                     strokeWidth = 5f
-                    // Crea un efecto de línea punteada (15px de línea, 10px de espacio)
                     pathEffect = DashPathEffect(floatArrayOf(15f, 10f), 0f)
                 }
 
                 marcadores.forEach { marcador ->
                     val pixel = mapView.projection.toPixels(marcador.position, null)
                     val radio = 54 * resources.displayMetrics.density
-
                     canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintFondo)
                     canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintBorde)
                 }
@@ -311,8 +334,12 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
         mapView.overlays.add(overlayPistas)
     }
-    private fun navegarAExcavacion() {
-        val intent = Intent(this, ExcavacionActivity::class.java)
+
+    // Pasamos el ID del fósil para que la siguiente pantalla sepa cuál cargar
+    private fun navegarAExcavacion(idFosil: Int) {
+        val intent = Intent(this, ExcavacionActivity::class.java).apply {
+            putExtra("FOSIL_ID", idFosil)
+        }
         startActivity(intent)
     }
 

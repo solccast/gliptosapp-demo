@@ -30,15 +30,11 @@ class MapaAccesibleHelper(
         invalidateRoot()
     }
 
-    // Convierte coordenadas del mapView al sistema del hostView
     private fun pixelEnHostView(position: GeoPoint): android.graphics.Point {
-        // Al estar superpuestas al 100%, la proyección del mapa
-        // coincide perfectamente con los píxeles de la pantalla.
         return mapView.projection.toPixels(position, null)
     }
 
     override fun getVirtualViewAt(x: Float, y: Float): Int {
-        // Radio generoso para facilitar la detección con TalkBack
         val radio = 80 * hostView.resources.displayMetrics.density
         return marcadores.firstOrNull { marcador ->
             val pixel = pixelEnHostView(marcador.position)
