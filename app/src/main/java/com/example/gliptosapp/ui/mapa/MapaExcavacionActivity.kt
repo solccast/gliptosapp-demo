@@ -154,6 +154,21 @@ class MapaExcavacionActivity : AppCompatActivity() {
         mapView.invalidate()
     }
 
+    private fun escalarDrawable(nombreIcono: String, anchoDp: Int): android.graphics.drawable.BitmapDrawable {
+        val anchoPx = (anchoDp * resources.displayMetrics.density).toInt()
+        val drawable = ContextCompat.getDrawable(mapView.context, obtenerIdDrawable(nombreIcono))
+            ?: return android.graphics.drawable.BitmapDrawable(resources, null as android.graphics.Bitmap?)
+
+        val anchoOriginal = drawable.intrinsicWidth.takeIf { it > 0 } ?: anchoPx
+        val altoOriginal = drawable.intrinsicHeight.takeIf { it > 0 } ?: anchoPx
+        val altoPx = (altoOriginal * anchoPx.toFloat() / anchoOriginal).toInt()
+
+        val bitmap = android.graphics.Bitmap.createBitmap(anchoPx, altoPx, android.graphics.Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(bitmap)
+        drawable.setBounds(0, 0, anchoPx, altoPx)
+        drawable.draw(canvas)
+        return android.graphics.drawable.BitmapDrawable(resources, bitmap)
+    }
     private fun agregarMarcadorExcavacion(fosil: Excavacion) {
         val punto = GeoPoint(fosil.latitud, fosil.longitud)
 
@@ -161,8 +176,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         marcador.position = punto
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
 
-        val idIcono = obtenerIdDrawable(fosil.icResName)
-        marcador.icon = ContextCompat.getDrawable(mapView.context, idIcono)
+        marcador.icon = escalarDrawable(fosil.icResName, 54)
 
         marcador.setOnMarkerClickListener { _, _ ->
             if (!isTalkBackActivo()) navegarAExcavacion(fosil.id)
@@ -172,7 +186,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
         marcadores.add(marcador)
         mapView.overlays.add(marcador)
 
-        // Nodo virtual para TalkBack usando el nombre real de la BD
         accessibilityHelper.agregarMarcador(
             position = punto,
             descripcion = "Zona de excavación. Posible fósil de ${fosil.nombre} oculto.",
@@ -181,13 +194,11 @@ class MapaExcavacionActivity : AppCompatActivity() {
     }
 
     private fun obtenerIdDrawable(nombreIcono: String): Int {
-        return when(nombreIcono) {
-            "ic_gliptodonte" -> R.drawable.ic_gliptodonte
-            "ic_neosclerocalyptus" -> R.drawable.ic_neosclerocalyptus
-            "ic_panochthus" -> R.drawable.ic_panochthus
-            "ic_doedicurus" -> R.drawable.ic_doedicurus
-            else -> R.drawable.ic_gliptodonte
-        }
+        // Elimina la extensión si viene con .webp, .png, etc.
+        val nombreLimpio = nombreIcono.substringBeforeLast(".")
+
+        return resources.getIdentifier(nombreLimpio, "drawable", packageName)
+            .takeIf { it != 0 } ?: R.drawable.ic_gliptodonte
     }
 
     private fun isTalkBackActivo(): Boolean {

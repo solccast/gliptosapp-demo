@@ -58,7 +58,7 @@ class MapaViewModel @Inject constructor(
                         nombre = "Doedicurus",
                         latitud = -34.9100, // Zona Plaza Italia
                         longitud = -57.9580,
-                        icResName = "ic_doedicurus"
+                        icResName = "doedicurus_descubierto"
                     )
                 )
                 // Al insertar, se crea el archivo .db físico y el StateFlow avisa a la UI
