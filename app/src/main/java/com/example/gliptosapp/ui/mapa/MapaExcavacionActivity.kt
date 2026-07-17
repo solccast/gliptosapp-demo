@@ -26,6 +26,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.customview.widget.ExploreByTouchHelper
 import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
+import com.example.gliptosapp.data.entities.EstadoExcavacion
 import com.example.gliptosapp.data.entities.Excavacion
 import com.example.gliptosapp.ui.excavation.ExcavacionActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -150,7 +151,8 @@ class MapaExcavacionActivity : AppCompatActivity() {
             agregarMarcadorExcavacion(fosil)
         }
 
-        agregarZonasDePista()
+        // Le pasamos la lista de fósiles para que pueda evaluar los estados
+        agregarZonasDePista(listaFosiles)
         mapView.invalidate()
     }
 
@@ -316,7 +318,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         })
     }
 
-    private fun agregarZonasDePista() {
+    private fun agregarZonasDePista(listaFosiles: List<Excavacion>) {
         val overlayPistas = object : org.osmdroid.views.overlay.Overlay() {
             override fun draw(
                 canvas: android.graphics.Canvas,
@@ -324,8 +326,10 @@ class MapaExcavacionActivity : AppCompatActivity() {
                 shadow: Boolean
             ) {
                 if (shadow) return
+
+                // Utilizamos el color "errores" de la paleta (#D85A3C)
                 val paintFondo = android.graphics.Paint().apply {
-                    color = android.graphics.Color.parseColor("#33D85A3C")
+                    color = android.graphics.Color.parseColor("#33D85A3C") // 20% de opacidad
                     style = android.graphics.Paint.Style.FILL
                 }
                 val paintBorde = android.graphics.Paint().apply {
@@ -335,8 +339,12 @@ class MapaExcavacionActivity : AppCompatActivity() {
                     pathEffect = DashPathEffect(floatArrayOf(15f, 10f), 0f)
                 }
 
-                marcadores.forEach { marcador ->
-                    val pixel = mapView.projection.toPixels(marcador.position, null)
+                // Filtramos para dibujar el overlay SOLO en los pendientes
+                val fosilesPendientes = listaFosiles.filter { it.estado != EstadoExcavacion.COMPLETADO }
+
+                fosilesPendientes.forEach { fosil ->
+                    val punto = GeoPoint(fosil.latitud, fosil.longitud)
+                    val pixel = mapView.projection.toPixels(punto, null)
                     val radio = 54 * resources.displayMetrics.density
                     canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintFondo)
                     canvas.drawCircle(pixel.x.toFloat(), pixel.y.toFloat(), radio, paintBorde)
