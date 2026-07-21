@@ -56,7 +56,7 @@ class ExtraInfoFosileFragment : BaseFragment() {
         }
 
         binding.btnJugar.setOnClickListener {
-            findNavController().navigate(ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment("Glipto?"))
+            findNavController().navigate(ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(args.nombreFosil))
         }
 
         binding.btnVer.setOnClickListener {

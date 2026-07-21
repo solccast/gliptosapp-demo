@@ -27,7 +27,7 @@ class ComparativeGameInfoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val juego = repository.getComparativeGameFosile("Gliptodonte")
+            val juego = repository.getComparativeGameFosile(nombreFosil)
             _uiState.value = _uiState.value.copy(juego = juego)
         }
     }
