@@ -2,6 +2,7 @@ package com.example.gliptosapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.gliptosapp.data.dao.ComparativeGameDao
 import com.example.gliptosapp.data.dao.ExcavacionDao
 import com.example.gliptosapp.data.db.AppDatabase
 import dagger.Module
@@ -30,5 +31,10 @@ object AppModule {
     @Provides
     fun provideExcavacionDao(appDatabase: AppDatabase): ExcavacionDao {
         return appDatabase.excavacionDao()
+    }
+
+    @Provides
+    fun provideComparativeGameDao(appDatabase: AppDatabase): ComparativeGameDao {
+        return appDatabase.comparativeGameDao()
     }
 }
