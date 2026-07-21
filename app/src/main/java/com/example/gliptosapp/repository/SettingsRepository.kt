@@ -1,14 +1,14 @@
 package com.example.gliptosapp.repository
 
 import android.content.Context
-import com.example.gliptosapp.ui.settings.ContrastPreferences
-import com.example.gliptosapp.ui.settings.FontPreferences
-import com.example.gliptosapp.ui.settings.FontScale
+import com.example.gliptosapp.ui.settings.appearance.ContrastPreferences
+import com.example.gliptosapp.ui.settings.appearance.FontPreferences
+import com.example.gliptosapp.ui.settings.appearance.FontScale
 import com.example.gliptosapp.ui.settings.InteractionMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import androidx.core.content.edit
-
+import com.example.gliptosapp.ui.settings.vibration.VibrationPreferences
 class SettingsRepository @Inject constructor(
     @ApplicationContext
     private val context: Context
@@ -49,6 +49,14 @@ class SettingsRepository @Inject constructor(
     }
 
     fun saveSoundEnabled(enabled: Boolean) {
-        prefs.edit().putBoolean("sound_enabled", enabled).apply()
+        prefs.edit { putBoolean("sound_enabled", enabled) }
+    }
+
+    fun isVibrationEnabled(): Boolean {
+        return VibrationPreferences.isEnabled(context)
+    }
+
+    fun saveVibrationEnabled(enabled: Boolean) {
+        VibrationPreferences.save(context, enabled)
     }
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gliptosapp.data.Fosil
 import com.example.gliptosapp.databinding.ItemFosilDescBinding
 import com.example.gliptosapp.databinding.ItemFosilNoDescBinding
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 class FosilAdapter(
     private var lista: List<Fosil>,

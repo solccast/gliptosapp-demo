@@ -1,5 +1,6 @@
 package com.example.gliptosapp.ui.settings
 
+import com.example.gliptosapp.ui.settings.appearance.FontScale
 data class SettingsUiState(
     val selectedFont: FontScale = FontScale.MEDIUM,
     val highContrastEnabled: Boolean = false,

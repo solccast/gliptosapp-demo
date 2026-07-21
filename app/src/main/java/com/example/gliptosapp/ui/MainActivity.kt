@@ -9,9 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityMainBinding
-import com.example.gliptosapp.ui.settings.ContrastPreferences
-import com.example.gliptosapp.ui.settings.SoundManager
-import com.example.gliptosapp.ui.settings.ThemeManager
+import com.example.gliptosapp.ui.settings.appearance.ThemeManager
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(ThemeManager.getTheme(this))
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        SoundManager.initialize(this)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.parseColor("#3E2A1F")),
             navigationBarStyle = SystemBarStyle.dark(Color.parseColor("#3E2A1F"))
@@ -36,14 +33,5 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
-    override fun onResume() {
-        super.onResume()
-        SoundManager.refreshAudioState(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        SoundManager.pauseBackgroundMusic()
     }
 }

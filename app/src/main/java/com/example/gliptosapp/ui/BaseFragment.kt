@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 abstract class BaseFragment : Fragment() {
 

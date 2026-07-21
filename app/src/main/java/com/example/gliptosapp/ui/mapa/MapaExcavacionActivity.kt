@@ -3,12 +3,7 @@ package com.example.gliptosapp.ui.mapa
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.DashPathEffect
-import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.preference.PreferenceManager
 import android.view.View
 import android.view.accessibility.AccessibilityManager
@@ -23,12 +18,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import androidx.customview.widget.ExploreByTouchHelper
 import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.data.entities.EstadoExcavacion
 import com.example.gliptosapp.data.entities.Excavacion
 import com.example.gliptosapp.ui.excavation.ExcavacionActivity
+import com.example.gliptosapp.ui.settings.vibration.VibrationManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
@@ -220,22 +215,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
     }
 
     private fun feedbackZonaVacia() {
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            (getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            getSystemService(VIBRATOR_SERVICE) as Vibrator
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(
-                VibrationEffect.createOneShot(150, 230)
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(150)
-        }
-
+        VibrationManager.vibrate(this, 150)
         mapView.announceForAccessibility(
             "En esta zona no hicieron denuncias de fósiles. " +
                     "Intentá explorar hacia el centro de la ciudad."
