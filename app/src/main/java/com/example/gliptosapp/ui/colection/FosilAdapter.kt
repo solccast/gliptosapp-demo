@@ -1,9 +1,11 @@
 package com.example.gliptosapp.ui.colection
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gliptosapp.data.Fosil
+import com.example.gliptosapp.R
+import com.example.gliptosapp.data.entities.Fosil
 import com.example.gliptosapp.databinding.ItemFosilDescBinding
 import com.example.gliptosapp.databinding.ItemFosilNoDescBinding
 import com.example.gliptosapp.ui.settings.applyFontScale
@@ -54,11 +56,11 @@ class FosilAdapter(
         }
     }
 
+
     private fun bindDescubierto(holder: FosilDescViewHolder, fosil: Fosil) {
         with(holder.binding) {
             nombreFosil.text = fosil.nombre
-            imagenFosil.setImageResource(fosil.obtenerImagen())
-
+            imagenFosil.setImageResource(resolverDrawable(root.context, fosil.obtenerImagen()))
             btnDetalle.contentDescription = "Ver detalle del fósil ${fosil.nombre}"
             btnDetalle.setOnClickListener { onDetalleClick(fosil) }
 
@@ -69,9 +71,14 @@ class FosilAdapter(
         }
     }
 
+
+    private fun resolverDrawable(context: Context, nombreRecurso: String): Int {
+        val resId = context.resources.getIdentifier(nombreRecurso, "drawable", context.packageName)
+        return if (resId != 0) resId else R.drawable.gliptodonte_sin_descubrir
+    }
     private fun bindNoDescubierto(holder: FosilNoDescViewHolder, fosil: Fosil) {
         with(holder.binding) {
-            imagenFosilSilueta.setImageResource(fosil.obtenerImagen())
+            imagenFosilSilueta.setImageResource(resolverDrawable(root.context, fosil.obtenerImagen()))
 
             root.isClickable = false
             root.isFocusable = true

@@ -31,32 +31,40 @@ class ExtraInfoFosileFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
-            binding.btnBack.setOnClickListener {
-                findNavController().popBackStack()
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.btnAjustes.setOnClickListener {
+            findNavController().navigate(R.id.action_extraInfoFosileFragment_to_settingsFragment)
+        }
+
+        val nombre = args.nombreFosil
+        viewModel.cargarFosil(nombre)
+
+        viewModel.fosil.observe(viewLifecycleOwner) { fosil ->
+            if (fosil == null) {
+                // El fósil no se encontró en la base (nombre con typo, o aún no sembrado).
+                // Ajustá esto según cómo quieras comunicar el error en tu UI.
+                binding.descripcionFosil.text = "No encontrado..."
+                return@observe
             }
 
-            binding.btnAjustes.setOnClickListener {
-                findNavController().navigate(R.id.action_extraInfoFosileFragment_to_settingsFragment)
-            }
-
-            val nombre = args.nombreFosil
-            viewModel.cargarFosil(nombre)
-
-            viewModel.fosil.observe(viewLifecycleOwner){fosil ->
             binding.tituloFosil.text = nombre
-
-            binding.descripcionFosil.text = fosil.descripcion // TODO: reemplazar por el dato real
+            binding.descripcionFosil.text = fosil.descripcion
             binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
-            fosil.obtenerImagen().let {
-                binding.imagenFosil.setImageResource(it)
-                binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
-            }
+
+            val resId = resolverDrawable(requireContext(), fosil.obtenerImagen())
+            binding.imagenFosil.setImageResource(resId)
+            binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
         }
 
         binding.btnJugar.setOnClickListener {
-            findNavController().navigate(ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(args.nombreFosil))
+            findNavController().navigate(
+                ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(args.nombreFosil)
+            )
         }
 
         binding.btnVer.setOnClickListener {
@@ -67,5 +75,19 @@ class ExtraInfoFosileFragment : BaseFragment() {
         }
         binding.btnVer.contentDescription =
             "Ver el fósil ${args.nombreFosil} en realidad aumentada"
+    }
+
+    /**
+     * Convierte el nombre del drawable (guardado como String en la entidad Fosil)
+     * al resource id Int que espera setImageResource.
+     */
+    private fun resolverDrawable(context: android.content.Context, nombreRecurso: String): Int {
+        val resId = context.resources.getIdentifier(nombreRecurso, "drawable", context.packageName)
+        return if (resId != 0) resId else R.drawable.gliptodonte
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
