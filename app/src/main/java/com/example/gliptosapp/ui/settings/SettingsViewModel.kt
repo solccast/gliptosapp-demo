@@ -2,6 +2,7 @@ package com.example.gliptosapp.ui.settings
 
 import androidx.lifecycle.ViewModel
 import com.example.gliptosapp.repository.SettingsRepository
+import com.example.gliptosapp.ui.settings.appearance.FontScale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,7 +38,8 @@ class SettingsViewModel @Inject constructor(
                 selectedFont = repository.getFontScale(),
                 highContrastEnabled = repository.isHighContrastEnabled(),
                 interactionMode = repository.getInteractionMode(),
-                soundsEnabled = repository.isSoundEnabled()
+                soundsEnabled = repository.isSoundEnabled(),
+                vibrationEnabled = repository.isVibrationEnabled()
             )
     }
 
@@ -77,6 +79,18 @@ class SettingsViewModel @Inject constructor(
         )
 
         emitRecreate()
+    }
+
+    fun toggleVibration(enabled: Boolean) {
+        repository.saveVibrationEnabled(enabled)
+        _uiState.value = _uiState.value.copy(vibrationEnabled = enabled)
+
+        emitAnnouncement(
+            if (enabled)
+                "Vibración activada"
+            else
+                "Vibración desactivada"
+        )
     }
 
     fun selectInteractionMode(

@@ -8,7 +8,7 @@ import com.example.gliptosapp.R
 import com.example.gliptosapp.data.entities.Fosil
 import com.example.gliptosapp.databinding.ItemFosilDescBinding
 import com.example.gliptosapp.databinding.ItemFosilNoDescBinding
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 class FosilAdapter(
     private var lista: List<Fosil>,

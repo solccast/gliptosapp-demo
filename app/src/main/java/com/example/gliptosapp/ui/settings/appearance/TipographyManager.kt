@@ -1,4 +1,4 @@
-package com.example.gliptosapp.ui.settings
+package com.example.gliptosapp.ui.settings.appearance
 
 import android.util.TypedValue
 import android.widget.TextView

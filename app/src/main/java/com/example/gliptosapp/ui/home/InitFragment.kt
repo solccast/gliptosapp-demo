@@ -8,12 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
 import com.example.gliptosapp.ui.BaseFragment
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
     private val binding get() = _binding!!

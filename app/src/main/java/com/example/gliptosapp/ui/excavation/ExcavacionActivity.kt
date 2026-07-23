@@ -11,27 +11,24 @@ import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
-import com.example.gliptosapp.ui.settings.SoundManager
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.sound.SoundManager
+import com.example.gliptosapp.ui.settings.vibration.VibrationManager
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 class ExcavacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExcavacionBinding
-    private lateinit var viewModel: ExcavacionViewModel
-    // Cambiamos ImageButton por ViewGroup porque ahora son LinearLayouts
+    private val viewModel: ExcavacionViewModel by viewModels()    // Cambiamos ImageButton por ViewGroup porque ahora son LinearLayouts
     private lateinit var herramientas: List<ViewGroup>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Inicializamos el ViewModel que guardará el estado al rotar la pantalla
-        viewModel = ViewModelProvider(this)[ExcavacionViewModel::class.java]
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.parseColor("#CD4A2C1D")),
@@ -106,9 +103,7 @@ class ExcavacionActivity : AppCompatActivity() {
         binding.txtIndicacionKira.text = mensajeKira
         actualizarInformacionFosil(mensajeKira)
 
-        if (viewModel.estadoActual == 5) {
-            finalizarMecanica()
-        }
+        VibrationManager.vibrate(this, 600)
     }
 
     private fun configurarHerramientas() {
@@ -240,15 +235,5 @@ class ExcavacionActivity : AppCompatActivity() {
             .setView(view)
             .setPositiveButton("¡Entendido!", null)
             .show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        SoundManager.refreshAudioState(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        SoundManager.pauseBackgroundMusic()
     }
 }

@@ -1,12 +1,12 @@
-package com.example.gliptosapp.ui.settings
+package com.example.gliptosapp.ui.settings.sound
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.media.SoundPool
 import com.example.gliptosapp.R
-
-object SoundManager {
-
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+object SoundManager : DefaultLifecycleObserver {
     private var soundEnabled = true
     private var soundPool: SoundPool? = null
     private var backgroundPlayer: MediaPlayer? = null
@@ -17,11 +17,11 @@ object SoundManager {
     private var picoId = 0
     private var palaId = 0
     private var pincelId = 0
-
+    private var appContext: Context? = null
     fun initialize(
         context: Context
     ) {
-
+        appContext = context.applicationContext
         if (soundPool == null) {
 
             soundPool =
@@ -64,8 +64,7 @@ object SoundManager {
                     1
                 )
         }
-        startBackgroundMusic(context)
-
+        refreshAudioState(context)
     }
 
     private fun soundsEnabled(
@@ -148,13 +147,13 @@ object SoundManager {
             startBackgroundMusic(context)
         }
     }
+    override fun onStart(owner: LifecycleOwner) {
+        appContext?.let {
+            refreshAudioState(it)
+        }
+    }
 
-    fun release() {
-
-        soundPool?.release()
-        soundPool = null
-
-        backgroundPlayer?.release()
-        backgroundPlayer = null
+    override fun onStop(owner: LifecycleOwner) {
+        pauseBackgroundMusic()
     }
 }

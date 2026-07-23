@@ -15,6 +15,9 @@ import com.example.gliptosapp.databinding.FragmentSettingsBinding
 import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.gliptosapp.R
+import com.example.gliptosapp.ui.settings.sound.SoundManager
+import com.example.gliptosapp.ui.settings.appearance.FontScale
+import com.example.gliptosapp.ui.settings.appearance.getThemeColor
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -68,6 +71,7 @@ class SettingsFragment : BaseFragment() {
                 viewModel.uiState.collect { state ->
                     binding.switchContrast.isChecked = state.highContrastEnabled
                     binding.switchSounds.isChecked = state.soundsEnabled
+                    binding.switchVibration.isChecked = state.vibrationEnabled
                     updateFontSelection(state.selectedFont)
                     updateInteractionMode(state.interactionMode)
                 }
@@ -123,6 +127,9 @@ class SettingsFragment : BaseFragment() {
         binding.switchSounds.setOnCheckedChangeListener { _, enabled ->
                 viewModel.toggleSounds(enabled)
             SoundManager.refreshAudioState(requireContext())
+        }
+        binding.switchVibration.setOnCheckedChangeListener { _, enabled ->
+            viewModel.toggleVibration(enabled)
         }
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()

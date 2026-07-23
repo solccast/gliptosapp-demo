@@ -1,4 +1,4 @@
-package com.example.gliptosapp.ui.settings
+package com.example.gliptosapp.ui.settings.appearance
 
 import android.content.Context
 import androidx.core.content.edit
