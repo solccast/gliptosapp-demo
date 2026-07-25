@@ -54,6 +54,9 @@
         <argument
             android:name="nombreFosil"
             app:argType="string" />
+        <argument
+            android:name="fosilId"
+            app:argType="long" />
         <action
             android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -74,6 +77,9 @@
         <argument
             android:name="nombreFosil"
             app:argType="string"/>
+        <argument
+            android:name="fosilId"
+            app:argType="long"/>
         <action
             android:id="@+id/action_comparativeGameInfoFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />

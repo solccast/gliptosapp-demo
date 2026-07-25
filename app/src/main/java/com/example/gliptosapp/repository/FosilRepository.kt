@@ -49,4 +49,8 @@ class FosilRepository @Inject constructor(private val fosilDao: FosilDao){
     suspend fun getFosilConEstadoPorNombre(nombre: String): FosilConEstado?{
         return fosilDao.getFosilConEstadoPorNombre(nombre)
     }
+
+    suspend fun getFosilConEstadoPorId(fosilid: Long): FosilConEstado?{
+        return fosilDao.getFosilConEstadoPorId(fosilid)
+    }
 }

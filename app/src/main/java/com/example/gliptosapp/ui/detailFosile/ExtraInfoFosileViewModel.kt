@@ -17,9 +17,9 @@ class ExtraInfoFosileViewModel @Inject constructor(
     private val _fosil = MutableLiveData<FosilConEstado?>()
     val fosil: LiveData<FosilConEstado?> = _fosil
 
-    fun cargarFosil(nombre: String) {
+    fun cargarFosil(fosilId: Long) {
         viewModelScope.launch {
-            _fosil.value = repository.getFosilConEstadoPorNombre(nombre)
+            _fosil.value = repository.getFosilConEstadoPorId(fosilId)
         }
     }
 }
