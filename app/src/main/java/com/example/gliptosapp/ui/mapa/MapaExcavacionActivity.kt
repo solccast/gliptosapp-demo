@@ -40,7 +40,7 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 
-@AndroidEntryPoint // <-- Hilt inyecta todo lo necesario aquí
+@AndroidEntryPoint
 class MapaExcavacionActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView

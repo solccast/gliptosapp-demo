@@ -52,27 +52,19 @@ class GliptosApp : Application() {
                     icResName = "ic_gliptodonte"
                 ),
                 Excavacion(
-                    //nombre = "Neosclerocalyptus",
+                    //nombre = "Euphractus",
                     fosilId = 2,
-                    latitud = -34.9150, // Museo de La Plata aprox
-                    longitud = -57.9480,
-                    icResName = "ic_neosclerocalyptus"
-                ),
-                Excavacion(
-                    //nombre = "Panochthus",
-                    fosilId = 3,
                     latitud = -34.9250, // Zona Parque Saavedra
                     longitud = -57.9400,
-                    icResName = "ic_panochthus"
+                    icResName = "ic_euphractus"
                 ),
-                    Excavacion(
-                        //nombre = "Doedicurus",
-                        fosilId = 3,
-                        latitud = -34.9100, // Zona Plaza Italia
-                        longitud = -57.9580,
-                        icResName = "doedicurus_descubierto"
-                    )
-
+                Excavacion(
+                    //nombre = "Smilodon",
+                    fosilId = 3,
+                    latitud = -34.9100, // Zona Plaza Italia
+                    longitud = -57.9580,
+                    icResName = "ic_smilodon"
+                ),
             )
 
             excavacionRepository.insertVariasExcavaciones(excavacionesIniciales)
