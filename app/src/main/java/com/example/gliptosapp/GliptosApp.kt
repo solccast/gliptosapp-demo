@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class GliptosApp : Application() {
-class GliptosApp : Application() {
     @Inject
     lateinit var fosilRepository: FosilRepository
     @Inject
