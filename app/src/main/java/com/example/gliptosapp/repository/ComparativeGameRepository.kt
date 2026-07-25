@@ -12,7 +12,7 @@ class ComparativeGameRepository @Inject constructor(
 ){
     private val listaPreguntas = listOf(
         ComparativeGame(
-            fosilId =  "Gliptodonte", // TODO: cambiarlo por el id de la entidad fósil
+            fosilId =  1,
             textoPregunta = "¿Cual es más grande?",
             realizada = false,
             infoExtra = "El gliptodonte podía medir hasta 3 metros de largo y pesar hasta 2,000 kg. ¡Era enorme!",
@@ -22,7 +22,7 @@ class ComparativeGameRepository @Inject constructor(
             )
         ),
         ComparativeGame(
-            fosilId = "Euphactus", // 👈 debe coincidir con Fosil.nombre para que el DAO lo encuentre
+            fosilId = 3, // El euphactus
             textoPregunta = "¿Cual es más chico?",
             realizada = false,
             infoExtra = "Euphractus era mucho más pequeño que un armadillo gigante actual: apenas alcanzaba el tamaño de un armadillo común, adaptado a ambientes abiertos y secos.",
@@ -32,17 +32,15 @@ class ComparativeGameRepository @Inject constructor(
             ))
     )
 
-    suspend fun getComparativeGameFosile(nombre: String): ComparativeGame?{
+    suspend fun getComparativeGameFosile(fosilId: Long): ComparativeGame?{
         sembrarSiEsNecesario()
-        val resultado = comparativeGameDao.getGameByFosilName(nombre) ?: return null
+        val resultado = comparativeGameDao.getGameByFosilId(fosilId) ?: return null
         return resultado.game.copy(opciones = resultado.opciones)
     }
-
 
     private suspend fun sembrarSiEsNecesario() {
         if (comparativeGameDao.contarJuegos() == 0) {
             listaPreguntas.forEach { comparativeGameDao.insertGameConOpciones(it) }
         }
     }
-
 }

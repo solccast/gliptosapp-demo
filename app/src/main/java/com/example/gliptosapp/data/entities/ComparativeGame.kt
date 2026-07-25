@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class ComparativeGame (
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val fosilId: String, // Reemplazare por el fosilId cuando se cree la entidad
+    val fosilId: Long, // Id del fosil
     val textoPregunta: String,
     val realizada: Boolean,
     val infoExtra: String, //Texto q se muestra al acertar
@@ -17,7 +17,7 @@ data class ComparativeGame (
 ){
     constructor(
         id: Long,
-        fosilId: String,
+        fosilId: Long,
         textoPregunta: String,
         realizada: Boolean,
         infoExtra: String

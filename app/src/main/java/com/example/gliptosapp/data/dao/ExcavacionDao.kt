@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.gliptosapp.data.entities.EstadoExcavacion
 import com.example.gliptosapp.data.entities.Excavacion
+import com.example.gliptosapp.data.relations.ExcavacionConFosil
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,4 +25,9 @@ interface ExcavacionDao {
     // Actualiza el estado cuando el niño lo descubre o termina de excavar
     @Query("UPDATE excavaciones SET estado = :nuevoEstado WHERE id = :excavacionId")
     suspend fun actualizarEstado(excavacionId: Int, nuevoEstado: EstadoExcavacion)
+
+
+    @Query("SELECT * FROM excavaciones")
+    fun obtenerExcavacionesConFosil(): Flow<List<ExcavacionConFosil>>
+
 }

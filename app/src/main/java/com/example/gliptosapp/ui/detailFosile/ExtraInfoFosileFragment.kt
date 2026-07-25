@@ -41,8 +41,9 @@ class ExtraInfoFosileFragment : BaseFragment() {
             findNavController().navigate(R.id.action_extraInfoFosileFragment_to_settingsFragment)
         }
 
-        val nombre = args.nombreFosil
-        viewModel.cargarFosil(nombre)
+        val fosilId = args.fosilId
+        val nombreFosil = args.nombreFosil
+        viewModel.cargarFosil(fosilId)
 
         viewModel.fosil.observe(viewLifecycleOwner) { fosil ->
             if (fosil == null) {
@@ -52,18 +53,18 @@ class ExtraInfoFosileFragment : BaseFragment() {
                 return@observe
             }
 
-            binding.tituloFosil.text = nombre
+            binding.tituloFosil.text = nombreFosil
             binding.descripcionFosil.text = fosil.descripcion
             binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
 
             val resId = resolverDrawable(requireContext(), fosil.obtenerImagen())
             binding.imagenFosil.setImageResource(resId)
-            binding.imagenFosil.contentDescription = "Imagen del fósil $nombre"
+            binding.imagenFosil.contentDescription = "Imagen del fósil ${nombreFosil}"
         }
 
         binding.btnJugar.setOnClickListener {
             findNavController().navigate(
-                ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(args.nombreFosil)
+                ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(nombreFosil, fosilId)
             )
         }
 

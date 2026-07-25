@@ -43,7 +43,7 @@ class ColectionFragment : BaseFragment() {
 
         adapter = FosilAdapter(emptyList()) { fosil ->
             val action = ColectionFragmentDirections
-                .actionColectionFragmentToExtraInfoFosileFragment(fosil.nombre)
+                .actionColectionFragmentToExtraInfoFosileFragment(fosil.nombre, fosil.fosil.id)
 
             findNavController().navigate(action)
         }

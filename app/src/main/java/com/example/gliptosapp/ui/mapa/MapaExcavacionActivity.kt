@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.data.entities.EstadoExcavacion
 import com.example.gliptosapp.data.entities.Excavacion
+import com.example.gliptosapp.data.relations.ExcavacionConFosil
 import com.example.gliptosapp.ui.excavation.ExcavacionActivity
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -134,7 +135,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         }
     }
 
-    private fun pintarMarcadores(listaFosiles: List<Excavacion>) {
+    private fun pintarMarcadores(listaFosiles: List<ExcavacionConFosil>) {
         // Limpiamos overlays anteriores (marcadores y pistas)
         mapView.overlays.clear()
         marcadores.clear()
@@ -166,7 +167,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         drawable.draw(canvas)
         return android.graphics.drawable.BitmapDrawable(resources, bitmap)
     }
-    private fun agregarMarcadorExcavacion(fosil: Excavacion) {
+    private fun agregarMarcadorExcavacion(fosil: ExcavacionConFosil) {
         val punto = GeoPoint(fosil.latitud, fosil.longitud)
 
         val marcador = Marker(mapView)
@@ -298,7 +299,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
         })
     }
 
-    private fun agregarZonasDePista(listaFosiles: List<Excavacion>) {
+    private fun agregarZonasDePista(listaFosiles: List<ExcavacionConFosil>) {
         val overlayPistas = object : org.osmdroid.views.overlay.Overlay() {
             override fun draw(
                 canvas: android.graphics.Canvas,

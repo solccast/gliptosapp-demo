@@ -48,4 +48,6 @@ interface ComparativeGameDao {
     @Query("SELECT * FROM comparative_games WHERE fosilId = :nombreFosil LIMIT 1")
     suspend fun getGameByFosilName(nombreFosil: String): ComparativeGameWithOptions? //TODO: eliminar, tiene que ser por ID
 
+    @Query("SELECT * FROM comparative_games WHERE fosilId = :fosilId LIMIT 1")
+    suspend fun getGameByFosilId(fosilId: Long): ComparativeGameWithOptions?
 }
