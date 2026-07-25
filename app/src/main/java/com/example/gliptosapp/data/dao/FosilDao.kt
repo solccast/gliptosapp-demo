@@ -35,4 +35,7 @@ interface FosilDao{
 
     @Query("SELECT * FROM fosiles WHERE nombre = :nombre LIMIT 1")
     suspend fun getFosilConEstadoPorNombre(nombre: String): FosilConEstado?
+
+    @Query("SELECT * FROM fosiles WHERE id = :fosilId LIMIT 1")
+    suspend fun getFosilConEstadoPorId(fosilId: Long): FosilConEstado?
 }

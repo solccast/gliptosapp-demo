@@ -14,7 +14,7 @@ import com.example.gliptosapp.data.entities.Fosil
 
 @Database(
     entities = [Excavacion::class, ComparativeGame::class, OptionComparativeGame::class, Fosil::class],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
