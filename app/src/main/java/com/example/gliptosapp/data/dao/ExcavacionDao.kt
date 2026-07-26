@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExcavacionDao {
 
-    // Observa todas las excavaciones en tiempo real para pintar el mapa
     @Query("SELECT * FROM excavaciones")
     fun observeTodasLasExcavaciones(): Flow<List<Excavacion>>
 
@@ -22,12 +21,12 @@ interface ExcavacionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(excavaciones: List<Excavacion>)
 
-    // Actualiza el estado cuando el niño lo descubre o termina de excavar
     @Query("UPDATE excavaciones SET estado = :nuevoEstado WHERE id = :excavacionId")
     suspend fun actualizarEstado(excavacionId: Int, nuevoEstado: EstadoExcavacion)
 
+    @Query("SELECT * FROM excavaciones WHERE id = :excavacionId LIMIT 1")
+    suspend fun obtenerPorId(excavacionId: Int): Excavacion?
 
     @Query("SELECT * FROM excavaciones")
     fun obtenerExcavacionesConFosil(): Flow<List<ExcavacionConFosil>>
-
 }

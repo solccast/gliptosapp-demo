@@ -1,25 +1,33 @@
 package com.example.gliptosapp.ui.excavation
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.activity.SystemBarStyle
-import android.graphics.Color
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.graphics.Color
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
+import com.example.gliptosapp.ui.MainActivity
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
-import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Locale
+
 @AndroidEntryPoint
 class ExcavacionActivity : AppCompatActivity() {
 
@@ -49,7 +57,6 @@ class ExcavacionActivity : AppCompatActivity() {
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
             val margen = (8 * resources.displayMetrics.density).toInt()
-
             view.setPadding(0, 0, 0, 0)
 
             val paramsBotones = binding.contenedorBotonesSuperiores.layoutParams as ConstraintLayout.LayoutParams
@@ -79,7 +86,8 @@ class ExcavacionActivity : AppCompatActivity() {
 
         configurarHerramientas()
         configurarBotonesSuperiores()
-        restaurarEstadoVisual()
+        configurarBotonesCompletado()
+        observarEstado()
 
         ViewCompat.setAccessibilityPaneTitle(window.decorView, "Pantalla de Excavación")
 
@@ -90,39 +98,64 @@ class ExcavacionActivity : AppCompatActivity() {
         }, 500)
     }
 
-    private fun restaurarEstadoVisual() {
-        val mensajeKira = obtenerMensajePorEstado(viewModel.estadoActual)
-        val imagenFosil = obtenerImagenPorEstado(viewModel.estadoActual)
-
-        binding.imgFosilFondo.setImageResource(imagenFosil)
-        binding.txtIndicacionKira.text = mensajeKira
-        actualizarInformacionFosil(mensajeKira)
-
-        VibrationManager.vibrate(this, 600)
-
-        // Cuando llega al estado final deshabilitamos las herramientas
-        if (viewModel.estadoActual == 5) {
-            finalizarMecanica()
+    private fun observarEstado() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.estado.collect { estadoJuego ->
+                    if (estadoJuego.cargado) {
+                        pintarEstado(estadoJuego.estadoActual, estadoJuego.yaCompletado)
+                    }
+                }
+            }
         }
     }
 
-    private fun finalizarMecanica() {
+    private fun pintarEstado(estado: Int, completado: Boolean) {
+        val estadoParaMostrar = if (completado) 5 else estado
+        val mensajeKira = obtenerMensajePorEstado(estadoParaMostrar)
+        val imagenFosil = obtenerImagenPorEstado(estadoParaMostrar)
+
+        binding.imgFosilFondo.setImageResource(imagenFosil)
+        binding.txtIndicacionKira.text = mensajeKira
+        actualizarInformacionFosil(mensajeKira, estadoParaMostrar)
+
+        if (completado) mostrarModoCompletado() else mostrarModoJuego()
+    }
+
+    private fun mostrarModoCompletado() {
+        binding.contenedorHerramientas.visibility = View.GONE
+        binding.contenedorAccionesCompletado.visibility = View.VISIBLE
         herramientas.forEach {
-            it.setOnClickListener(null)
-            it.isSelected = false
             it.isEnabled = false
-            it.contentDescription = "Excavación completada"
+            it.isSelected = false
         }
-        // Anunciamos a TalkBack que terminó
-        binding.txtIndicacionKira.announceForAccessibility(
-            "¡Felicitaciones! Excavación completada."
-        )
+    }
+
+    private fun mostrarModoJuego() {
+        binding.contenedorAccionesCompletado.visibility = View.GONE
+        binding.contenedorHerramientas.visibility = View.VISIBLE
+        herramientas.forEach { it.isEnabled = true }
+        actualizarDescripcionesBotones()
     }
 
     private fun configurarHerramientas() {
         binding.btnPicoContenedor.setOnClickListener { activarHerramienta("PICO", binding.btnPicoContenedor) }
         binding.btnPalaContenedor.setOnClickListener { activarHerramienta("PALA", binding.btnPalaContenedor) }
         binding.btnPincelContenedor.setOnClickListener { activarHerramienta("PINCEL", binding.btnPincelContenedor) }
+    }
+
+    private fun configurarBotonesCompletado() {
+        binding.btnVerColeccion.setOnClickListener { irAColeccion() }
+        binding.btnVolverAExcavar.setOnClickListener { viewModel.reiniciarJuego() }
+    }
+
+    private fun irAColeccion() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("DESTINO_NAV", "colectionFragment")
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun activarHerramienta(herramienta: String, botonActivo: ViewGroup) {
@@ -148,7 +181,7 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun verificarHerramientaCorrecta(herramienta: String): Boolean {
-        return when (viewModel.estadoActual) {
+        return when (viewModel.estado.value.estadoActual) {
             1, 2 -> herramienta == "PICO"
             3 -> herramienta == "PALA"
             4 -> herramienta == "PINCEL"
@@ -157,8 +190,15 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun avanzarProgreso() {
-        viewModel.avanzarEstado() // Aquí el ViewModel marca como COMPLETADO si llega a 5
-        restaurarEstadoVisual()
+        val completadoAntes = viewModel.estado.value.yaCompletado
+        viewModel.avanzarEstado()
+        VibrationManager.vibrate(this, 600)
+
+        if (!completadoAntes && viewModel.estado.value.yaCompletado) {
+            binding.txtIndicacionKira.announceForAccessibility(
+                "¡Felicitaciones! Excavación completada."
+            )
+        }
     }
 
     private fun obtenerMensajePorEstado(estado: Int): String {
@@ -181,12 +221,11 @@ class ExcavacionActivity : AppCompatActivity() {
         return if (resourceId != 0) resourceId else R.drawable.gliptodonte_1
     }
 
-    private fun actualizarInformacionFosil(mensajeKira: String) {
+    private fun actualizarInformacionFosil(mensajeKira: String, estado: Int) {
         val nombreFosil = viewModel.nombreFosilBase.replaceFirstChar { it.uppercase() }
-        val descripcionAccesible = "Fósil de $nombreFosil en etapa ${viewModel.estadoActual} de 5. $mensajeKira"
+        val descripcionAccesible = "Fósil de $nombreFosil en etapa $estado de 5. $mensajeKira"
         binding.imgFosilFondo.contentDescription = descripcionAccesible
         binding.imgFosilFondo.announceForAccessibility(mensajeKira)
-        actualizarDescripcionesBotones()
     }
 
     private fun errorFeedback() {
@@ -197,7 +236,7 @@ class ExcavacionActivity : AppCompatActivity() {
     }
 
     private fun obtenerNombreHerramientaRequerida(): String {
-        return when (viewModel.estadoActual) {
+        return when (viewModel.estado.value.estadoActual) {
             1, 2 -> "Pico"
             3 -> "Pala"
             4 -> "Pincel"
@@ -213,18 +252,16 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun configurarBotonesSuperiores() {
         binding.btnBack.setOnClickListener { finish() }
-
         binding.btnInfo.setOnClickListener {
             val nombreFosil = viewModel.nombreFosilBase.replaceFirstChar { it.uppercase() }
             mostrarDialogo(
-                "Excavá el fósil",
+                "¿Cómo jugar?",
                 "¡Ayudá a Kira a desenterrar el fósil del $nombreFosil! " +
                         "Escuchá o leé con atención su pista. Abajo vas a encontrar tres herramientas: " +
                         "el Pico (para romper la tierra dura y piedras), la Pala (para limpiar los escombros sueltos) " +
                         "y el Pincel (para limpiar el polvo de los huesos). ¡Tocá la herramienta correcta para avanzar paso a paso!"
             )
         }
-
     }
 
     private fun mostrarDialogo(titulo: String, mensaje: String) {

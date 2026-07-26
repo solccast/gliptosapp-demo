@@ -25,4 +25,8 @@ class ExcavacionRepository @Inject constructor(private val excavacionDao: Excava
     suspend fun actualizarEstadoExcavacion(excavacionId: Int, nuevoEstado: EstadoExcavacion) {
         excavacionDao.actualizarEstado(excavacionId, nuevoEstado)
     }
+
+    suspend fun obtenerEstadoExcavacion(fosilId: Int): EstadoExcavacion? {
+        return excavacionDao.obtenerPorId(fosilId)?.estado // ajustar nombre del DAO según tengas
+    }
 }
