@@ -90,5 +90,6 @@
     <activity
         android:id="@+id/mapaExcavacionActivity"
         android:name="com.example.gliptosapp.ui.mapa.MapaExcavacionActivity"
-        android:label="MapaExcavacionActivity" />
+        android:label="MapaExcavacionActivity"
+        tools:layout="@layout/activity_mapa_excavacion"/>
 </navigation>

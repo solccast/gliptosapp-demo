@@ -55,7 +55,7 @@ class ExtraInfoFosileFragment : BaseFragment() {
 
             binding.tituloFosil.text = nombreFosil
             binding.descripcionFosil.text = fosil.descripcion
-            binding.infoExtra.text = "Época: Pleistoceno\nDieta: Herbívoro"
+            binding.textoNota.text = "Época: Pleistoceno\nDieta: Herbívoro"
 
             val resId = resolverDrawable(requireContext(), fosil.obtenerImagen())
             binding.imagenFosil.setImageResource(resId)
