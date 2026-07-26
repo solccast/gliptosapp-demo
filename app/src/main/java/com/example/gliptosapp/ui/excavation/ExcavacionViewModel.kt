@@ -14,7 +14,7 @@ import javax.inject.Inject
 data class EstadoJuego(
     val estadoActual: Int = 1,
     val yaCompletado: Boolean = false,
-    val cargado: Boolean = false // evita pintar algo antes de saber el estado real guardado
+    val cargado: Boolean = false
 )
 
 @HiltViewModel
@@ -31,7 +31,12 @@ class ExcavacionViewModel @Inject constructor(
     var nombreFosilBase: String = "gliptodonte"
         private set
 
+    private var fosilIdInicializado: Int? = null
+
     fun inicializarFosil(id: Int) {
+        if (fosilIdInicializado == id) return
+
+        fosilIdInicializado = id
         fosilId = id
         nombreFosilBase = when (id) {
             1 -> "gliptodonte"
@@ -41,7 +46,6 @@ class ExcavacionViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            // Ver nota más abajo: hay que agregar este método al repositorio
             val estadoGuardado = repository.obtenerEstadoExcavacion(fosilId)
             val completado = estadoGuardado == EstadoExcavacion.COMPLETADO
             _estado.value = EstadoJuego(
@@ -62,9 +66,6 @@ class ExcavacionViewModel @Inject constructor(
     }
 
     fun reiniciarJuego() {
-        // Solo reinicia la mecánica visual; NO toca el estado en BD,
-        // porque el fósil ya está descubierto y no queremos que el mapa
-        // vuelva a mostrarlo como "pendiente".
         _estado.value = _estado.value.copy(estadoActual = 1, yaCompletado = false)
     }
 
