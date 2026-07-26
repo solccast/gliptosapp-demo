@@ -54,6 +54,10 @@ class ColectionFragment : BaseFragment() {
         colectionViewModel.fosiles.observe(viewLifecycleOwner) { lista ->
             adapter.updateList(lista)
         }
+
+        binding.btnMapa.setOnClickListener {
+            findNavController().navigate(R.id.action_colectionFragment_to_mapaExcavacionActivity)
+        }
     }
 
     override fun onDestroyView() {
