@@ -48,8 +48,10 @@ class ComparativeGameInfoViewModel @Inject constructor(
         )
 
         if (opcion.esCorrecta) {
-            // TODO: cuando el repository tenga persistencia,
-            // acá llamamos a repository.marcarComoRealizado(nombreFosil)
+            viewModelScope.launch {
+                repository.marcarComoRealizado(fosilId)
+            }
+
         }
     }
 }

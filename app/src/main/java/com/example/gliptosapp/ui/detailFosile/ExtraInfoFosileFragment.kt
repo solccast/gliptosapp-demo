@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
@@ -47,9 +48,6 @@ class ExtraInfoFosileFragment : BaseFragment() {
 
         viewModel.fosil.observe(viewLifecycleOwner) { fosil ->
             if (fosil == null) {
-                // El fósil no se encontró en la base (nombre con typo, o aún no sembrado).
-                // Ajustá esto según cómo quieras comunicar el error en tu UI.
-                binding.descripcionFosil.text = "No encontrado..."
                 return@observe
             }
 
@@ -66,6 +64,17 @@ class ExtraInfoFosileFragment : BaseFragment() {
             findNavController().navigate(
                 ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(nombreFosil, fosilId)
             )
+        }
+
+        viewModel.game.observe(viewLifecycleOwner) { game ->
+            val desbloqueada = game?.realizada == true
+            binding.overlayBloqueo.isVisible = !desbloqueada
+            binding.btnJugar.isVisible = !desbloqueada
+            binding.textoNota.text = if (desbloqueada) {
+                game?.infoExtra
+            } else {
+                getString(R.string.texto_ilegible_placeholder)
+            }
         }
 
         binding.btnVer.setOnClickListener {

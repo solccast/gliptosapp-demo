@@ -62,4 +62,9 @@ class ComparativeGameRepository @Inject constructor(
             listaPreguntas.forEach { comparativeGameDao.insertGameConOpciones(it) }
         }
     }
+
+    suspend fun marcarComoRealizado(fosilId: Long) = comparativeGameDao.marcarComoRealizado(fosilId)
+    suspend fun getInfoComparativeGame(fosilId: Long): ComparativeGame?{
+        return comparativeGameDao.getInfoGame(fosilId)
+    }
 }
