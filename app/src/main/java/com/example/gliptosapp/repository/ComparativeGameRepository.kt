@@ -22,14 +22,33 @@ class ComparativeGameRepository @Inject constructor(
             )
         ),
         ComparativeGame(
-            fosilId = 3, // El euphactus
+            fosilId = 2, // El euphactus
             textoPregunta = "¿Cual es más chico?",
             realizada = false,
             infoExtra = "Euphractus era mucho más pequeño que un armadillo gigante actual: apenas alcanzaba el tamaño de un armadillo común, adaptado a ambientes abiertos y secos.",
             opciones = listOf(
                 OptionComparativeGame(texto = "Un armadillo gigante", esCorrecta = false, imgOption = R.drawable.truck),
                 OptionComparativeGame(texto = "Un Euphractus", esCorrecta = true, imgOption = R.drawable.euphractus_descubierto)
-            ))
+            )),
+        ComparativeGame(
+            fosilId = 3, // Smilodon
+            textoPregunta = "¿Quién tiene los colmillos más largos?",
+            realizada = false,
+            infoExtra = "El Smilodon tenía unos enormes colmillos curvos que podían medir hasta 28 cm. ¡Eran mucho más largos que los de los grandes felinos actuales!",
+            opciones = listOf(
+                OptionComparativeGame(
+                    texto = "Un león",
+                    esCorrecta = false,
+                    imgOption = R.drawable.leon
+                ),
+                OptionComparativeGame(
+                    texto = "Un Smilodon",
+                    esCorrecta = true,
+                    imgOption = R.drawable.smilodon_descubierto
+                )
+            )
+        )
+
     )
 
     suspend fun getComparativeGameFosile(fosilId: Long): ComparativeGame?{

@@ -174,7 +174,13 @@ class MapaExcavacionActivity : AppCompatActivity() {
         marcador.position = punto
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
 
-        marcador.icon = escalarDrawable(fosil.icResName, 54)
+        val iconoACargar = if (fosil.estado == EstadoExcavacion.COMPLETADO) {
+            fosil.imgDescubierto
+        } else {
+            fosil.icResName
+        }
+
+        marcador.icon = escalarDrawable(iconoACargar, 54)
 
         marcador.setOnMarkerClickListener { _, _ ->
             if (!isTalkBackActivo()) navegarAExcavacion(fosil.id)
@@ -184,9 +190,16 @@ class MapaExcavacionActivity : AppCompatActivity() {
         marcadores.add(marcador)
         mapView.overlays.add(marcador)
 
+        // Accesibilidad mejorada según el estado del fósil (Heurística de Nielsen: Visibilidad del estado del sistema)
+        val descripcionAccesible = if (fosil.estado == EstadoExcavacion.COMPLETADO) {
+            "Zona de excavación completada. Fósil de ${fosil.nombre} descubierto."
+        } else {
+            "Zona de excavación. Posible fósil de ${fosil.nombre} oculto."
+        }
+
         accessibilityHelper.agregarMarcador(
             position = punto,
-            descripcion = "Zona de excavación. Posible fósil de ${fosil.nombre} oculto.",
+            descripcion = descripcionAccesible,
             onActivar = { navegarAExcavacion(fosil.id) }
         )
     }

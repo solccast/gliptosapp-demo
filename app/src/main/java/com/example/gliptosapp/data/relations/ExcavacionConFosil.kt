@@ -21,4 +21,5 @@ data class ExcavacionConFosil(
     val estado: EstadoExcavacion get() = excavacion.estado
     val icResName: String get() = excavacion.icResName
     val nombre: String get() = fosil.nombre
+    val imgDescubierto: String get() = fosil.imgDescubierto // <-- agregar esto
 }
