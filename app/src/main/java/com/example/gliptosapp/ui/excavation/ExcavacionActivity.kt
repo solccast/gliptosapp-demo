@@ -217,13 +217,14 @@ class ExcavacionActivity : AppCompatActivity() {
         binding.btnInfo.setOnClickListener {
             val nombreFosil = viewModel.nombreFosilBase.replaceFirstChar { it.uppercase() }
             mostrarDialogo(
-                "¿Cómo jugar?",
+                "Excavá el fósil",
                 "¡Ayudá a Kira a desenterrar el fósil del $nombreFosil! " +
                         "Escuchá o leé con atención su pista. Abajo vas a encontrar tres herramientas: " +
                         "el Pico (para romper la tierra dura y piedras), la Pala (para limpiar los escombros sueltos) " +
                         "y el Pincel (para limpiar el polvo de los huesos). ¡Tocá la herramienta correcta para avanzar paso a paso!"
             )
         }
+
     }
 
     private fun mostrarDialogo(titulo: String, mensaje: String) {

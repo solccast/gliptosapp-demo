@@ -21,7 +21,6 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.data.entities.EstadoExcavacion
-import com.example.gliptosapp.data.entities.Excavacion
 import com.example.gliptosapp.data.relations.ExcavacionConFosil
 import com.example.gliptosapp.ui.excavation.ExcavacionActivity
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
@@ -39,6 +38,10 @@ import org.osmdroid.util.MapTileIndex
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 @AndroidEntryPoint
 class MapaExcavacionActivity : AppCompatActivity() {
@@ -69,10 +72,8 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         val layoutPrincipal = findViewById<ConstraintLayout>(R.id.layoutPrincipalMapa)
         mapView = findViewById(R.id.mapView)
-        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
         val btnZoomIn = findViewById<ImageButton>(R.id.btnZoomIn)
         val btnZoomOut = findViewById<ImageButton>(R.id.btnZoomOut)
-        val btnAyuda = findViewById<ImageButton>(R.id.btnAyuda)
 
         ViewCompat.setOnApplyWindowInsetsListener(layoutPrincipal) { view, insets ->
             val bars = insets.getInsets(
@@ -106,6 +107,7 @@ class MapaExcavacionActivity : AppCompatActivity() {
 
         configurarMapa()
         configurarTapEnZonaVacia()
+        configurarBotonesSuperiores()
 
         // OBSERVAMOS LA BASE DE DATOS REACTIVAMENTE
         lifecycleScope.launch {
@@ -113,12 +115,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
                 pintarMarcadores(listaFosiles)
             }
         }
-
-        mapView.post {
-            mostrarInstruccionesIniciales()
-        }
-
-        btnVolver.setOnClickListener { finish() }
 
         btnZoomIn.setOnClickListener {
             mapView.controller.zoomIn()
@@ -130,9 +126,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
             mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
         }
 
-        btnAyuda.setOnClickListener {
-            mostrarInstruccionesIniciales()
-        }
     }
 
     private fun pintarMarcadores(listaFosiles: List<ExcavacionConFosil>) {
@@ -215,17 +208,6 @@ class MapaExcavacionActivity : AppCompatActivity() {
     private fun isTalkBackActivo(): Boolean {
         val am = getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
         return am.isEnabled && am.isTouchExplorationEnabled
-    }
-
-    private fun mostrarInstruccionesIniciales() {
-        if (isTalkBackActivo()) {
-            mapView.announceForAccessibility(
-                "Mapa de La Plata. Explorá la pantalla para encontrar " +
-                        "zonas de excavación. " +
-                        "Cuando encuentres una, tocá dos veces para excavar. " +
-                        "Usá los botones de acercar y alejar para navegar el mapa."
-            )
-        }
     }
 
     private fun feedbackZonaVacia() {
@@ -354,6 +336,32 @@ class MapaExcavacionActivity : AppCompatActivity() {
             putExtra("FOSIL_ID", idFosil)
         }
         startActivity(intent)
+    }
+
+    private fun configurarBotonesSuperiores() {
+        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+        val btnAyuda = findViewById<ImageButton>(R.id.btnAyuda)
+
+        btnVolver.setOnClickListener { finish() }
+
+        btnAyuda.setOnClickListener {
+            mostrarDialogoAyuda()
+        }
+    }
+
+
+    private fun mostrarDialogoAyuda() {
+        val view = layoutInflater.inflate(R.layout.dialog_ayuda, null)
+        (view as? ViewGroup)?.applyFontScale()
+        val txtAyuda = view.findViewById<TextView>(R.id.txtAyuda)
+        txtAyuda.text = "Cuando encuentres un fosil, tocá dos veces para comenzar la excavación " +
+                "Podes usar los botones de acercar y alejar para navegar el mapa."
+
+        AlertDialog.Builder(this)
+            .setTitle("Explorá el mapa")
+            .setView(view)
+            .setPositiveButton("¡Entendido!", null)
+            .show()
     }
 
     override fun onResume() { super.onResume(); mapView.onResume() }
