@@ -70,6 +70,12 @@ class ExcavacionActivity : AppCompatActivity() {
             paramsHerramientas.rightMargin = bars.right + margen
             binding.contenedorHerramientas.layoutParams = paramsHerramientas
 
+            val paramsAcciones = binding.contenedorAccionesCompletado.layoutParams as ConstraintLayout.LayoutParams
+            paramsAcciones.bottomMargin = bars.bottom + margen
+            paramsAcciones.leftMargin = bars.left + margen
+            paramsAcciones.rightMargin = bars.right + margen
+            binding.contenedorAccionesCompletado.layoutParams = paramsAcciones
+
             val paramsKira = binding.contenedorKira.layoutParams as ConstraintLayout.LayoutParams
             paramsKira.bottomMargin = bars.bottom + margen
             paramsKira.leftMargin = bars.left + margen
