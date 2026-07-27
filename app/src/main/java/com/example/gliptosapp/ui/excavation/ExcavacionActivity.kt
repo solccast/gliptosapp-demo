@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
-import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
 
@@ -100,7 +99,6 @@ class ExcavacionActivity : AppCompatActivity() {
         val imagenFosil = obtenerImagenPorEstado(viewModel.estadoActual)
         binding.imgFosilFondo.setImageResource(imagenFosil)
         binding.txtIndicacionKira.text = mensajeKira
-        binding.contenedorKira.applyAccessibilityPreferences()
         actualizarInformacionFosil(mensajeKira)
 
         VibrationManager.vibrate(this, 600)
@@ -172,7 +170,6 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun actualizarInformacionFosil(mensajeKira: String) {
         val descripcionAccesible = "Fósil en etapa ${viewModel.estadoActual} de 5. $mensajeKira"
-        // binding.contenedorKira.applyAccessibilityPreferences()
         binding.imgFosilFondo.contentDescription = descripcionAccesible
 
         binding.imgFosilFondo.announceForAccessibility(mensajeKira)
@@ -202,13 +199,6 @@ class ExcavacionActivity : AppCompatActivity() {
         binding.btnPincelContenedor.contentDescription = "Herramienta Pincel"
     }
 
-    private fun finalizarMecanica() {
-        herramientas.forEach {
-            it.setOnClickListener(null)
-            it.isSelected = false
-            it.contentDescription = "Juego completado"
-        }
-    }
 
     private fun configurarBotonesSuperiores() {
         binding.btnBack.setOnClickListener {
@@ -239,8 +229,6 @@ class ExcavacionActivity : AppCompatActivity() {
 
         view.findViewById<TextView>(R.id.txtTitulo).text = titulo
         view.findViewById<TextView>(R.id.txtMensaje).text = mensaje
-
-        (view as ViewGroup).applyAccessibilityPreferences()
 
         AlertDialog.Builder(this)
             .setView(view)
