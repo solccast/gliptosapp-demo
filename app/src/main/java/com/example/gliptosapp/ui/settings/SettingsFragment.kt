@@ -15,6 +15,7 @@ import com.example.gliptosapp.databinding.FragmentSettingsBinding
 import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.gliptosapp.R
+import com.example.gliptosapp.ui.settings.appearance.FontFamily
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.appearance.FontScale
 import com.example.gliptosapp.ui.settings.appearance.getThemeColor
@@ -72,6 +73,7 @@ class SettingsFragment : BaseFragment() {
                     binding.switchContrast.isChecked = state.highContrastEnabled
                     binding.switchSounds.isChecked = state.soundsEnabled
                     binding.switchVibration.isChecked = state.vibrationEnabled
+                    binding.switchDyslexiaFont.isChecked = state.selectedFontFamily == FontFamily.DYSLEXIA
                     updateFontSelection(state.selectedFont)
                     updateInteractionMode(state.interactionMode)
                 }
@@ -98,10 +100,7 @@ class SettingsFragment : BaseFragment() {
                                 )
                         }
 
-                        SettingsEvent.RecreateActivity -> {
-
-                            requireActivity().recreate()
-                        }
+                        SettingsEvent.RecreateActivity -> { requireActivity().recreate() }
                     }
                 }
             }
@@ -130,6 +129,9 @@ class SettingsFragment : BaseFragment() {
         }
         binding.switchVibration.setOnCheckedChangeListener { _, enabled ->
             viewModel.toggleVibration(enabled)
+        }
+        binding.switchDyslexiaFont.setOnCheckedChangeListener { _, enabled ->
+            viewModel.toggleDyslexiaFont(enabled)
         }
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()

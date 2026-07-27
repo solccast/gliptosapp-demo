@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
 import com.example.gliptosapp.ui.BaseFragment
-import com.example.gliptosapp.ui.settings.appearance.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
     private val binding get() = _binding!!
@@ -50,7 +52,7 @@ class InitFragment : BaseFragment() {
             navController.navigate(R.id.action_initFragment_to_recursosFragment)
         }
 
-        (binding.root as ViewGroup).applyFontScale()
+        (binding.root as ViewGroup).applyAccessibilityPreferences()
 
         binding.btnInfo.setOnClickListener {
             mostrarDialogoMasInfo("¿Cómo funciona?",
@@ -116,9 +118,23 @@ class InitFragment : BaseFragment() {
     }
 
     private fun mostrarDialogoMasInfo(titulo: String, mensaje: String) {
-        android.app.AlertDialog.Builder(requireContext())
+        val view =
+            layoutInflater.inflate(
+                R.layout.dialog_ayuda,
+                null
+            )
+
+        val txtAyuda =
+            view.findViewById<TextView>(R.id.txtAyuda)
+
+        txtAyuda.text = mensaje
+
+        (view as ViewGroup)
+            .applyAccessibilityPreferences()
+
+        AlertDialog.Builder(requireContext())
             .setTitle(titulo)
-            .setMessage(mensaje)
+            .setView(view)
             .setPositiveButton("¡Entendido!", null)
             .show()
     }

@@ -2,6 +2,7 @@ package com.example.gliptosapp.ui.settings
 
 import androidx.lifecycle.ViewModel
 import com.example.gliptosapp.repository.SettingsRepository
+import com.example.gliptosapp.ui.settings.appearance.FontFamily
 import com.example.gliptosapp.ui.settings.appearance.FontScale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -36,6 +38,7 @@ class SettingsViewModel @Inject constructor(
         _uiState.value =
             _uiState.value.copy(
                 selectedFont = repository.getFontScale(),
+                selectedFontFamily = repository.getFontFamily(),
                 highContrastEnabled = repository.isHighContrastEnabled(),
                 interactionMode = repository.getInteractionMode(),
                 soundsEnabled = repository.isSoundEnabled(),
@@ -118,6 +121,35 @@ class SettingsViewModel @Inject constructor(
             }
         )
     }
+
+    fun selectFontFamily(
+        family: FontFamily
+    ) {
+
+        if (_uiState.value.selectedFontFamily == family)
+            return
+
+        repository.saveFontFamily(family)
+
+        _uiState.update {
+            it.copy(selectedFontFamily = family)
+        }
+
+        emitAnnouncement(
+            if (family == FontFamily.DYSLEXIA)
+                "Fuente para dislexia activada"
+            else
+                "Fuente predeterminada activada"
+        )
+
+        emitRecreate()
+    }
+
+
+    fun toggleDyslexiaFont(enabled: Boolean) =
+        selectFontFamily(
+            if (enabled) FontFamily.DYSLEXIA else FontFamily.DEFAULT
+        )
 
     fun toggleSounds(
         enabled: Boolean

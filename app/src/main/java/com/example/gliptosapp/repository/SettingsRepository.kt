@@ -8,6 +8,7 @@ import com.example.gliptosapp.ui.settings.InteractionMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import androidx.core.content.edit
+import com.example.gliptosapp.ui.settings.appearance.FontFamily
 import com.example.gliptosapp.ui.settings.vibration.VibrationPreferences
 class SettingsRepository @Inject constructor(
     @ApplicationContext
@@ -59,4 +60,9 @@ class SettingsRepository @Inject constructor(
     fun saveVibrationEnabled(enabled: Boolean) {
         VibrationPreferences.save(context, enabled)
     }
+    fun saveFontFamily(family: FontFamily) =
+        FontPreferences.saveFamily(context, family)
+
+    fun getFontFamily(): FontFamily =
+        FontPreferences.getFamily(context)
 }

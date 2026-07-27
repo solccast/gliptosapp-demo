@@ -1,5 +1,6 @@
 package com.example.gliptosapp.ui.settings
 
+import com.example.gliptosapp.ui.settings.appearance.FontFamily
 import com.example.gliptosapp.ui.settings.appearance.FontScale
 data class SettingsUiState(
     val selectedFont: FontScale = FontScale.MEDIUM,
@@ -7,7 +8,8 @@ data class SettingsUiState(
     val narrationEnabled: Boolean = false,
     val soundsEnabled: Boolean = false,
     val vibrationEnabled: Boolean = false,
-    val interactionMode: InteractionMode = InteractionMode.PIECE_FIRST
+    val interactionMode: InteractionMode = InteractionMode.PIECE_FIRST,
+    val selectedFontFamily: FontFamily = FontFamily.DEFAULT
 )
 enum class InteractionMode {
     PIECE_FIRST,

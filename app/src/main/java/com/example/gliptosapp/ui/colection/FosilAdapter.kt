@@ -8,7 +8,7 @@ import com.example.gliptosapp.R
 import com.example.gliptosapp.data.entities.Fosil
 import com.example.gliptosapp.databinding.ItemFosilDescBinding
 import com.example.gliptosapp.databinding.ItemFosilNoDescBinding
-import com.example.gliptosapp.ui.settings.appearance.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 
 class FosilAdapter(
     private var lista: List<Fosil>,
@@ -36,12 +36,12 @@ class FosilAdapter(
         return when (viewType) {
             TYPE_DESCUBIERTO -> {
                 val binding = ItemFosilDescBinding.inflate(inflater, parent, false)
-                (binding.root as ViewGroup).applyFontScale()
+                (binding.root as ViewGroup).applyAccessibilityPreferences()
                 FosilDescViewHolder(binding)
             }
             else -> {
                 val binding = ItemFosilNoDescBinding.inflate(inflater, parent, false)
-                (binding.root as ViewGroup).applyFontScale()
+                (binding.root as ViewGroup).applyAccessibilityPreferences()
                 FosilNoDescViewHolder(binding)
             }
         }

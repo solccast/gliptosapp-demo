@@ -10,13 +10,43 @@ object TypographyManager {
         baseSizeSp: Float
     ) {
 
-        val multiplier = FontPreferences
-            .get(textView.context)
-            .multiplier
+        val scale =
+            FontPreferences
+                .get(textView.context)
+
+        val multiplier =
+            effectiveMultiplier(
+                scale.multiplier,
+                baseSizeSp
+            )
 
         textView.setTextSize(
             TypedValue.COMPLEX_UNIT_SP,
             baseSizeSp * multiplier
         )
+    }
+
+    private fun effectiveMultiplier(
+        multiplier: Float,
+        size: Float
+    ): Float {
+
+        return when {
+
+            multiplier <= 1f ->
+                multiplier
+
+            size >= 36f ->
+                1f + (multiplier - 1f) * 0.45f
+
+            size >= 28f ->
+                1f + (multiplier - 1f) * 0.65f
+
+            size >= 20f ->
+                1f + (multiplier - 1f) * 0.85f
+
+            else ->
+                multiplier
+        }
     }
 }

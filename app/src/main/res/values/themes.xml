@@ -27,4 +27,20 @@
         <item name="colorAppButton">@color/hc_boton1</item>
         <item name="colorAppButtonSecondary">@color/hc_boton2</item>
     </style>
+    <style
+        name="Theme.GliptosApp.Dyslexia"
+        parent="Theme.GliptosApp">
+
+        <item name="android:fontFamily">@font/opendyslexic</item>
+        <item name="fontFamily">@font/opendyslexic</item>
+
+    </style>
+    <style
+        name="Theme.GliptosApp.HighContrast.Dyslexia"
+        parent="Theme.GliptosApp.HighContrast">
+
+        <item name="android:fontFamily">@font/opendyslexic</item>
+        <item name="fontFamily">@font/opendyslexic</item>
+
+    </style>
 </resources>

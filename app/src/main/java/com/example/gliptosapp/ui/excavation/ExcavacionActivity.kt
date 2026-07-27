@@ -15,9 +15,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
-import com.example.gliptosapp.ui.settings.appearance.applyFontScale
 
 class ExcavacionActivity : AppCompatActivity() {
 
@@ -98,9 +98,9 @@ class ExcavacionActivity : AppCompatActivity() {
     private fun restaurarEstadoVisual() {
         val mensajeKira = obtenerMensajePorEstado(viewModel.estadoActual)
         val imagenFosil = obtenerImagenPorEstado(viewModel.estadoActual)
-
         binding.imgFosilFondo.setImageResource(imagenFosil)
         binding.txtIndicacionKira.text = mensajeKira
+        binding.contenedorKira.applyAccessibilityPreferences()
         actualizarInformacionFosil(mensajeKira)
 
         VibrationManager.vibrate(this, 600)
@@ -172,6 +172,7 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun actualizarInformacionFosil(mensajeKira: String) {
         val descripcionAccesible = "Fósil en etapa ${viewModel.estadoActual} de 5. $mensajeKira"
+        // binding.contenedorKira.applyAccessibilityPreferences()
         binding.imgFosilFondo.contentDescription = descripcionAccesible
 
         binding.imgFosilFondo.announceForAccessibility(mensajeKira)
@@ -225,13 +226,23 @@ class ExcavacionActivity : AppCompatActivity() {
         }
     }
 
-    private fun mostrarDialogo(titulo: String, mensaje: String) {
-        val view = layoutInflater.inflate(R.layout.dialog_ayuda, null)
-        val txtAyuda = view.findViewById<TextView>(R.id.txtAyuda)
-        txtAyuda.text = mensaje
-        (view as? ViewGroup)?.applyFontScale()
+    private fun mostrarDialogo(
+        titulo: String,
+        mensaje: String
+    ) {
+
+        val view =
+            layoutInflater.inflate(
+                R.layout.dialog_info,
+                null
+            )
+
+        view.findViewById<TextView>(R.id.txtTitulo).text = titulo
+        view.findViewById<TextView>(R.id.txtMensaje).text = mensaje
+
+        (view as ViewGroup).applyAccessibilityPreferences()
+
         AlertDialog.Builder(this)
-            .setTitle(titulo)
             .setView(view)
             .setPositiveButton("¡Entendido!", null)
             .show()
