@@ -59,4 +59,7 @@
     <string name="feedback_correcto">¡Gracias por tu ayuda! Ahora tenemos más información</string>
     <string name="feedback_incorrecto">¡Tenemos que volverlo a intentar!</string>
     <string name="ver_informacion">Ver información</string>
+    <string name="mensaje_kira_minijuego">¡Ups, perdí mis notas de esta especie! ¡Ayudame a recuperar más información sobre esta especie! </string>
+    <string name="texto_ilegible_placeholder">INFORMACIÓN    PERDIDA</string>
+    <string name="sabias_que">¿SABÍAS QUÉ?</string>
 </resources>

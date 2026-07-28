@@ -163,6 +163,46 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- CONTENEDOR DE ACCIONES POST-COMPLETADO -->
+    <LinearLayout
+        android:id="@+id/contenedorAccionesCompletado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:gravity="center"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnVerColeccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Ver colección de fósiles"
+            android:backgroundTint="@color/boton4"
+            android:textAllCaps="false"
+            android:contentDescription="Ver mi colección de fósiles" />
+
+        <Button
+            android:id="@+id/btnVolverAExcavar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver a excavar"
+            android:backgroundTint="@color/boton2"
+            android:textAllCaps="false"
+            android:contentDescription="Reiniciar la excavación de este fósil" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierAcciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="contenedorHerramientas,contenedorAccionesCompletado" />
+
     <!-- AVATAR KIRA -->
     <LinearLayout
         android:id="@+id/contenedorKira"
@@ -179,7 +219,7 @@
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/contenedorHerramientas">
+        app:layout_constraintEnd_toStartOf="@id/barrierAcciones">
 
         <ImageView
             android:id="@+id/imgKira"

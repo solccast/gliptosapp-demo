@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_colectionFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_colectionFragment_to_mapaExcavacionActivity"
+            app:destination="@id/mapaExcavacionActivity" />
     </fragment>
 
     <fragment
@@ -54,6 +57,9 @@
         <argument
             android:name="nombreFosil"
             app:argType="string" />
+        <argument
+            android:name="fosilId"
+            app:argType="long" />
         <action
             android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -74,6 +80,9 @@
         <argument
             android:name="nombreFosil"
             app:argType="string"/>
+        <argument
+            android:name="fosilId"
+            app:argType="long"/>
         <action
             android:id="@+id/action_comparativeGameInfoFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -81,5 +90,6 @@
     <activity
         android:id="@+id/mapaExcavacionActivity"
         android:name="com.example.gliptosapp.ui.mapa.MapaExcavacionActivity"
-        android:label="MapaExcavacionActivity" />
+        android:label="MapaExcavacionActivity"
+        tools:layout="@layout/activity_mapa_excavacion"/>
 </navigation>

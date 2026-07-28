@@ -43,7 +43,7 @@ class ColectionFragment : BaseFragment() {
 
         adapter = FosilAdapter(emptyList()) { fosil ->
             val action = ColectionFragmentDirections
-                .actionColectionFragmentToExtraInfoFosileFragment(fosil.nombre)
+                .actionColectionFragmentToExtraInfoFosileFragment(fosil.nombre, fosil.fosil.id)
 
             findNavController().navigate(action)
         }
@@ -53,6 +53,10 @@ class ColectionFragment : BaseFragment() {
 
         colectionViewModel.fosiles.observe(viewLifecycleOwner) { lista ->
             adapter.updateList(lista)
+        }
+
+        binding.btnMapa.setOnClickListener {
+            findNavController().navigate(R.id.action_colectionFragment_to_mapaExcavacionActivity)
         }
     }
 

@@ -158,15 +158,89 @@
                             android:focusable="true"
                             android:layout_marginTop="12dp"/>
 
-                        <!-- Info extra -->
-                        <TextView
-                            android:id="@+id/infoExtra"
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:focusable="true"
                             android:layout_height="wrap_content"
-                            android:text="Época, tamaño, dieta..."
-                            android:textColor="@color/texto1"
-                            android:layout_marginTop="8dp"/>
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#FFF9C4"
+                            app:strokeColor="#E6D77E"
+                            app:strokeWidth="1dp"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="6dp"
+                            app:contentPadding="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tituloNota"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sabias_que"
+                                    android:textStyle="bold"
+                                    android:textColor="#4B3621"
+                                    android:focusable="true"/>
+
+                                <TextView
+                                    android:id="@+id/textoNota"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:textColor="#4B3621"
+                                    android:lineSpacingExtra="4dp"
+                                    android:focusable="true"
+                                    android:text="@string/texto_ilegible_placeholder"/>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <FrameLayout
+                            android:id="@+id/contenedorInfoExtra"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+                            <!-- visible hasta ganar el minijuego -->
+                            <FrameLayout
+                                android:id="@+id/overlayBloqueo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+
+                                <!-- Avatar + globo de diálogo -->
+                                <LinearLayout
+                                    android:id="@+id/contenedorKira"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:padding="12dp"
+                                    android:focusable="true"
+                                    android:importantForAccessibility="yes">
+
+                                    <ImageView
+                                        android:id="@+id/imgKira"
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/kira"
+                                        android:importantForAccessibility="no" />
+
+                                    <TextView
+                                        android:id="@+id/txtIndicacionKira"
+                                        android:background="@drawable/bg_vinieta_redondeada"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="15dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:text="@string/mensaje_kira_minijuego"
+                                        android:textColor="@color/texto1"
+                                        android:textStyle="bold"
+                                        android:accessibilityHeading="true" />
+                                </LinearLayout>
+                            </FrameLayout>
+                        </FrameLayout>
 
                     </LinearLayout>
                 </ScrollView>

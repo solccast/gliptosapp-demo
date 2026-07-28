@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.gliptosapp.data.entities.Fosil
+import com.example.gliptosapp.data.relations.FosilConEstado
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,4 +25,17 @@ interface FosilDao{
 
     @Query("SELECT COUNT(*) FROM fosiles")
     suspend fun contarFosiles(): Int
+
+    @Query("SELECT * FROM fosiles WHERE id = :id LIMIT 1")
+    suspend fun getFosilPorId(id: Long): Fosil?
+
+    @Query("SELECT * FROM fosiles")
+    fun obtenerFosilesConEstado(): Flow<List<FosilConEstado>> //
+
+
+    @Query("SELECT * FROM fosiles WHERE nombre = :nombre LIMIT 1")
+    suspend fun getFosilConEstadoPorNombre(nombre: String): FosilConEstado?
+
+    @Query("SELECT * FROM fosiles WHERE id = :fosilId LIMIT 1")
+    suspend fun getFosilConEstadoPorId(fosilId: Long): FosilConEstado?
 }

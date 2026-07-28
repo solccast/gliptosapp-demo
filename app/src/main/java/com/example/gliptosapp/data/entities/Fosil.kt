@@ -8,12 +8,7 @@ data class Fosil(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val nombre: String,
-    val descubierto: Boolean,
     val imgDescubierto: String, // Éste es el que se muestra en la colección de fósiles
     val imgSinDescubrir: String, // éste es el que se muestra como una sombra sin descubrir
     val descripcion: String?
-){
-    fun obtenerImagen(): String{
-        return if (descubierto) imgDescubierto else imgSinDescubrir
-    }
-}
+)

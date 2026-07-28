@@ -20,6 +20,7 @@ class ComparativeGameInfoViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val nombreFosil: String = checkNotNull(savedStateHandle["nombreFosil"])
+    private var fosilId: Long = checkNotNull(savedStateHandle["fosilId"])
 
     private val _uiState = MutableStateFlow(ComparativeGameUiState(juego = null))
 
@@ -27,7 +28,7 @@ class ComparativeGameInfoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val juego = repository.getComparativeGameFosile(nombreFosil)
+            val juego = repository.getComparativeGameFosile(fosilId)
             _uiState.value = _uiState.value.copy(juego = juego)
         }
     }
@@ -47,8 +48,10 @@ class ComparativeGameInfoViewModel @Inject constructor(
         )
 
         if (opcion.esCorrecta) {
-            // TODO: cuando el repository tenga persistencia,
-            // acá llamamos a repository.marcarComoRealizado(nombreFosil)
+            viewModelScope.launch {
+                repository.marcarComoRealizado(fosilId)
+            }
+
         }
     }
 }
