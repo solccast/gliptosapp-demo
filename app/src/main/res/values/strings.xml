@@ -34,6 +34,7 @@
     <string name="jugar">¡Jugar!</string>
     <string name="fosil_no_desc">Fósil no descubierto</string>
     <string name="btn_ver_ra">Ver en realidad aumentada</string>
+    <string name="btn_ver_fosil_3d">Ver en 3D</string>
     <string name="ver_detalle">Ver detalle</string>
     <string name="coleccion_lista">Lista de fosiles descubiertos y sin descubrir</string>
     <string name="back">Atrás</string>
