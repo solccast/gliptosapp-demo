@@ -160,6 +160,7 @@
                             android:focusable="true"
                             android:layout_marginTop="12dp"/>
 
+                        <!-- Nota de ¿sabias qué? -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -204,7 +205,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp">
 
-                            <!-- visible hasta ganar el minijuego -->
+                            <!-- visible hasta ganar el minijuego (es el coso de Kira) -->
                             <FrameLayout
                                 android:id="@+id/overlayBloqueo"
                                 android:layout_width="match_parent"
@@ -242,6 +243,71 @@
                                         android:accessibilityHeading="true" />
                                 </LinearLayout>
                             </FrameLayout>
+
+                            <!-- Visible cuando gana el minijuego -->
+                            <LinearLayout
+                                android:id="@+id/contenedorDatosFosil"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <!-- Fila 1: Época + Hábitat -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <include
+                                        android:id="@+id/cardEpoca"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="6dp"/>
+
+                                    <include
+                                        android:id="@+id/cardHabitat"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginStart="6dp"/>
+                                </LinearLayout>
+
+                                <!-- Fila 2: Tamaño + Peso -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="10dp">
+
+                                    <include
+                                        android:id="@+id/cardTamano"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="6dp"/>
+
+                                    <include
+                                        android:id="@+id/cardPeso"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginStart="6dp"/>
+                                </LinearLayout>
+
+                                <!-- Fila 3: Dieta (ancho completo) -->
+                                <include
+                                    android:id="@+id/cardDieta"
+                                    layout="@layout/item_dato_fosil"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"/>
+
+                            </LinearLayout>
                         </FrameLayout>
 
                     </LinearLayout>
