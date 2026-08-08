@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.gliptosapp.databinding.FragmentExtraInfoFosileBinding
 import com.example.gliptosapp.ui.BaseFragment
-import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import com.example.gliptosapp.R
