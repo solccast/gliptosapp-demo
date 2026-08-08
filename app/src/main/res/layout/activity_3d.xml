@@ -65,7 +65,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/usar_teclas_visor"
+            android:maxWidth="250dp"
+            android:text="@string/instrucciones_visor"
             android:textColor="@color/texto2"
             android:textSize="@dimen/texto_boton_medium"
             android:layout_marginBottom="8dp"/>

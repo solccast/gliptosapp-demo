@@ -33,7 +33,7 @@
     <string name="rotacion_izq">Rotar fósil hacia la izquierda</string>
     <string name="rotacion_arr">Rotar fósil hacia arriba</string>
     <string name="rotacion_ab">Rotar fosil hacia abajo</string>
-    <string name="usar_teclas_visor">¡Usa las teclas para girar al fósil!</string>
+    <string name="instrucciones_visor">¡Usa las teclas para girar al fósil o puedes arrastrar para rotarlo!</string>
     <string name="jugar">¡Jugar!</string>
     <string name="fosil_no_desc">Fósil no descubierto</string>
     <string name="btn_ver_ra">Ver en realidad aumentada</string>
