@@ -41,6 +41,7 @@
             android:exported="false"
             android:label="Zona de Excavación" />
         <activity android:name=".ui.ra.RAFosilActivity"/>
+        <activity android:name=".ui.visor3d.Visor3DActivity"/>
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />

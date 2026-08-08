@@ -14,6 +14,7 @@ import com.example.gliptosapp.ui.ra.RAFosilActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import com.example.gliptosapp.R
+import com.example.gliptosapp.ui.visor3d.Visor3DActivity
 
 @AndroidEntryPoint
 class ExtraInfoFosileFragment : BaseFragment() {
@@ -78,13 +79,16 @@ class ExtraInfoFosileFragment : BaseFragment() {
         }
 
         binding.btnVer.setOnClickListener {
-            // TODO realidad aumentada
-            val intent = Intent(requireContext(), RAFosilActivity::class.java)
-            intent.putExtra("nombreFosil", args.nombreFosil)
-            startActivity(intent)
+            startActivity(
+                Visor3DActivity.newIntent(
+                    context = requireContext(),
+                    modelPath = "models/duck.glb",
+                    titulo = args.nombreFosil
+                )
+            )
         }
         binding.btnVer.contentDescription =
-            "Ver el fósil ${args.nombreFosil} en realidad aumentada"
+            "Ver el fósil ${args.nombreFosil} en 3D"
     }
 
     /**
