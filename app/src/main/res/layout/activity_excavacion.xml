@@ -237,26 +237,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVerColeccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Ver colección de fósiles"
+            android:text="Colección de fósiles"
+            android:textColor="@color/texto3"
+            android:textSize="@dimen/texto_boton_medium"
             android:backgroundTint="@color/boton4"
             android:textAllCaps="false"
-            android:contentDescription="Ver mi colección de fósiles"/>
+            android:contentDescription="Ver mi colección de fósiles"
+            app:icon="@drawable/ic_coleccion"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/texto3"
+            app:iconSize="24dp" />
 
-
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVolverAExcavar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Volver a excavar"
+            android:textColor="@color/texto3"
+            android:textSize="@dimen/texto_boton_medium"
             android:backgroundTint="@color/boton2"
             android:textAllCaps="false"
-            android:contentDescription="Reiniciar la excavación de este fósil" />
+            android:contentDescription="Reiniciar la excavación de este fósil"
+            app:icon="@drawable/ic_pala"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/texto3"
+            app:iconSize="24dp" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
