@@ -15,6 +15,10 @@
         <item name="colorAppTextSecondary">@color/texto2</item>
         <item name="colorAppButton">@color/boton1</item>
         <item name="colorAppButtonSecondary">@color/boton2</item>
+        <item name="colorAppTitle">@color/boton3</item>
+        <item name="colorAppSwitchThumb">@color/boton1</item>
+        <item name="colorAppSwitchTrack">@color/boton2</item>
+        <item name="colorSettingsCard">@color/fondo_card_settings</item>
     </style>
     <style
         name="Theme.GliptosApp.HighContrast"
@@ -26,6 +30,11 @@
         <item name="colorAppTextSecondary">@color/hc_texto2</item>
         <item name="colorAppButton">@color/hc_boton1</item>
         <item name="colorAppButtonSecondary">@color/hc_boton2</item>
+        <item name="colorAppTitle">@color/boton3</item>
+        <item name="colorAppSwitchThumb">@color/hc_boton1</item>
+        <item name="colorAppSwitchTrack">@color/hc_boton2</item>
+        <item name="colorSettingsCard">@color/fondo_card_settings</item>
+
     </style>
     <style
         name="Theme.GliptosApp.Dyslexia"

@@ -21,6 +21,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 import com.example.gliptosapp.ui.MainActivity
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
@@ -104,6 +105,10 @@ class ExcavacionActivity : AppCompatActivity() {
                 android.view.accessibility.AccessibilityEvent.TYPE_VIEW_FOCUSED
             )
         }, 500)
+
+        if (savedInstanceState == null) {
+            mostrarInfoExcavacion()
+        }
     }
 
     private fun observarEstado() {
@@ -260,36 +265,13 @@ class ExcavacionActivity : AppCompatActivity() {
 
     private fun configurarBotonesSuperiores() {
         binding.btnBack.setOnClickListener { finish() }
+
         binding.btnInfo.setOnClickListener {
-            val nombreFosil = viewModel.nombreFosilBase.replaceFirstChar { it.uppercase() }
-            mostrarDialogo(
-                "¿Cómo jugar?",
-                "¡Ayudá a Kira a desenterrar el fósil del $nombreFosil! " +
-                        "Escuchá o leé con atención su pista. Abajo vas a encontrar tres herramientas: " +
-                        "el Pico (para romper la tierra dura y piedras), la Pala (para limpiar los escombros sueltos) " +
-                        "y el Pincel (para limpiar el polvo de los huesos). ¡Tocá la herramienta correcta para avanzar paso a paso!"
-            )
+            mostrarInfoExcavacion()
         }
     }
-
-    private fun mostrarDialogo(
-        titulo: String,
-        mensaje: String
-    ) {
-
-        val view =
-            layoutInflater.inflate(
-                R.layout.dialog_info,
-                null
-            )
-
-        view.findViewById<TextView>(R.id.txtTitulo).text = titulo
-        view.findViewById<TextView>(R.id.txtMensaje).text = mensaje
-        (view as? ViewGroup)?.applyAccessibilityPreferences()
-
-        AlertDialog.Builder(this)
-            .setView(view)
-            .setPositiveButton("¡Entendido!", null)
-            .show()
+    private fun mostrarInfoExcavacion() {
+        AvisoDialog.mostrar(this, getString(R.string.ayuda_excavacion))
     }
+
 }

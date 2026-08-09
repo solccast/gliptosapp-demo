@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
 import com.example.gliptosapp.ui.BaseFragment
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
@@ -32,11 +33,6 @@ class InitFragment : BaseFragment() {
         val navController = findNavController()
 
         binding.btnExcavacion.setOnClickListener {
-            navController.navigate(R.id.action_initFragment_to_excavacionActivity)
-        }
-
-        binding.btnExcavacion.setOnClickListener {
-            // Llama a la acción que abre la ExcavacionActivity declarada en el grafo
             findNavController().navigate(R.id.action_initFragment_to_excavacionActivity)
         }
 
@@ -55,12 +51,17 @@ class InitFragment : BaseFragment() {
         (binding.root as ViewGroup).applyAccessibilityPreferences()
 
         binding.btnInfo.setOnClickListener {
-            mostrarDialogoMasInfo("¿Cómo funciona?",
-                "- Realizar Excavación: Descubrí grandes mamíferos presentes en la ciudad para agregarlos al cuadernillo.\n" +
-                        "- Mi colección de fósiles: Descubrí datos interesantes de los fósiles que descubriste jugando juegos!\n" +
-                        "- Ajustes: Configurá el sitio web a tu gusto, incluyendo opciones de accesibilidad.\n" +
-                        "- Recursos: Si te quedaste con ganas de más, acá vas a encontrar más información.")
+            mostrarInfoInicio()
         }
+
+        // Mostrar la info apenas se crea la vista del fragment
+        if (savedInstanceState == null) {
+            mostrarInfoInicio()
+        }
+    }
+
+    private fun mostrarInfoInicio() {
+        AvisoDialog.mostrar(requireContext(), getString(R.string.ayuda_inicio))
     }
 
     override fun onResume() {
@@ -115,27 +116,5 @@ class InitFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Evita memory leaks (Fuga de memoria), una excelente práctica de desarrollo
-    }
-
-    private fun mostrarDialogoMasInfo(titulo: String, mensaje: String) {
-        val view =
-            layoutInflater.inflate(
-                R.layout.dialog_ayuda,
-                null
-            )
-
-        val txtAyuda =
-            view.findViewById<TextView>(R.id.txtAyuda)
-
-        txtAyuda.text = mensaje
-
-        (view as ViewGroup)
-            .applyAccessibilityPreferences()
-
-        AlertDialog.Builder(requireContext())
-            .setTitle(titulo)
-            .setView(view)
-            .setPositiveButton("¡Entendido!", null)
-            .show()
     }
 }
