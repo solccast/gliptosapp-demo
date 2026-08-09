@@ -41,6 +41,7 @@ import org.osmdroid.views.overlay.Marker
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 
 @AndroidEntryPoint
@@ -345,24 +346,10 @@ class MapaExcavacionActivity : AppCompatActivity() {
         btnVolver.setOnClickListener { finish() }
 
         btnAyuda.setOnClickListener {
-            mostrarDialogoAyuda()
+            AvisoDialog.mostrar(this,getString(R.string.ayuda_mapa))
         }
     }
 
-
-    private fun mostrarDialogoAyuda() {
-        val view = layoutInflater.inflate(R.layout.dialog_ayuda, null)
-        val txtAyuda = view.findViewById<TextView>(R.id.txtAyuda)
-        txtAyuda.text = "Cuando encuentres un fosil, tocá dos veces para comenzar la excavación " +
-                "Podes usar los botones de acercar y alejar para navegar el mapa."
-        (view as? ViewGroup)?.applyAccessibilityPreferences()
-
-        AlertDialog.Builder(this)
-            .setTitle("Explorá el mapa")
-            .setView(view)
-            .setPositiveButton("¡Entendido!", null)
-            .show()
-    }
 
     override fun onResume() { super.onResume(); mapView.onResume() }
     override fun onPause() { super.onPause(); mapView.onPause() }
