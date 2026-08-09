@@ -13,33 +13,36 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:background="?attr/colorAppPrimary">
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_boton_ra"
-            android:src="@drawable/ic_arrow_back"
-            android:contentDescription="Volver"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:text="@string/settings"
-            android:accessibilityHeading="true"
-            android:textSize="32sp"
-            android:textColor="?attr/colorAppText"
-            android:textStyle="bold"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_boton_ra"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"/>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/settings"
+                android:textStyle="bold"
+                android:textSize="32sp"
+                android:textColor="?attr/colorAppTitle"/>
+        </FrameLayout>
         <!-- MODO DE INTERACCIÓN -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:cardCornerRadius="24dp">
-
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +56,7 @@
                     android:text="Modo de interacción"
                     android:textAllCaps="true"
                     android:textStyle="bold"
+                    android:textColor="@color/font_settings"
                     android:accessibilityHeading="true"/>
 
                 <!-- OPCIÓN ARRASTRAR -->
@@ -69,7 +73,7 @@
                     android:focusable="true"
                     app:cardCornerRadius="18dp"
                     app:strokeWidth="2dp"
-                    >
+                    android:backgroundTint="@color/fondo_card_settings">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -94,6 +98,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
+                            android:textColor="@color/font_settings"
                             android:text="Arrastrar piezas"/>
 
                         <!-- Mano -->
@@ -136,7 +141,8 @@
                     android:focusable="true"
                     app:cardCornerRadius="18dp"
                     app:strokeWidth="0dp"
-                    app:cardBackgroundColor="?attr/colorSurface">
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    android:backgroundTint="@color/fondo_card_settings">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -157,7 +163,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:text="Tocar pieza y destino"/>
+                            android:text="Tocar pieza y destino"
+                            android:textColor="@color/font_settings"/>
 
                         <ImageView
                             android:id="@+id/imgTouchPiece"
@@ -184,20 +191,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="24dp">
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:screenReaderFocusable="true">
+                android:screenReaderFocusable="true"
+                android:backgroundTint="@color/fondo_card_settings">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Soporte visual"
+                    android:text="SOPORTE VISUAL"
                     android:textStyle="bold"
-                    android:accessibilityHeading="true"/>
+                    android:accessibilityHeading="true"
+                    android:textColor="@color/font_settings"/>
 
                 <!-- Alto contraste -->
 
@@ -214,13 +225,18 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:labelFor="@id/switchContrast"
-                        android:text="Alto contraste"/>
+                        android:text="Alto contraste"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchContrast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Soporte visual. Activa colores de alto contraste para mejorar la visibilidad"/>
+                        android:contentDescription="Soporte visual. Activa colores de alto contraste para mejorar la visibilidad"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
+
                 </LinearLayout>
 
                 <!-- Tamaño de texto -->
@@ -236,7 +252,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tamaño de texto"/>
+                        android:text="Tamaño de texto"
+                        android:textColor="@color/font_settings"/>
 
                     <LinearLayout
                         android:id="@+id/fontSizeContainer"
@@ -317,13 +334,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Letra dislexia"/>
+                        android:text="Cambiar tipo de letras"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchDyslexiaFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Soporte visual. Activar tipografía para personas con dislexia"/>
+                        android:contentDescription="Soporte visual. Activar tipografía para personas con dislexia"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -333,7 +354,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
-            app:cardCornerRadius="24dp">
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -344,9 +366,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Apoyo auditivo"
+                    android:text="APOYO AUDITIVO"
                     android:textStyle="bold"
-                    android:accessibilityHeading="true" />
+                    android:accessibilityHeading="true"
+                    android:textColor="@color/font_settings"/>
 
                 <!-- Narración -->
 
@@ -361,13 +384,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Narración" />
+                        android:text="Narración"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchNarration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Apoyo auditivo. Activar narración de instrucciones y eventos" />
+                        android:contentDescription="Apoyo auditivo. Activar narración de instrucciones y eventos"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
 
                 </LinearLayout>
 
@@ -384,13 +411,16 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Música" />
+                        android:text="Música"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchSounds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Apoyo auditivo. Activar efectos de sonido" />
+                        android:contentDescription="Apoyo auditivo. Activar efectos de sonido"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"/>
 
                 </LinearLayout>
 
@@ -407,13 +437,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Vibración" />
+                        android:text="Vibración"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchVibration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Apoyo auditivo. Activar vibración como retroalimentación" />
+                        android:contentDescription="Apoyo auditivo. Activar vibración como retroalimentación"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
 
                 </LinearLayout>
             </LinearLayout>
