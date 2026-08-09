@@ -12,7 +12,8 @@ import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferenc
 
 class FosilAdapter(
     private var lista: List<FosilConEstado>,
-    private val onDetalleClick: (FosilConEstado) -> Unit
+    private val onDetalleClick: (FosilConEstado) -> Unit,
+    private val onNoDescubiertoClick: (FosilConEstado) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -72,10 +73,10 @@ class FosilAdapter(
         with(holder.binding) {
             imagenFosilSilueta.setImageResource(resolverDrawable(root.context, item.obtenerImagen()))
 
-            root.isClickable = false
+            root.isClickable = true
             root.isFocusable = true
-            root.setOnClickListener(null)
-            root.contentDescription = "Fósil ${item.fosil.nombre}, aún no descubierto."
+            root.setOnClickListener { onNoDescubiertoClick(item) }
+            root.contentDescription = "Fósil ${item.fosil.nombre}, aún no descubierto. Toca para más información."
         }
     }
 

@@ -72,8 +72,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    // AR
-    implementation("com.google.ar:core:1.38.0")
+    // Para el modelo 3d
     implementation("io.github.sceneview:arsceneview:2.2.1")
 
     // OpenStreetMap

@@ -134,54 +134,73 @@
                             android:textSize="16sp"/>
                     </LinearLayout>
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnExcavacion"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="12dp"
                         android:backgroundTint="@color/boton1"
                         android:text="@string/excavacion"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/texto3"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Comenzar excavación para descubrir fósiles"/>
+                        android:contentDescription="Comenzar excavación para descubrir fósiles"
+                        app:icon="@drawable/ic_pala"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/texto3"
+                        app:iconSize="24dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnColeccion"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="12dp"
                         android:backgroundTint="@color/boton2"
                         android:text="@string/coleccion_fosiles"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/texto3"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Ver mi colección de fósiles guardados"/>
+                        android:contentDescription="Ver mi colección de fósiles guardados"
+                        app:icon="@drawable/ic_coleccion"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/texto3"
+                        app:iconSize="24dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAjustes"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="12dp"
                         android:text="@string/settings"
                         android:backgroundTint="@color/post_its"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/texto3"
                         android:textAllCaps="false"
                         android:textSize="@dimen/texto_boton_medium"
-                        android:contentDescription="Abrir opciones y ajustes de la aplicación"/>
+                        android:contentDescription="Abrir opciones y ajustes de la aplicación"
+                        app:icon="@drawable/ic_settings"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/texto3"
+                        app:iconSize="24dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRecursos"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/boton_alto_medium"
                         android:layout_marginTop="12dp"
                         android:textSize="@dimen/texto_boton_medium"
                         android:text="@string/recursos"
-                        android:textColor="@color/texto2"
+                        android:textColor="@color/texto3"
                         android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/boton_recursos_azul"
-                        android:contentDescription="@string/recursos"/>
-
+                        android:contentDescription="@string/recursos"
+                        app:icon="@drawable/ic_libro"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/texto3"
+                        app:iconSize="24dp" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

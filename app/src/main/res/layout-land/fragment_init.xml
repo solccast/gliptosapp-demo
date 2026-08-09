@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorAppPrimary">
+    android:background="@color/fondo1">
 
     <ImageView
         android:id="@+id/imgPatitasBottom"
@@ -27,7 +27,7 @@
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_help"
         android:background="@drawable/bg_boton_ra"
-        android:contentDescription="Más información"
+        android:contentDescription="Más información sobre esta pantalla"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -53,6 +53,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+            <!-- Perforaciones del cuaderno -->
             <LinearLayout
                 android:layout_width="34dp"
                 android:layout_height="match_parent"
@@ -60,6 +61,7 @@
                 android:orientation="vertical"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp">
+                <!-- Se asume que las vistas de perforación se mantienen igual por diseño -->
                 <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
                 <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
                 <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginBottom="16dp" android:src="@drawable/perforacion_hoja" android:importantForAccessibility="no"/>
@@ -109,7 +111,8 @@
                             android:layout_height="wrap_content"
                             android:text="Descubrí los gigantes que habitaron La Plata hace miles de años"
                             android:textSize="14sp"
-                            android:textColor="@color/boton2"/>
+                            android:textColor="@color/boton2"
+                            android:textAlignment="center"/>
                     </LinearLayout>
 
                     <GridLayout
@@ -120,57 +123,77 @@
                         android:alignmentMode="alignMargins"
                         android:useDefaultMargins="true">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnExcavacion"
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/boton_alto_medium"
+                            android:layout_height="wrap_content"
+                            android:minHeight="64dp"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:text="@string/excavacion"
-                            android:backgroundTint="@color/boton1"
-                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/boton1"
+                            android:textColor="@color/texto3"
+                            app:icon="@drawable/ic_pala"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/texto3"
                             android:textAllCaps="false"
-                            android:textSize="@dimen/texto_boton_medium"
-                            android:contentDescription="Comenzar excavación para descubrir fósiles"/>
+                            android:textSize="18sp"
+                            android:contentDescription="Comenzar excavación para descubrir fósiles" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnColeccion"
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/boton_alto_medium"
+                            android:layout_height="wrap_content"
+                            android:minHeight="64dp"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:text="@string/coleccion_fosiles"
-                            android:backgroundTint="@color/boton2"
-                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/boton2"
+                            android:textColor="@color/texto3"
+                            app:icon="@drawable/ic_hueso"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/texto3"
                             android:textAllCaps="false"
-                            android:textSize="@dimen/texto_boton_medium"
-                            android:contentDescription="Ver mi colección de fósiles guardados"/>
+                            android:textSize="18sp"
+                            android:contentDescription="Ver mi colección de fósiles guardados" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAjustes"
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/boton_alto_medium"
+                            android:layout_height="wrap_content"
+                            android:minHeight="64dp"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:text="@string/settings"
-                            android:backgroundTint="@color/post_its"
-                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/post_its"
+                            android:textColor="@color/texto3"
+                            app:icon="@drawable/ic_settings"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/texto3"
                             android:textAllCaps="false"
-                            android:textSize="@dimen/texto_boton_medium"
-                            android:contentDescription="Abrir opciones y ajustes de la aplicación"/>
+                            android:textSize="18sp"
+                            android:contentDescription="Abrir opciones y ajustes de la aplicación" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnRecursos"
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/boton_alto_medium"
+                            android:layout_height="wrap_content"
+                            android:minHeight="64dp"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:text="@string/recursos"
-                            android:textColor="@color/texto2"
-                            android:backgroundTint="@color/boton_recursos_azul"
+                            app:backgroundTint="@color/boton_recursos_azul"
+                            android:textColor="@color/texto3"
+                            app:icon="@drawable/ic_libro"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/texto3"
                             android:textAllCaps="false"
-                            android:textSize="@dimen/texto_boton_medium"
-                            android:contentDescription="@string/recursos"/>
+                            android:textSize="18sp"
+                            android:contentDescription="Ver recursos educativos adicionales" />
 
                     </GridLayout>
                 </LinearLayout>
