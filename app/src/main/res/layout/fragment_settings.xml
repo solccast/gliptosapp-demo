@@ -108,14 +108,14 @@
                             android:id="@+id/imgDragHand"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
-                            android:src="@drawable/ic_touch_destination"/>
+                            android:src="@drawable/ic_hand"/>
 
                         <ImageView
                             android:id="@+id/imgArrow"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginStart="12dp"
-                            android:src="@drawable/ic_arrow_back"/>
+                            android:src="@drawable/ic_arrow_right"/>
 
                         <!-- Pieza -->
 
@@ -172,14 +172,14 @@
                             android:id="@+id/imgTouchPiece"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
-                            android:src="@drawable/ic_touch_piece"/>
+                            android:src="@drawable/ic_hand"/>
 
                         <ImageView
                             android:id="@+id/imgTouchDestination"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_touch_destination"/>
+                            android:src="@drawable/ic_hand"/>
 
                     </LinearLayout>
 
