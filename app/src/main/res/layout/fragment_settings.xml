@@ -193,7 +193,6 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="24dp"
             android:backgroundTint="@color/fondo_card_settings">
-            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -218,7 +217,13 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
                     <TextView
                         android:id="@+id/tvContrast"
                         android:layout_width="0dp"
@@ -247,7 +252,13 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -328,7 +339,13 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
                     <TextView
                         android:id="@+id/tvDyslexiaFont"
                         android:layout_width="0dp"
@@ -379,6 +396,14 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_head_speech"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no"
+                        android:backgroundTint="@color/vinieta"/>
 
                     <TextView
                         android:layout_width="0dp"
@@ -406,6 +431,13 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_music"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -432,6 +464,13 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_vibrate"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
 
                     <TextView
                         android:layout_width="0dp"
