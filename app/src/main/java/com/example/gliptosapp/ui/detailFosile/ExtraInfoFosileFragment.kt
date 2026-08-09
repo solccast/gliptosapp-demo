@@ -38,8 +38,8 @@ class ExtraInfoFosileFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnAjustes.setOnClickListener {
-            findNavController().navigate(R.id.action_extraInfoFosileFragment_to_settingsFragment)
+        binding.btnAyuda.setOnClickListener {
+
         }
 
         val fosilId = args.fosilId

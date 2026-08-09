@@ -38,8 +38,7 @@ class ColectionFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnAjustes.setOnClickListener {
-            findNavController().navigate(R.id.action_colectionFragment_to_settingsFragment)
+        binding.btnAyuda.setOnClickListener {
         }
 
         adapter = FosilAdapter(

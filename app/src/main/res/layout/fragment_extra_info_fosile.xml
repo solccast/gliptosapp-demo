@@ -21,14 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/btnAjustes"
+        android:id="@+id/btnAyuda"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:src="@drawable/ic_help"
+        app:tint="@color/fondo1"
         android:background="@drawable/bg_boton_ra"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="Ajustes"
+        android:contentDescription="Ayuda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

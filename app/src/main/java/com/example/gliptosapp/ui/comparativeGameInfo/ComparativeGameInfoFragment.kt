@@ -42,8 +42,7 @@ class ComparativeGameInfoFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnAjustes.setOnClickListener {
-            findNavController().navigate(R.id.action_comparativeGameInfoFragment_to_settingsFragment)
+        binding.btnAyuda.setOnClickListener {
         }
 
         binding.cardOpcionA.setOnClickListener { viewModel.seleccionarOpcion(0) }
