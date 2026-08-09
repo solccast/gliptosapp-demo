@@ -7,4 +7,8 @@
     <attr name="colorAppTextSecondary" format="color"/>
     <attr name="colorAppButton" format="color"/>
     <attr name="colorAppButtonSecondary" format="color"/>
+    <attr name="colorAppTitle" format="color"/>
+    <attr name="colorAppSwitchThumb" format="color"/>
+    <attr name="colorAppSwitchTrack" format="color"/>
+    <attr name="colorSettingsCard" format="color"/>
 </resources>

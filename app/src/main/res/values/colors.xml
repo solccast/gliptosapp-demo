@@ -19,7 +19,8 @@
     <color name="boton4">#FFD85A3C</color>
     <color name="fondo_polaroid">#F4E8CC</color>
     <color name="boton_verde_claro">#6B8E23</color>
-
+    <color name="fondo_card_settings">#E8DCC8</color>
+    <color name="font_settings">#3D2817</color>
     <color name="hc_fondo1">#7B2D2A</color>
     <color name="hc_fondo2">#FF5722</color>
     <color name="hc_vinieta">#56814C</color>
