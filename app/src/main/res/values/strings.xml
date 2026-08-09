@@ -66,4 +66,6 @@
     <string name="mensaje_kira_minijuego">¡Ups, perdí mis notas de esta especie! ¡Ayudame a recuperar más información sobre esta especie! </string>
     <string name="texto_ilegible_placeholder">INFORMACIÓN    PERDIDA</string>
     <string name="sabias_que">¿SABÍAS QUÉ?</string>
+    <string name="aviso_excavar_fosil_individual">Debés excavar en la Zona de Excavación para desbloquear este fósil. ¡Accede al MAPA!</string>
+    <string name="aviso_excavar_todos_bloqueados">Todavía no descubriste ningún fósil. Andá a la Zona de Excavación para empezar a desenterrarlos ¡Accede al mapa!. </string>
 </resources>
