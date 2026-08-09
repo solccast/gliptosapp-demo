@@ -42,7 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:cardCornerRadius="24dp"
-            android:backgroundTint="@color/fondo_card_settings">
+            android:backgroundTint="@color/fondo_card_settings"
+
+            android:contentDescription="Sección: Cambiar modo de juego: arrastrar o tocar piezas">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,7 +194,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="24dp"
-            android:backgroundTint="@color/fondo_card_settings">
+            android:backgroundTint="@color/fondo_card_settings"
+            android:contentDescription="Sección de apoyo visual: Cambio de contraste tamaño o estilo de fuentes">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -279,7 +282,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             app:cardCornerRadius="12dp"
-                            android:contentDescription="Soporte visual. Tamaño de texto pequeño">
+                            android:contentDescription="Tamaño de texto pequeño">
 
                             <TextView
                                 android:id="@+id/tvFontSmall"
@@ -300,7 +303,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="12dp"
 
-                            android:contentDescription="Soporte visual. Tamaño de texto mediano">
+                            android:contentDescription="Tamaño de texto mediano">
 
                             <TextView
                                 android:id="@+id/tvFontMedium"
@@ -320,7 +323,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             app:cardCornerRadius="12dp"
-                            android:contentDescription="Soporte visual. Tamaño de texto grande">
+                            android:contentDescription="Tamaño de texto grande">
                             <TextView
                                 android:id="@+id/tvFontLarge"
                                 android:layout_width="match_parent"
@@ -372,7 +375,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
             app:cardCornerRadius="24dp"
-            android:backgroundTint="@color/fondo_card_settings">
+            android:backgroundTint="@color/fondo_card_settings"
+            android:contentDescription="Sección de opciones: Narración, Música y vibración">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -395,7 +399,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    >
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
