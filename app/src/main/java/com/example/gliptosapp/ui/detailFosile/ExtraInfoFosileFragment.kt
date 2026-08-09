@@ -13,6 +13,7 @@ import com.example.gliptosapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import com.example.gliptosapp.R
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import com.example.gliptosapp.ui.visor3d.Visor3DActivity
 
 @AndroidEntryPoint
@@ -39,7 +40,8 @@ class ExtraInfoFosileFragment : BaseFragment() {
         }
 
         binding.btnAyuda.setOnClickListener {
-
+            AvisoDialog.mostrar(context = requireContext(),
+                mensaje = getString(R.string.ayuda_extra_info_fosile))
         }
 
         val fosilId = args.fosilId

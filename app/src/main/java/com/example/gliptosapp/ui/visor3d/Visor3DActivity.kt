@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.Activity3dBinding
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.sceneview.node.ModelNode
 import kotlinx.coroutines.launch
@@ -58,6 +59,12 @@ class Visor3DActivity : AppCompatActivity() { //TODO: El fondo del fósil debe s
         val titulo = intent.getStringExtra(EXTRA_TITULO) ?: ""
 
         binding.btnBack.setOnClickListener { finish() }
+        binding.btnAyuda.setOnClickListener {
+            AvisoDialog.mostrar(
+                context = this,
+                mensaje = getString(R.string.ayuda_visor)
+            )
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.visor3d)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

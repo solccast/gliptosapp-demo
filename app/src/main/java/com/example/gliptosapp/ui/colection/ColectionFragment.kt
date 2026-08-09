@@ -38,7 +38,9 @@ class ColectionFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnAyuda.setOnClickListener {
+        binding.btnAyuda.setOnClickListener{
+            AvisoDialog.mostrar(context = requireContext(),
+                mensaje = getString(R.string.ayuda_coleccion))
         }
 
         adapter = FosilAdapter(

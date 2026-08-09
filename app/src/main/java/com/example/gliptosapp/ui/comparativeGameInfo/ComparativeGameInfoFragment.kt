@@ -18,6 +18,7 @@ import com.example.gliptosapp.databinding.FragmentComparativeGameInfoBinding
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.launch
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.gliptosapp.ui.helper.AvisoDialog
 import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
@@ -43,6 +44,8 @@ class ComparativeGameInfoFragment : BaseFragment() {
         }
 
         binding.btnAyuda.setOnClickListener {
+            AvisoDialog.mostrar(context = requireContext(),
+                mensaje = getString(R.string.ayuda_comparative_game))
         }
 
         binding.cardOpcionA.setOnClickListener { viewModel.seleccionarOpcion(0) }

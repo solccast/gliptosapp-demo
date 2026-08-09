@@ -321,11 +321,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:text="@string/jugar"
+                    android:textSize="@dimen/texto_boton_medium"
                     android:textAllCaps="false"
                     app:backgroundTint="?attr/colorAppButtonSecondary"
                     app:icon="@drawable/gamepad_2"
+                    app:iconSize="25dp"
                     app:iconGravity="textStart"
-                    app:iconPadding="8dp"/>
+                    app:iconPadding="4dp"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

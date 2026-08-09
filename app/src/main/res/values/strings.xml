@@ -83,6 +83,13 @@
                     "Escuchá o leé con atención sus indicaciones. Vas a tener tres herramientas: el pico, la pala y el pincel. \n"
                     "Tocá la herramienta correcta para avanzar paso a paso"</string>
 
+    <string name="ayuda_comparative_game">¡Sigue las instrucciones de Kira! Dependiendo de la consigna elegí la opción correcta para descubrir más información del fósil </string>
+    <string name="ayuda_extra_info_fosile">"¡Las excavaciones permitieron a Kira investigar sobre lo que encontró! Acá podrás:\n\n"
+    "- Ver la figura en 3D\n"
+    "- Presiona JUGAR y podrás acceder a un minijuego para desbloquear más información del fósil encontrado"</string>
+
+    <string name="ayuda_coleccion">En esta sección podrás seguir qué fósiles descubriste en la ciudad y cuales no.\n Podrás acceder a ellos una vez que logres excavar un fósil con éxito desde el MAPA.\n Una vez realizado se desbloquearán y podrás acceder a investigar más sobre cada uno. </string>
+    <string name="ayuda_visor">Arrastrá la figura con el dedo para rotarla, o usá las flechas.\n Pellizcá con dos dedos para acercar o alejar.</string>
     <!-- Texto Kira excavacion -->
 
 </resources>

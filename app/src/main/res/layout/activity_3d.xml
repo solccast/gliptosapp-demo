@@ -29,6 +29,19 @@
         android:layout_margin="16dp"
         android:elevation="8dp"/>
 
+    <ImageButton
+        android:id="@+id/btnAyuda"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_help"
+        app:tint="@color/fondo1"
+        android:background="@drawable/bg_boton_ra"
+        android:contentDescription="Ayuda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <!-- Título del fósil -->
     <TextView
         android:id="@+id/tvTituloFosil"
