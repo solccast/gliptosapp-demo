@@ -127,6 +127,9 @@ class MapaExcavacionActivity : AppCompatActivity() {
             mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
         }
 
+        if (savedInstanceState == null) {
+            montrarInfoMapa()
+        }
     }
 
     private fun pintarMarcadores(listaFosiles: List<ExcavacionConFosil>) {
@@ -346,8 +349,12 @@ class MapaExcavacionActivity : AppCompatActivity() {
         btnVolver.setOnClickListener { finish() }
 
         btnAyuda.setOnClickListener {
-            AvisoDialog.mostrar(this,getString(R.string.ayuda_mapa))
+           montrarInfoMapa()
         }
+    }
+
+    private fun montrarInfoMapa(){
+        AvisoDialog.mostrar(this,getString(R.string.ayuda_mapa))
     }
 
 

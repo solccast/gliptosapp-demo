@@ -33,11 +33,6 @@ class InitFragment : BaseFragment() {
         val navController = findNavController()
 
         binding.btnExcavacion.setOnClickListener {
-            navController.navigate(R.id.action_initFragment_to_excavacionActivity)
-        }
-
-        binding.btnExcavacion.setOnClickListener {
-            // Llama a la acción que abre la ExcavacionActivity declarada en el grafo
             findNavController().navigate(R.id.action_initFragment_to_excavacionActivity)
         }
 
@@ -56,8 +51,17 @@ class InitFragment : BaseFragment() {
         (binding.root as ViewGroup).applyAccessibilityPreferences()
 
         binding.btnInfo.setOnClickListener {
-            AvisoDialog.mostrar(requireContext(),getString(R.string.ayuda_inicio))
+            mostrarInfoInicio()
         }
+
+        // Mostrar la info apenas se crea la vista del fragment
+        if (savedInstanceState == null) {
+            mostrarInfoInicio()
+        }
+    }
+
+    private fun mostrarInfoInicio() {
+        AvisoDialog.mostrar(requireContext(), getString(R.string.ayuda_inicio))
     }
 
     override fun onResume() {

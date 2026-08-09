@@ -105,6 +105,10 @@ class ExcavacionActivity : AppCompatActivity() {
                 android.view.accessibility.AccessibilityEvent.TYPE_VIEW_FOCUSED
             )
         }, 500)
+
+        if (savedInstanceState == null) {
+            mostrarInfoExcavacion()
+        }
     }
 
     private fun observarEstado() {
@@ -263,9 +267,11 @@ class ExcavacionActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener { finish() }
 
         binding.btnInfo.setOnClickListener {
-            val nombreFosil = viewModel.nombreFosilBase.replaceFirstChar { it.uppercase() }
-            AvisoDialog.mostrar(this,getString(R.string.ayuda_excavacion))
+            mostrarInfoExcavacion()
         }
+    }
+    private fun mostrarInfoExcavacion() {
+        AvisoDialog.mostrar(this, getString(R.string.ayuda_excavacion))
     }
 
 }
