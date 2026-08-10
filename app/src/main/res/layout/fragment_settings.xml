@@ -414,7 +414,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Narración"
+                        android:text="Narración guiada por Kira"
                         android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
