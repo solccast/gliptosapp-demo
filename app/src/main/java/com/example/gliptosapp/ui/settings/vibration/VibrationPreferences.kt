@@ -11,7 +11,7 @@ object VibrationPreferences {
     fun isEnabled(context: Context): Boolean {
         return context
             .getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            .getBoolean(KEY_VIBRATION, false)
+            .getBoolean(KEY_VIBRATION, true)
     }
 
     fun save(context: Context, enabled: Boolean) {

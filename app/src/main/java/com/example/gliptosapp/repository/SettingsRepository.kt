@@ -45,6 +45,15 @@ class SettingsRepository @Inject constructor(
         prefs.edit { putString("interaction_mode", mode.name) }
     }
 
+    fun isNarrationEnabled(): Boolean {
+        return prefs.getBoolean("narration_enabled", false)
+    }
+
+    fun saveNarrationEnabled(enabled: Boolean) {
+        prefs.edit {
+            putBoolean("narration_enabled", enabled)
+        }
+    }
     fun isSoundEnabled(): Boolean {
         return prefs.getBoolean("sound_enabled", true)
     }

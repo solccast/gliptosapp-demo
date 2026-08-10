@@ -1,11 +1,9 @@
 package com.example.gliptosapp.repository
 
-import com.example.gliptosapp.R
 import com.example.gliptosapp.data.dao.FosilDao
 import com.example.gliptosapp.data.entities.Fosil
 import com.example.gliptosapp.data.relations.FosilConEstado
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 

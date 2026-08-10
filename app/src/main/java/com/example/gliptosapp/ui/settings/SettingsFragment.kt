@@ -73,6 +73,7 @@ class SettingsFragment : BaseFragment() {
                     binding.switchContrast.isChecked = state.highContrastEnabled
                     binding.switchSounds.isChecked = state.soundsEnabled
                     binding.switchVibration.isChecked = state.vibrationEnabled
+                    binding.switchNarration.isChecked = state.narrationEnabled
                     binding.switchDyslexiaFont.isChecked = state.selectedFontFamily == FontFamily.DYSLEXIA
                     updateFontSelection(state.selectedFont)
                     updateInteractionMode(state.interactionMode)
@@ -119,7 +120,9 @@ class SettingsFragment : BaseFragment() {
         binding.cardFontLarge.setOnClickListener {
             viewModel.selectFont(FontScale.LARGE)
         }
-
+        binding.switchNarration.setOnCheckedChangeListener { _, enabled ->
+            viewModel.toggleNarration(enabled)
+        }
         binding.switchContrast.setOnCheckedChangeListener { _, enabled ->
             viewModel.toggleContrast(enabled)
         }

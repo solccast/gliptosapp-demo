@@ -41,6 +41,7 @@ class SettingsViewModel @Inject constructor(
                 selectedFontFamily = repository.getFontFamily(),
                 highContrastEnabled = repository.isHighContrastEnabled(),
                 interactionMode = repository.getInteractionMode(),
+                narrationEnabled = repository.isNarrationEnabled(),
                 soundsEnabled = repository.isSoundEnabled(),
                 vibrationEnabled = repository.isVibrationEnabled()
             )
@@ -63,6 +64,11 @@ class SettingsViewModel @Inject constructor(
         )
 
         emitRecreate()
+    }
+
+    fun toggleNarration(enabled: Boolean) {
+        _uiState.update { it.copy(narrationEnabled = enabled) }
+        repository.saveNarrationEnabled(enabled)
     }
 
     fun toggleContrast(enabled: Boolean) {

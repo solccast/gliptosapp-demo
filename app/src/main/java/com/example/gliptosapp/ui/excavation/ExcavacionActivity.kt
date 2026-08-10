@@ -22,12 +22,14 @@ import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 import com.example.gliptosapp.ui.MainActivity
 import com.example.gliptosapp.ui.helper.AvisoDialog
+import com.example.gliptosapp.ui.helper.KiraNarration
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExcavacionActivity : AppCompatActivity() {
@@ -35,7 +37,8 @@ class ExcavacionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExcavacionBinding
     private val viewModel: ExcavacionViewModel by viewModels()
     private lateinit var herramientas: List<ViewGroup>
-
+    @Inject
+    lateinit var kiraNarration: KiraNarration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
@@ -130,6 +133,8 @@ class ExcavacionActivity : AppCompatActivity() {
 
         binding.imgFosilFondo.setImageResource(imagenFosil)
         binding.txtIndicacionKira.text = mensajeKira
+
+        kiraNarration.speak( this, mensajeKira )
         actualizarInformacionFosil(mensajeKira, estadoParaMostrar)
 
         if (completado) mostrarModoCompletado() else mostrarModoJuego()
@@ -244,6 +249,7 @@ class ExcavacionActivity : AppCompatActivity() {
     private fun errorFeedback() {
         val herramientaCorrecta = obtenerNombreHerramientaRequerida()
         val avisoError = "¡Uy! Esa no es la herramienta. Tenés que seleccionar el $herramientaCorrecta."
+        kiraNarration.speak(this, avisoError)
         binding.txtIndicacionKira.text = avisoError
         binding.txtIndicacionKira.announceForAccessibility(avisoError)
     }
