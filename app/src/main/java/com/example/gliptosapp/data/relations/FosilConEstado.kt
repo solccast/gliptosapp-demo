@@ -19,6 +19,12 @@ data class FosilConEstado(
     val descubierto: Boolean
         get() = excavaciones.any { it.estado == EstadoExcavacion.COMPLETADO }
 
+    val epoca: String get() = fosil.epoca
+    val habitat: String get() = fosil.habitat
+    val tamano: String get() = fosil.tamano
+    val peso: String get() = fosil.peso
+    val dieta: String get() = fosil.dieta
+
     fun obtenerImagen(): String =
         if (descubierto) fosil.imgDescubierto else fosil.imgSinDescubrir
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -48,35 +49,39 @@ class ExtraInfoFosileFragment : BaseFragment() {
         val nombreFosil = args.nombreFosil
         viewModel.cargarFosil(fosilId)
 
-        viewModel.fosil.observe(viewLifecycleOwner) { fosil ->
-            if (fosil == null) {
-                return@observe
-            }
-
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
             binding.tituloFosil.text = nombreFosil
-            binding.descripcionFosil.text = fosil.descripcion
-            binding.textoNota.text = "Época: Pleistoceno\nDieta: Herbívoro"
+            binding.descripcionFosil.text = state.fosil.descripcion
 
-            val resId = resolverDrawable(requireContext(), fosil.obtenerImagen())
+            val resId = resolverDrawable(requireContext(), state.fosil.obtenerImagen())
             binding.imagenFosil.setImageResource(resId)
             binding.imagenFosil.contentDescription = "Imagen del fósil ${nombreFosil}"
+
+            binding.overlayBloqueo.isVisible = !state.desbloqueada
+            binding.btnJugar.isVisible = !state.desbloqueada
+            binding.contenedorDatosFosil.isVisible = state.desbloqueada
+
+            binding.textoNota.text = if (state.desbloqueada) {
+                state.infoExtra
+            } else {
+                getString(R.string.texto_ilegible_placeholder)
+            }
+
+            if (state.desbloqueada) {
+                with(state.fosil) {
+                    bindearDato(binding.cardEpoca.root, R.string.dato_epoca, epoca)
+                    bindearDato(binding.cardHabitat.root, R.string.dato_habitat, habitat)
+                    bindearDato(binding.cardTamano.root, R.string.dato_tamano, tamano)
+                    bindearDato(binding.cardPeso.root, R.string.dato_peso, peso)
+                    bindearDato(binding.cardDieta.root, R.string.dato_dieta, dieta)
+                }
+            }
         }
 
         binding.btnJugar.setOnClickListener {
             findNavController().navigate(
                 ExtraInfoFosileFragmentDirections.actionExtraInfoFosileFragmentToComparativeGameInfoFragment(nombreFosil, fosilId)
             )
-        }
-
-        viewModel.game.observe(viewLifecycleOwner) { game ->
-            val desbloqueada = game?.realizada == true
-            binding.overlayBloqueo.isVisible = !desbloqueada
-            binding.btnJugar.isVisible = !desbloqueada
-            binding.textoNota.text = if (desbloqueada) {
-                game?.infoExtra
-            } else {
-                getString(R.string.texto_ilegible_placeholder)
-            }
         }
 
         binding.btnVer.setOnClickListener {
@@ -88,8 +93,12 @@ class ExtraInfoFosileFragment : BaseFragment() {
                 )
             )
         }
-        binding.btnVer.contentDescription =
-            "Ver el fósil ${args.nombreFosil} en 3D"
+        binding.btnVer.contentDescription = "Ver el fósil ${args.nombreFosil} en 3D"
+    }
+
+    private fun bindearDato(card: View, labelResId: Int, valor: String) {
+        card.findViewById<TextView>(R.id.etiquetaDato).text = getString(labelResId)
+        card.findViewById<TextView>(R.id.valorDato).text = valor
     }
 
     /**

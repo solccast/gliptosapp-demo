@@ -10,5 +10,10 @@ data class Fosil(
     val nombre: String,
     val imgDescubierto: String, // Éste es el que se muestra en la colección de fósiles
     val imgSinDescubrir: String, // éste es el que se muestra como una sombra sin descubrir
-    val descripcion: String?
+    val descripcion: String?,
+    val epoca: String,
+    val habitat: String,
+    val tamano: String,
+    val peso: String,
+    val dieta: String
 )
