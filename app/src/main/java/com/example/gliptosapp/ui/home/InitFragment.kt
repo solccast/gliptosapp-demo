@@ -15,6 +15,7 @@ import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
 import com.example.gliptosapp.ui.BaseFragment
 import com.example.gliptosapp.ui.helper.AvisoDialog
+import com.example.gliptosapp.ui.helper.SesionApp
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
@@ -55,7 +56,8 @@ class InitFragment : BaseFragment() {
         }
 
         // Mostrar la info apenas se crea la vista del fragment
-        if (savedInstanceState == null) {
+        if (!SesionApp.infoInicioMostrada) {
+            SesionApp.infoInicioMostrada = true
             mostrarInfoInicio()
         }
     }

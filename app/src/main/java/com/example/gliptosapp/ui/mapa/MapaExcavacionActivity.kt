@@ -42,6 +42,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.gliptosapp.ui.helper.AvisoDialog
+import com.example.gliptosapp.ui.helper.SesionApp
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 
 @AndroidEntryPoint
@@ -127,8 +128,9 @@ class MapaExcavacionActivity : AppCompatActivity() {
             mapView.announceForAccessibility("Zoom nivel ${mapView.zoomLevelDouble.toInt()}")
         }
 
-        if (savedInstanceState == null) {
-            montrarInfoMapa()
+        if (!SesionApp.infoMapaMostrada) {
+            SesionApp.infoMapaMostrada = true
+            mostrarInfoMapa()
         }
     }
 
@@ -349,11 +351,11 @@ class MapaExcavacionActivity : AppCompatActivity() {
         btnVolver.setOnClickListener { finish() }
 
         btnAyuda.setOnClickListener {
-           montrarInfoMapa()
+           mostrarInfoMapa()
         }
     }
 
-    private fun montrarInfoMapa(){
+    private fun mostrarInfoMapa(){
         AvisoDialog.mostrar(this,getString(R.string.ayuda_mapa))
     }
 

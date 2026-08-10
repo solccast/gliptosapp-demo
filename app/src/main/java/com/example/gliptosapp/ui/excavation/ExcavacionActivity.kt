@@ -23,6 +23,7 @@ import com.example.gliptosapp.databinding.ActivityExcavacionBinding
 import com.example.gliptosapp.ui.MainActivity
 import com.example.gliptosapp.ui.helper.AvisoDialog
 import com.example.gliptosapp.ui.helper.KiraNarration
+import com.example.gliptosapp.ui.helper.SesionApp
 import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.example.gliptosapp.ui.settings.sound.SoundManager
 import com.example.gliptosapp.ui.settings.vibration.VibrationManager
@@ -109,7 +110,8 @@ class ExcavacionActivity : AppCompatActivity() {
             )
         }, 500)
 
-        if (savedInstanceState == null) {
+        if (!SesionApp.infoExcavacionMostrada) {
+            SesionApp.infoExcavacionMostrada = true
             mostrarInfoExcavacion()
         }
     }
