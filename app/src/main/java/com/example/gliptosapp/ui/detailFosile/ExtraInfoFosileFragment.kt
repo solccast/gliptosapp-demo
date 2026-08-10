@@ -83,7 +83,7 @@ class ExtraInfoFosileFragment : BaseFragment() {
             startActivity(
                 Visor3DActivity.newIntent(
                     context = requireContext(),
-                    modelPath = "models/duck.glb",
+                    modelPath = "models/rex.glb",
                     titulo = args.nombreFosil
                 )
             )

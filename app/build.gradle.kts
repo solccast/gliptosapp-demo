@@ -77,4 +77,7 @@ dependencies {
 
     // OpenStreetMap
     implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    // Animación
+    implementation("com.airbnb.android:lottie:6.5.0")
 }
