@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.Activity3dBinding
@@ -102,18 +104,22 @@ class Visor3DActivity : AppCompatActivity() { //TODO: El fondo del fósil debe s
 
     private fun configurarBotones() {
         binding.btnRotarIzq.setOnClickListener {
+            ocultarGestoAyuda()
             rotacionY -= pasoRotacion
             aplicarRotacion()
         }
         binding.btnRotarDer.setOnClickListener {
+            ocultarGestoAyuda()
             rotacionY += pasoRotacion
             aplicarRotacion()
         }
         binding.btnRotarArriba.setOnClickListener {
+            ocultarGestoAyuda()
             rotacionX -= pasoRotacion
             aplicarRotacion()
         }
         binding.btnRotarAbajo.setOnClickListener {
+            ocultarGestoAyuda()
             rotacionX += pasoRotacion
             aplicarRotacion()
         }
@@ -148,6 +154,7 @@ class Visor3DActivity : AppCompatActivity() { //TODO: El fondo del fósil debe s
             })
 
         binding.sceneView.setOnTouchListener { _, event ->
+            ocultarGestoAyuda()
             scaleGestureDetector.onTouchEvent(event)
             gestureDetector.onTouchEvent(event)
             true
@@ -156,5 +163,18 @@ class Visor3DActivity : AppCompatActivity() { //TODO: El fondo del fósil debe s
 
     private fun aplicarRotacion() {
         modelNode?.rotation = Rotation(x = rotacionX, y = rotacionY)
+    }
+
+    private fun ocultarGestoAyuda() {
+        if (binding.lottieGesto.isVisible) {
+            binding.lottieGesto.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .withEndAction {
+                    binding.lottieGesto.visibility = View.GONE
+                    binding.lottieGesto.cancelAnimation()
+                }
+                .start()
+        }
     }
 }
