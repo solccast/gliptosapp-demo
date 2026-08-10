@@ -28,7 +28,8 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_3d" />
+                android:src="@drawable/ic_info"
+                app:tint="@color/texto1" />
 
             <TextView
                 android:id="@+id/etiquetaDato"
@@ -37,7 +38,6 @@
                 android:layout_marginStart="6dp"
                 android:text="Época"
                 android:textAllCaps="true"
-                android:textSize="11dp"
                 android:textColor="@color/texto1" />
         </LinearLayout>
 
@@ -49,7 +49,6 @@
             android:layout_marginTop="4dp"
             android:text="Pleistoceno"
             android:textStyle="bold"
-            android:textSize="15dp"
             android:textColor="@color/texto1"
             android:focusable="true" />
 

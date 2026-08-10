@@ -92,4 +92,11 @@
     <string name="ayuda_visor">Arrastrá la figura con el dedo para rotarla, o usá las flechas.\n Pellizcá con dos dedos para acercar o alejar.</string>
     <!-- Texto Kira excavacion -->
 
+
+    <!-- Cards de info extra -->
+    <string name="dato_epoca">Época</string>
+    <string name="dato_habitat">Hábitat</string>
+    <string name="dato_tamano">Tamaño</string>
+    <string name="dato_peso">Peso</string>
+    <string name="dato_dieta">Dieta</string>
 </resources>
