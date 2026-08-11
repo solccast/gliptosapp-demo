@@ -12,43 +12,35 @@ class ComparativeGameRepository @Inject constructor(
 ){
     private val listaPreguntas = listOf(
         ComparativeGame(
-            fosilId =  1,
-            textoPregunta = "¿Cual es más grande?",
+            fosilId = 1, // Gliptodonte
+            textoPregunta = "¿Cuál es más grande?",
             realizada = false,
-            infoExtra = "El gliptodonte podía medir hasta 3 metros de largo y pesar hasta 2,000 kg. ¡Era enorme!",
+            infoExtra = "El gliptodonte podía medir hasta 3 metros de largo y pesar hasta 2,000 kg. ¡Era casi del tamaño de un auto pequeño, pero mucho más pesado que uno!",
             opciones = listOf(
-                OptionComparativeGame(texto = "Un camion", esCorrecta = false, imgOption = R.drawable.truck),
+                OptionComparativeGame(texto = "Un auto pequeño", esCorrecta = false, imgOption = R.drawable.auto_pequeno),
                 OptionComparativeGame(texto = "Un gliptodonte", esCorrecta = true, imgOption = R.drawable.gliptodonte)
             )
         ),
         ComparativeGame(
-            fosilId = 2, // El euphactus
-            textoPregunta = "¿Cual es más chico?",
+            fosilId = 2, // Euphractus
+            textoPregunta = "¿Cuál es más chico?",
             realizada = false,
-            infoExtra = "Euphractus era mucho más pequeño que un armadillo gigante actual: apenas alcanzaba el tamaño de un armadillo común, adaptado a ambientes abiertos y secos.",
+            infoExtra = "Euphractus era pequeño: apenas del tamaño de un perro mediano, adaptado a ambientes abiertos y secos. ¡Nada que ver con los gigantes de su familia!",
             opciones = listOf(
-                OptionComparativeGame(texto = "Un armadillo gigante", esCorrecta = false, imgOption = R.drawable.truck),
+                OptionComparativeGame(texto = "Un perro grande", esCorrecta = false, imgOption = R.drawable.perro_grande),
                 OptionComparativeGame(texto = "Un Euphractus", esCorrecta = true, imgOption = R.drawable.euphractus_descubierto)
-            )),
+            )
+        ),
         ComparativeGame(
             fosilId = 3, // Smilodon
             textoPregunta = "¿Quién tiene los colmillos más largos?",
             realizada = false,
-            infoExtra = "El Smilodon tenía unos enormes colmillos curvos que podían medir hasta 28 cm. ¡Eran mucho más largos que los de los grandes felinos actuales!",
+            infoExtra = "El Smilodon tenía enormes colmillos curvos de hasta 28 cm. ¡Eran mucho más largos que los de cualquier felino grande que exista hoy!",
             opciones = listOf(
-                OptionComparativeGame(
-                    texto = "Un león",
-                    esCorrecta = false,
-                    imgOption = R.drawable.leon
-                ),
-                OptionComparativeGame(
-                    texto = "Un Smilodon",
-                    esCorrecta = true,
-                    imgOption = R.drawable.smilodon_descubierto
-                )
+                OptionComparativeGame(texto = "Un león", esCorrecta = false, imgOption = R.drawable.leon),
+                OptionComparativeGame(texto = "Un Smilodon", esCorrecta = true, imgOption = R.drawable.smilodon_descubierto)
             )
         )
-
     )
 
     suspend fun getComparativeGameFosile(fosilId: Long): ComparativeGame?{
