@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import com.example.gliptosapp.databinding.DialogAvisoBinding
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object AvisoDialog {
@@ -16,6 +17,7 @@ object AvisoDialog {
     ) {
         val dialogBinding = DialogAvisoBinding.inflate(LayoutInflater.from(context))
         dialogBinding.tvMensajeAviso.text = mensaje
+        dialogBinding.root.applyAccessibilityPreferences()
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setView(dialogBinding.root)

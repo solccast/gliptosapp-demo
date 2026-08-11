@@ -44,6 +44,7 @@ class ExcavacionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityExcavacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyAccessibilityPreferences()
 
         val fosilId = intent.getIntExtra("FOSIL_ID", 1)
         viewModel.inicializarFosil(fosilId)

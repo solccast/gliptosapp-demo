@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.Activity3dBinding
 import com.example.gliptosapp.ui.helper.AvisoDialog
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.sceneview.node.ModelNode
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class Visor3DActivity : AppCompatActivity() { //TODO: El fondo del fósil debe s
 
         binding = Activity3dBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.root.applyAccessibilityPreferences()
         val modelPath = intent.getStringExtra(EXTRA_MODEL_PATH) ?: "models/duck.glb"
         val titulo = intent.getStringExtra(EXTRA_TITULO) ?: ""
 
