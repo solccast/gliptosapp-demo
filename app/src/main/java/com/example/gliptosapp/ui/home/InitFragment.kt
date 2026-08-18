@@ -3,16 +3,20 @@ package com.example.gliptosapp.ui.home
 import android.content.Context
 import android.util.TypedValue
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.gliptosapp.R
 import com.example.gliptosapp.databinding.FragmentInitBinding
 import com.example.gliptosapp.ui.BaseFragment
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.helper.AvisoDialog
+import com.example.gliptosapp.ui.helper.SesionApp
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 class InitFragment : BaseFragment() {
     private var _binding: FragmentInitBinding? = null
     private val binding get() = _binding!!
@@ -30,11 +34,6 @@ class InitFragment : BaseFragment() {
         val navController = findNavController()
 
         binding.btnExcavacion.setOnClickListener {
-            navController.navigate(R.id.action_initFragment_to_excavacionActivity)
-        }
-
-        binding.btnExcavacion.setOnClickListener {
-            // Llama a la acción que abre la ExcavacionActivity declarada en el grafo
             findNavController().navigate(R.id.action_initFragment_to_excavacionActivity)
         }
 
@@ -45,12 +44,39 @@ class InitFragment : BaseFragment() {
         binding.btnAjustes.setOnClickListener {
             navController.navigate(R.id.settingsFragment)
         }
-        (binding.root as ViewGroup).applyFontScale()
+
+        binding.btnRecursos.setOnClickListener {
+            navController.navigate(R.id.action_initFragment_to_recursosFragment)
+        }
+
+        (binding.root as ViewGroup).applyAccessibilityPreferences()
+
+        binding.btnInfo.setOnClickListener {
+            mostrarInfoInicio()
+        }
+
+        // Mostrar la info apenas se crea la vista del fragment
+        if (!SesionApp.infoInicioMostrada) {
+            SesionApp.infoInicioMostrada = true
+            mostrarInfoInicio()
+        }
+    }
+
+    private fun mostrarInfoInicio() {
+        AvisoDialog.mostrar(requireContext(), getString(R.string.ayuda_inicio))
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d(
+            "FONT",
+            binding.btnExcavacion.textSize.toString()
+        )
         aplicarConfiguracionDeAccesibilidad()
+        Log.d(
+            "FONT",
+            binding.btnExcavacion.textSize.toString()
+        )
     }
 
     private fun aplicarConfiguracionDeAccesibilidad() {
@@ -74,7 +100,7 @@ class InitFragment : BaseFragment() {
         val tamanoTextoSp = resources.getDimension(textoSizeDimen) / resources.displayMetrics.scaledDensity
 
         // Lista de botones a los que se les aplicará el cambio de accesibilidad
-        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes)
+        val listaBotones = listOf(binding.btnExcavacion, binding.btnColeccion, binding.btnAjustes, binding.btnRecursos)
 
         listaBotones.forEach { boton ->
             // 1. Modificar dinámicamente el alto manteniendo los LayoutParams del LinearLayout interno
@@ -93,5 +119,4 @@ class InitFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null // Evita memory leaks (Fuga de memoria), una excelente práctica de desarrollo
     }
-
 }

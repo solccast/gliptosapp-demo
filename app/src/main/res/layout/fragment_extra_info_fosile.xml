@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo1">
+    android:background="?attr/colorAppPrimary">
 
     <!-- Botón volver FUERA de la card -->
     <ImageButton
@@ -21,14 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/btnAjustes"
+        android:id="@+id/btnAyuda"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:src="@drawable/ic_help"
+        app:tint="@color/fondo1"
         android:background="@drawable/bg_boton_ra"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="Ajustes"
+        android:contentDescription="Ayuda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -132,19 +133,21 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnVer"
-                                android:layout_width="48dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:text="@string/btn_ver_fosil_3d"
                                 android:layout_gravity="bottom|end"
-                                android:layout_margin="12dp"
+                                android:layout_margin="2dp"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp"
-                                app:icon="@drawable/binoculars"
+                                app:icon="@drawable/ic_3d"
                                 app:iconGravity="textStart"
-                                app:iconSize="24dp"
-                                app:iconPadding="0dp"
+                                app:iconSize="25dp"
+                                android:textSize="@dimen/texto_boton_medium"
+                                app:iconPadding="5dp"
                                 app:backgroundTint="@color/boton_verde_claro"
                                 app:cornerRadius="24dp"
-                                android:contentDescription="@string/btn_ver_ra"/>
+                                android:contentDescription="@string/btn_ver_fosil_3d"/>
 
                         </FrameLayout>
 
@@ -158,15 +161,155 @@
                             android:focusable="true"
                             android:layout_marginTop="12dp"/>
 
-                        <!-- Info extra -->
-                        <TextView
-                            android:id="@+id/infoExtra"
+                        <!-- Nota de ¿sabias qué? -->
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:focusable="true"
                             android:layout_height="wrap_content"
-                            android:text="Época, tamaño, dieta..."
-                            android:textColor="@color/texto1"
-                            android:layout_marginTop="8dp"/>
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#FFF9C4"
+                            app:strokeColor="#E6D77E"
+                            app:strokeWidth="1dp"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="6dp"
+                            app:contentPadding="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tituloNota"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sabias_que"
+                                    android:textStyle="bold"
+                                    android:textColor="#4B3621"
+                                    android:focusable="true"/>
+
+                                <TextView
+                                    android:id="@+id/textoNota"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:textColor="#4B3621"
+                                    android:lineSpacingExtra="4dp"
+                                    android:focusable="true"
+                                    android:text="@string/texto_ilegible_placeholder"/>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <FrameLayout
+                            android:id="@+id/contenedorInfoExtra"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+                            <!-- visible hasta ganar el minijuego (es el coso de Kira) -->
+                            <FrameLayout
+                                android:id="@+id/overlayBloqueo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+
+                                <!-- Avatar + globo de diálogo -->
+                                <LinearLayout
+                                    android:id="@+id/contenedorKira"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:padding="12dp"
+                                    android:focusable="true"
+                                    android:importantForAccessibility="yes">
+
+                                    <ImageView
+                                        android:id="@+id/imgKira"
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/kira"
+                                        android:importantForAccessibility="no" />
+
+                                    <TextView
+                                        android:id="@+id/txtIndicacionKira"
+                                        android:background="@drawable/bg_vinieta_redondeada"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="15dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:text="@string/mensaje_kira_minijuego"
+                                        android:textColor="@color/texto1"
+                                        android:textStyle="bold"
+                                        android:accessibilityHeading="true" />
+                                </LinearLayout>
+                            </FrameLayout>
+
+                            <!-- Visible cuando gana el minijuego -->
+                            <LinearLayout
+                                android:id="@+id/contenedorDatosFosil"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <!-- Fila 1: Época + Hábitat -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <include
+                                        android:id="@+id/cardEpoca"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="6dp"/>
+
+                                    <include
+                                        android:id="@+id/cardHabitat"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginStart="6dp"/>
+                                </LinearLayout>
+
+                                <!-- Fila 2: Tamaño + Peso -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="10dp">
+
+                                    <include
+                                        android:id="@+id/cardTamano"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="6dp"/>
+
+                                    <include
+                                        android:id="@+id/cardPeso"
+                                        layout="@layout/item_dato_fosil"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginStart="6dp"/>
+                                </LinearLayout>
+
+                                <!-- Fila 3: Dieta (ancho completo) -->
+                                <include
+                                    android:id="@+id/cardDieta"
+                                    layout="@layout/item_dato_fosil"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"/>
+
+                            </LinearLayout>
+                        </FrameLayout>
 
                     </LinearLayout>
                 </ScrollView>
@@ -178,12 +321,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:text="@string/jugar"
+                    android:textSize="@dimen/texto_boton_medium"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/boton2"
+                    app:backgroundTint="?attr/colorAppButtonSecondary"
                     app:icon="@drawable/gamepad_2"
+                    app:iconSize="25dp"
                     app:iconGravity="textStart"
-                    app:iconPadding="8dp"/>
-
+                    app:iconPadding="4dp"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -1,12 +1,55 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GliptosApp" parent="Theme.Material3.DayNight.NoActionBar">
-
-        <!-- Configuración letra de la aplicación -->
+<resources>
+    <style
+        name="Base.Theme.GliptosApp"
+        parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/patrick_hand</item>
         <item name="fontFamily">@font/patrick_hand</item>
     </style>
+    <style
+        name="Theme.GliptosApp"
+        parent="Base.Theme.GliptosApp">
+        <item name="colorAppBackground">@color/vinieta</item>
+        <item name="colorAppSurface">@color/fondo_polaroid</item>
+        <item name="colorAppPrimary">@color/fondo1</item>
+        <item name="colorAppText">@color/texto1</item>
+        <item name="colorAppTextSecondary">@color/texto2</item>
+        <item name="colorAppButton">@color/boton1</item>
+        <item name="colorAppButtonSecondary">@color/boton2</item>
+        <item name="colorAppTitle">@color/boton3</item>
+        <item name="colorAppSwitchThumb">@color/boton1</item>
+        <item name="colorAppSwitchTrack">@color/boton2</item>
+        <item name="colorSettingsCard">@color/fondo_card_settings</item>
+    </style>
+    <style
+        name="Theme.GliptosApp.HighContrast"
+        parent="Base.Theme.GliptosApp">
+        <item name="colorAppBackground">@color/hc_vinieta</item>
+        <item name="colorAppSurface">@color/hc_fondo_polaroid</item>
+        <item name="colorAppPrimary">@color/hc_fondo1</item>
+        <item name="colorAppText">@color/hc_texto1</item>
+        <item name="colorAppTextSecondary">@color/hc_texto2</item>
+        <item name="colorAppButton">@color/hc_boton1</item>
+        <item name="colorAppButtonSecondary">@color/hc_boton2</item>
+        <item name="colorAppTitle">@color/boton3</item>
+        <item name="colorAppSwitchThumb">@color/hc_boton1</item>
+        <item name="colorAppSwitchTrack">@color/hc_boton2</item>
+        <item name="colorSettingsCard">@color/fondo_card_settings</item>
 
-    <style name="Theme.GliptosApp" parent="Base.Theme.GliptosApp" />
+    </style>
+    <style
+        name="Theme.GliptosApp.Dyslexia"
+        parent="Theme.GliptosApp">
 
+        <item name="android:fontFamily">@font/opendyslexic</item>
+        <item name="fontFamily">@font/opendyslexic</item>
+
+    </style>
+    <style
+        name="Theme.GliptosApp.HighContrast.Dyslexia"
+        parent="Theme.GliptosApp.HighContrast">
+
+        <item name="android:fontFamily">@font/opendyslexic</item>
+        <item name="fontFamily">@font/opendyslexic</item>
+
+    </style>
 </resources>

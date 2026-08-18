@@ -51,20 +51,33 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.lifecycle.process)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Nav component
+    // Nav component
     val navVersion = "2.9.8"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    // DaggerHilt
+    // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.57.1")
     kapt("com.google.dagger:hilt-android-compiler:2.57.1")
 
-    // RA
-    implementation("com.google.ar:core:1.38.0")
+    // Room
+    val roomVersion = "2.8.4"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    // Para el modelo 3d
     implementation("io.github.sceneview:arsceneview:2.2.1")
+
+    // OpenStreetMap
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    // Animación
+    implementation("com.airbnb.android:lottie:6.5.0")
 }

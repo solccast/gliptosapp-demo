@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.gliptosapp.ui.settings.applyFontScale
+import com.example.gliptosapp.ui.settings.appearance.applyAccessibilityPreferences
 
 abstract class BaseFragment : Fragment() {
 
@@ -15,7 +15,6 @@ abstract class BaseFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        (view as? ViewGroup)
-            ?.applyFontScale()
+        (view as? ViewGroup)?.applyAccessibilityPreferences()
     }
 }

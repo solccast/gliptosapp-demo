@@ -3,25 +3,27 @@ package com.example.gliptosapp.ui.colection
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.gliptosapp.R
-import com.example.gliptosapp.data.Fosil
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.gliptosapp.data.relations.FosilConEstado
 import com.example.gliptosapp.repository.FosilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class ColectionViewModel @Inject constructor() : ViewModel(){
-    private val _fosiles = MutableLiveData<List<Fosil>>()
-    val fosiles: LiveData<List<Fosil>> = _fosiles
+class ColectionViewModel @Inject constructor(
+    private val repository: FosilRepository
+) : ViewModel(){
+    private val _fosiles = MutableLiveData<List<FosilConEstado>>()
 
-    private val repository = FosilRepository()
+    val fosiles: LiveData<List<FosilConEstado>> = repository.getFosiles().asLiveData()
 
     init {
-        cargarMock()
+        viewModelScope.launch {
+            //repository.sembrarSiEsNecesario()
+        }
     }
 
-    private fun cargarMock() {
-        _fosiles.value = repository.getFosiles()
-    }
 }

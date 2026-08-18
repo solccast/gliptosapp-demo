@@ -6,10 +6,10 @@
     android:id="@+id/layoutPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo1"
+    android:background="?attr/colorAppPrimary"
     tools:context=".ui.excavation.ExcavacionActivity">
 
-    <!-- 1. IMAGEN DE FONDO -->
+    <!-- IMAGEN DE FONDO -->
     <ImageView
         android:id="@+id/imgFosilFondo"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 2. ÁREA INTERACTIVA -->
+    <!-- ÁREA INTERACTIVA -->
     <View
         android:id="@+id/areaExcavacionClick"
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 3. FILA SUPERIOR: Botón volver + Botones info/config -->
+    <!-- FILA SUPERIOR: Botón volver + Botones info/config -->
     <LinearLayout
         android:id="@+id/contenedorBotonesSuperiores"
         android:layout_width="0dp"
@@ -70,12 +70,12 @@
             android:src="@drawable/ic_help"
             android:background="@drawable/bg_boton_ra"
             android:contentDescription="Información"
-            android:layout_marginEnd="8dp" />
+            />
 
 
     </LinearLayout>
 
-    <!-- 4. AVATAR KIRA -->
+    <!-- AVATAR KIRA -->
     <LinearLayout
         android:id="@+id/contenedorKira"
         android:layout_width="0dp"
@@ -113,13 +113,13 @@
             android:accessibilityHeading="true" />
     </LinearLayout>
 
-    <!-- 5. BOTONERA DE HERRAMIENTAS -->
+    <!-- CONTENEDOR DE HERRAMIENTAS -->
     <LinearLayout
         android:id="@+id/contenedorHerramientas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
@@ -129,38 +129,147 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/btnPico"
+        <LinearLayout
+            android:id="@+id/btnPicoContenedor"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:layout_weight="1"
             android:layout_margin="6dp"
-            android:src="@drawable/ic_pico"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pico" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pico">
 
-        <ImageButton
-            android:id="@+id/btnPala"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:layout_margin="6dp"
-            android:src="@drawable/ic_pala"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pala" />
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_pico"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
 
-        <ImageButton
-            android:id="@+id/btnPincel"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pico"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPalaContenedor"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:layout_weight="1"
             android:layout_margin="6dp"
-            android:src="@drawable/ic_pincel"
-            android:backgroundTint="@color/selector_fondo_herramienta"
-            app:tint="@color/selector_icono_herramienta"
-            android:contentDescription="Herramienta Pincel" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pala">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_pala"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pala"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPincelContenedor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/selector_fondo_herramienta"
+            android:contentDescription="Herramienta Pincel">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_pincel"
+                app:tint="@color/selector_icono_herramienta"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Pincel"
+                android:textColor="@color/selector_icono_herramienta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:importantForAccessibility="no"/>
+        </LinearLayout>
+
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/contenedorAccionesCompletado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVerColeccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Colección de fósiles"
+            android:textColor="@color/texto3"
+            android:textSize="@dimen/texto_boton_medium"
+            android:backgroundTint="@color/boton4"
+            android:textAllCaps="false"
+            android:contentDescription="Ver mi colección de fósiles"
+            app:icon="@drawable/ic_coleccion"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/texto3"
+            app:iconSize="24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVolverAExcavar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver a excavar"
+            android:textColor="@color/texto3"
+            android:textSize="@dimen/texto_boton_medium"
+            android:backgroundTint="@color/boton2"
+            android:textAllCaps="false"
+            android:contentDescription="Reiniciar la excavación de este fósil"
+            app:icon="@drawable/ic_pala"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/texto3"
+            app:iconSize="24dp" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

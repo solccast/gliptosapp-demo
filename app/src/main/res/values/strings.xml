@@ -26,14 +26,77 @@
 
     <!-- Mensajes de ayuda de la paleontóloga -->
     <string name="como_usar_en_pantalla_ra">¡Apuntá a una superficie y tocá la pantalla para poner a tu fósil en tu entorno!</string>
+    <string name="como_jugar_minijuego">¡Toca una de las opciones para ver si es cierta la comparación!</string>
 
     <!-- Content Descriptions -->
     <string name="rotacion_der">Rotar fósil hacia la derecha</string>
     <string name="rotacion_izq">Rotar fósil hacia la izquierda</string>
+    <string name="rotacion_arr">Rotar fósil hacia arriba</string>
+    <string name="rotacion_ab">Rotar fosil hacia abajo</string>
+    <string name="instrucciones_visor">¡Usa las teclas para girar al fósil o puedes arrastrar para rotarlo!</string>
     <string name="jugar">¡Jugar!</string>
+    <string name="fosil_no_desc">Fósil no descubierto</string>
     <string name="btn_ver_ra">Ver en realidad aumentada</string>
+    <string name="btn_ver_fosil_3d">Ver en 3D</string>
     <string name="ver_detalle">Ver detalle</string>
     <string name="coleccion_lista">Lista de fosiles descubiertos y sin descubrir</string>
     <string name="back">Atrás</string>
     <string name="settings">Ajustes</string>
+    <string name="recursos_libro_caminando">Caminando sobre gliptodontes y tigres dientes de sable</string>
+    <string name="btn_descargar">Descargar recurso</string>
+    <string name="btn_descargar_libro_caminando">Descargar libro "Caminando sobre gliptodontes y tigres dientes de sable"</string>
+    <string name="recursos_documental_caminando">Documental: "Caminando sobre gliptodontess y tigres dientes de sable"</string>
+    <string name="btn_ver">Ver</string>
+    <string name="btn_ver_documental_caminando">Ver documental: "Caminando sobre gliptodontes y tigres dientes de sable"</string>
+    <string name="recursos_libro_caminando_tierras_nuevas">Caminando hacia tierras nuevas</string>
+    <string name="btn_descargar_caminando_tierras_nuevas">Descargar libro: "Caminando hacia tierras nuevas"</string>
+    <string name="redes_seguinos">¡Seguinos en nuestras redes sociales!</string>
+    <string name="redes_instagram">Instagram</string>
+    <string name="redes_facebook">Facebook</string>
+    <string name="redes_youtube">YouTube</string>
+    <string name="redes_web">Sitio web</string>
+
+    <!-- Textos minijuego -->
+    <string name="pregunta_cual_es_mas_grande">¿Cuál es más grande?</string>
+    <string name="opcion_camion">Un camión</string>
+    <string name="opcion_fosil">Un gliptodonte</string>
+    <string name="feedback_correcto">¡Gracias por tu ayuda! Ahora tenemos más información</string>
+    <string name="feedback_incorrecto">¡Tenemos que volverlo a intentar!</string>
+    <string name="ver_informacion">Ver información</string>
+    <string name="mensaje_kira_minijuego">¡Ups, perdí mis notas de esta especie! ¡Ayudame a recuperar más información sobre esta especie! </string>
+    <string name="texto_ilegible_placeholder">INFORMACIÓN    PERDIDA</string>
+    <string name="sabias_que">¿SABÍAS QUÉ?</string>
+    <string name="aviso_excavar_fosil_individual">Debés excavar en la Zona de Excavación para desbloquear este fósil. ¡Accede al MAPA!</string>
+    <string name="aviso_excavar_todos_bloqueados">Todavía no descubriste ningún fósil. Andá a la Zona de Excavación para empezar a desenterrarlos ¡Accede al mapa!. </string>
+
+    <!-- Texto ayuda -->
+    <string name="ayuda_inicio">"¿Cómo funciona?\n\n"
+                    "►Realizar Excavación: Descubrí grandes mamíferos presentes en la ciudad para agregarlos al cuadernillo.\n"
+                    "►Mi colección de fósiles: Descubrí datos interesantes de los fósiles que descubriste jugando juegos!\n"
+                    "►Ajustes: Configurá el sitio web a tu gusto, incluyendo opciones de accesibilidad.\n"
+                    "►Recursos: Si te quedaste con ganas de más, acá vas a encontrar más información."</string>
+    <string name="ayuda_mapa">"¡Explora el mapa!\n\n"
+                     "Se ha informado al museo de posibles hallazgos de fósiles.\n"
+                    "Selecciona uno de los puntos para inspeccionar el área y comenzar la excavación."
+                    "Podes usar los botones de acercar y alejar para navegar el mapa."</string>
+    <string name="ayuda_excavacion">"¡Ayudá a Kira a desenterrar el fósil! \n\n"
+                    "Escuchá o leé con atención sus indicaciones. Vas a tener tres herramientas: el pico, la pala y el pincel. \n"
+                    "Tocá la herramienta correcta para avanzar paso a paso"</string>
+
+    <string name="ayuda_comparative_game">¡Sigue las instrucciones de Kira! Dependiendo de la consigna elegí la opción correcta para descubrir más información del fósil </string>
+    <string name="ayuda_extra_info_fosile">"¡Las excavaciones permitieron a Kira investigar sobre lo que encontró! Acá podrás:\n\n"
+    "- Ver la figura en 3D\n"
+    "- Presiona JUGAR y podrás acceder a un minijuego para desbloquear más información del fósil encontrado"</string>
+
+    <string name="ayuda_coleccion">En esta sección podrás seguir qué fósiles descubriste en la ciudad y cuales no.\n Podrás acceder a ellos una vez que logres excavar un fósil con éxito desde el MAPA.\n Una vez realizado se desbloquearán y podrás acceder a investigar más sobre cada uno. </string>
+    <string name="ayuda_visor">Arrastrá la figura con el dedo para rotarla, o usá las flechas.\n Pellizcá con dos dedos para acercar o alejar.</string>
+    <!-- Texto Kira excavacion -->
+
+
+    <!-- Cards de info extra -->
+    <string name="dato_epoca">Época</string>
+    <string name="dato_habitat">Hábitat</string>
+    <string name="dato_tamano">Tamaño</string>
+    <string name="dato_peso">Peso</string>
+    <string name="dato_dieta">Dieta</string>
 </resources>

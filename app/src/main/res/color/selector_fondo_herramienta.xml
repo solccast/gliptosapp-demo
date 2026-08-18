@@ -5,4 +5,5 @@
 
     <!-- Estado Por Defecto (No seleccionado): color boton3 -->
     <item android:color="@color/boton3" />
+    <item android:color="?attr/colorAppButtonSecondary"/>
 </selector>

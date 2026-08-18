@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_initFragment_to_excavacionActivity"
-            app:destination="@id/excavacionActivity" />
+            app:destination="@id/mapaExcavacionActivity" />
 
         <action
             android:id="@+id/action_initFragment_to_colectionFragment"
@@ -22,13 +22,10 @@
         <action
             android:id="@+id/action_initFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_initFragment_to_recursosFragment"
+            app:destination="@id/recursosFragment" />
     </fragment>
-
-    <activity
-        android:id="@+id/excavacionActivity"
-        android:name="com.example.gliptosapp.ui.excavation.ExcavacionActivity"
-        android:label="activity_excavacion"
-        tools:layout="@layout/activity_excavacion" />
 
     <fragment
         android:id="@+id/colectionFragment"
@@ -41,6 +38,9 @@
         <action
             android:id="@+id/action_colectionFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_colectionFragment_to_mapaExcavacionActivity"
+            app:destination="@id/mapaExcavacionActivity" />
     </fragment>
 
     <fragment
@@ -57,8 +57,39 @@
         <argument
             android:name="nombreFosil"
             app:argType="string" />
+        <argument
+            android:name="fosilId"
+            app:argType="long" />
         <action
             android:id="@+id/action_extraInfoFosileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_extraInfoFosileFragment_to_comparativeGameInfoFragment"
+            app:destination="@id/comparativeGameInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recursosFragment"
+        android:name="com.example.gliptosapp.ui.recursos.RecursosFragment"
+        android:label="RecursosFragment"
+        tools:layout="@layout/fragment_recursos"/>
+    <fragment
+        android:id="@+id/comparativeGameInfoFragment"
+        android:name="com.example.gliptosapp.ui.comparativeGameInfo.ComparativeGameInfoFragment"
+        android:label="ComparativeGameInfoFragment"
+        tools:layout="@layout/fragment_comparative_game_info">
+        <argument
+            android:name="nombreFosil"
+            app:argType="string"/>
+        <argument
+            android:name="fosilId"
+            app:argType="long"/>
+        <action
+            android:id="@+id/action_comparativeGameInfoFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mapaExcavacionActivity"
+        android:name="com.example.gliptosapp.ui.mapa.MapaExcavacionActivity"
+        android:label="MapaExcavacionActivity"
+        tools:layout="@layout/activity_mapa_excavacion"/>
 </navigation>

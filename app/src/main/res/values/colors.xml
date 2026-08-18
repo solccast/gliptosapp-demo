@@ -12,9 +12,27 @@
     <color name="vinieta">#FFF8E8</color>
     <color name="texto1">#2D241E</color>
     <color name="texto2">#E8D7B0</color>
+    <color name="texto3">#FFF8E8</color>
     <color name="boton1">#3E2A1F</color>
     <color name="boton2">#1A3727</color>
     <color name="boton3">#E8D7B0</color>
+    <color name="boton4">#FFD85A3C</color>
     <color name="fondo_polaroid">#F4E8CC</color>
     <color name="boton_verde_claro">#6B8E23</color>
+    <color name="fondo_card_settings">#E8DCC8</color>
+    <color name="font_settings">#3D2817</color>
+    <color name="hc_fondo1">#7B2D2A</color>
+    <color name="hc_fondo2">#FF5722</color>
+    <color name="hc_vinieta">#56814C</color>
+    <color name="hc_texto1">#000000</color>
+    <color name="hc_texto2">#FFB200</color>
+    <color name="hc_boton1">#E93C1E</color>
+    <color name="hc_boton2">#2196F3</color>
+    <color name="hc_boton3">#009688</color>
+    <color name="hc_fondo_polaroid">#FDC443</color>
+    <color name="boton_recursos_azul">#282E53</color>
+    <color name="fondo_correcto">#F0F7E0</color>
+    <color name="borde_correcto">#6B8E23</color>
+    <color name="fondo_incorrecto">#FFF4E6</color>
+    <color name="borde_incorrecto">#F4A261</color>
 </resources>

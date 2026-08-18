@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo1">
+    android:background="?attr/colorAppPrimary">
 
     <!-- Botón volver FUERA de la card -->
     <ImageButton
@@ -21,16 +21,18 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/btnAjustes"
+        android:id="@+id/btnAyuda"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:src="@drawable/ic_help"
+        app:tint="@color/fondo1"
         android:background="@drawable/bg_boton_ra"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="Ajustes"
+        android:contentDescription="Ayuda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 
     <!-- Card cuaderno -->
     <androidx.cardview.widget.CardView
@@ -99,7 +101,7 @@
                     android:text="@string/coleccion_fosiles"
                     android:textSize="@dimen/texto_boton_large"
                     android:textStyle="bold"
-                    android:textColor="@color/texto1"
+                    android:textColor="?attr/colorAppText"
                     android:padding="16dp"
                     android:focusable="true"
                     android:accessibilityHeading="true"/>

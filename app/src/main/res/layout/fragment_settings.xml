@@ -3,106 +3,214 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="?attr/colorAppPrimary"
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
+        android:padding="16dp"
+        android:background="?attr/colorAppPrimary">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
 
-        android:padding="16dp">
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_boton_ra"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"/>
 
-        <include
-            android:id="@+id/backButton"
-            layout="@layout/view_back_button"/>
-
-        <TextView
-            android:id="@+id/tvTitle"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_gravity="center"
-
-            android:layout_marginTop="16dp"
-
-            android:text="@string/settings"
-
-            android:textSize="32sp"
-
-            android:textStyle="bold"/>
-
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/settings"
+                android:textStyle="bold"
+                android:textSize="32sp"
+                android:textColor="?attr/colorAppTitle"/>
+        </FrameLayout>
         <!-- MODO DE INTERACCIÓN -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings"
 
-            android:layout_marginTop="24dp">
-
+            android:contentDescription="Sección: Cambiar modo de juego: arrastrar o tocar piezas">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="vertical"
-
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tvInteractionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="Modo de interacción"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/font_settings"
+                    android:accessibilityHeading="true"/>
 
-                    android:textStyle="bold"/>
+                <!-- OPCIÓN ARRASTRAR -->
 
-                <RadioGroup
-                    android:id="@+id/rgInteractionMode"
-
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardDragMode"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
 
-                    <RadioButton
-                        android:id="@+id/rbDragToClean"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="18dp"
+                    app:strokeWidth="2dp"
+                    android:backgroundTint="@color/fondo_card_settings">
 
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
-                        android:text="Arrastrar y mover"/>
+                        <!-- Indicador -->
 
-                    <RadioButton
-                        android:id="@+id/rbTapToClean"
+                        <View
+                            android:id="@+id/indicatorDragMode"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/bg_circle_indicator"/>
 
-                        android:layout_width="wrap_content"
+                        <!-- Texto -->
+
+                        <TextView
+                            android:id="@+id/tvDragMode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_settings"
+                            android:text="Arrastrar piezas"/>
+
+                        <!-- Mano -->
+                        <ImageView
+                            android:id="@+id/imgDragHand"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_hand"/>
+
+                        <ImageView
+                            android:id="@+id/imgArrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                        <!-- Pieza -->
+
+                        <ImageView
+                            android:id="@+id/imgPiece"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginStart="12dp"
+                            android:src="@drawable/ic_touch_piece"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- OPCIÓN TOCAR -->
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTapMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="18dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    android:backgroundTint="@color/fondo_card_settings">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
-                        android:text="Tocar y limpiar"/>
-                </RadioGroup>
+                        <View
+                            android:id="@+id/indicatorTapMode"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/bg_circle_indicator"/>
+
+                        <TextView
+                            android:id="@+id/tvTapMode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Tocar pieza y destino"
+                            android:textColor="@color/font_settings"/>
+
+                        <ImageView
+                            android:id="@+id/imgTouchPiece"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_hand"/>
+
+                        <ImageView
+                            android:id="@+id/imgTouchDestination"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_hand"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
         <!-- APOYO VISUAL -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings"
+            android:contentDescription="Sección de apoyo visual: Cambio de contraste tamaño o estilo de fuentes">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
-
+                android:padding="16dp"
+                android:screenReaderFocusable="true"
+                android:backgroundTint="@color/fondo_card_settings">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Soporte visual"
-                    android:textStyle="bold"/>
+                    android:text="SOPORTE VISUAL"
+                    android:textStyle="bold"
+                    android:accessibilityHeading="true"
+                    android:textColor="@color/font_settings"/>
 
                 <!-- Alto contraste -->
 
@@ -112,18 +220,31 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
                     <TextView
                         android:id="@+id/tvContrast"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Alto contraste"/>
+                        android:labelFor="@id/switchContrast"
+                        android:text="Alto contraste"
+                        android:textColor="@color/font_settings"/>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchContrast"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Soporte visual. Activa colores de alto contraste para mejorar la visibilidad"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
+
                 </LinearLayout>
 
                 <!-- Tamaño de texto -->
@@ -134,12 +255,19 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tamaño de texto"/>
+                        android:text="Tamaño de texto"
+                        android:textColor="@color/font_settings"/>
 
                     <LinearLayout
                         android:id="@+id/fontSizeContainer"
@@ -149,11 +277,12 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardFontSmall"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:clickable="true"
                             android:focusable="true"
-                            app:cardCornerRadius="12dp">
+                            app:cardCornerRadius="12dp"
+                            android:contentDescription="Tamaño de texto pequeño">
 
                             <TextView
                                 android:id="@+id/tvFontSmall"
@@ -161,17 +290,20 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="A"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp"
+                                android:importantForAccessibility="no"/>
 
                         </com.google.android.material.card.MaterialCardView>
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardFontMedium"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_marginStart="8dp"
                             android:clickable="true"
                             android:focusable="true"
-                            app:cardCornerRadius="12dp">
+                            app:cardCornerRadius="12dp"
+
+                            android:contentDescription="Tamaño de texto mediano">
 
                             <TextView
                                 android:id="@+id/tvFontMedium"
@@ -179,115 +311,190 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="A"
-                                android:textSize="18sp"/>
-
+                                android:textSize="18sp"
+                                android:importantForAccessibility="no"/>
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardFontLarge"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_marginStart="8dp"
                             android:clickable="true"
                             android:focusable="true"
-                            app:cardCornerRadius="12dp">
-
+                            app:cardCornerRadius="12dp"
+                            android:contentDescription="Tamaño de texto grande">
                             <TextView
                                 android:id="@+id/tvFontLarge"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
+                                android:includeFontPadding="false"
                                 android:text="A"
-                                android:textSize="22sp"/>
-
+                                android:textSize="24sp"
+                                android:importantForAccessibility="no"/>
                         </com.google.android.material.card.MaterialCardView>
-
                     </LinearLayout>
                 </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-        <!-- APOYO AUDITIVO -->
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical"
-
-                android:padding="16dp">
-
-                <TextView
-                    android:text="Apoyo auditivo"
-                    android:textStyle="bold"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switchNarration"
-                    android:text="Narración"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switchSounds"
-                    android:text="Sonidos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switchVibration"
-                    android:text="Vibracion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- INCLUSIÓN -->
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical"
-
-                android:padding="16dp">
-
-                <TextView
-                    android:text="Soporte e inclusión"
-                    android:textStyle="bold"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switchLsa"
-
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
+                    <TextView
+                        android:id="@+id/tvDyslexiaFont"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cambiar tipo de letras"
+                        android:textColor="@color/font_settings"/>
 
-                    android:text="Activar Lengua de Señas (LSA)"/>
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchDyslexiaFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Soporte visual. Activar tipografía para personas con dislexia"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
+                </LinearLayout>
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
+        <!-- APOYO AUDITIVO -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            app:cardCornerRadius="24dp"
+            android:backgroundTint="@color/fondo_card_settings"
+            android:contentDescription="Sección de opciones: Narración, Música y vibración">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="APOYO AUDITIVO"
+                    android:textStyle="bold"
+                    android:accessibilityHeading="true"
+                    android:textColor="@color/font_settings"/>
+
+                <!-- Narración -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_head_speech"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no"
+                        android:backgroundTint="@color/vinieta"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Narración guiada por Kira"
+                        android:textColor="@color/font_settings"/>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchNarration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Apoyo auditivo. Activar narración de instrucciones y eventos"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
+
+                </LinearLayout>
+
+                <!-- Sonidos -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_music"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Música"
+                        android:textColor="@color/font_settings"/>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchSounds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Apoyo auditivo. Activar efectos de sonido"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"/>
+
+                </LinearLayout>
+
+                <!-- Vibración -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_vibrate"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Vibración"
+                        android:textColor="@color/font_settings"/>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchVibration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Apoyo auditivo. Activar vibración como retroalimentación"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
 </ScrollView>
